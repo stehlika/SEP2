@@ -12,7 +12,7 @@ Odporúčané pripojenie (funguje všade):
 postgresql.websupport.sk
 +port: 5432	
 
-Heslo: ********
+Heslo: 4M1BztWIVh
 
 Správa databázy
 
