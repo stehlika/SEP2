@@ -2,17 +2,17 @@
 SEP 2 Project for Harry Potter Game
 
 
-Prihlasovacie údaje do databázy
+Prihlasovacie údaje
 Názov databázy:
-sdj2_database
+sep2database
 Prihlasovacie meno:
-sdj2_database
+sep2database
 Host/Server:
 Odporúčané pripojenie (funguje všade):
 postgresql.websupport.sk
 +port: 5432	
 
-Heslo: 4M1BztWIVh
+Heslo: 0PXU4hYoGw
 
 Správa databázy
 
