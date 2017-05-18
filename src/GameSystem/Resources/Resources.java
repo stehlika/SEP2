@@ -8,10 +8,12 @@ import javafx.scene.image.Image;
 public class Resources {
 
     public Image userImage;
+    public Image  towerImage;
 
     public Resources() {
         try {
-            userImage = new Image(getClass().getResourceAsStream("player.png"));
+            userImage = new Image(getClass().getResourceAsStream("cedric.png"));
+            towerImage = new Image(getClass().getResourceAsStream("griffindor_tower.png"));
         } catch (Exception e) {
             e.printStackTrace();
         }

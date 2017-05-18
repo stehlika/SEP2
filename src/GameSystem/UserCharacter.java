@@ -13,7 +13,7 @@ public class UserCharacter {
     private ImageView graphics = new ImageView();
     private Image frame;
     public boolean jumping = false;
-    Ellipse bounds;
+    private Ellipse bounds;
 
     public ImageView getGraphics() {
         return graphics;

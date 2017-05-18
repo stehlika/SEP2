@@ -10,9 +10,9 @@ import javafx.scene.image.ImageView;
 public class Lightning extends ImageView {
 
     public Lightning() {
-        setImage(new Image(Lightning.class.getResourceAsStream("Resources/lightning.png")));
-        setScaleX(Math.random() / 2.0 + 0.5);
-        setScaleY(Math.random() / 2.0 + 0.5);
+        setImage(new Image(Lightning.class.getResourceAsStream("Resources/bolt.png")));
+        setScaleX(Math.random() / 1.0 + 0.5);
+        setScaleY(Math.random() / 1.0 + 0.5);
         setFitWidth(20);
         setFitHeight(30);
         setOpacity(0.9);

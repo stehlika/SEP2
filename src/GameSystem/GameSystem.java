@@ -14,6 +14,7 @@ import javafx.scene.shape.Shape;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import sun.security.provider.SHA;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -24,6 +25,8 @@ import java.util.ArrayList;
 /**
  * Created by adamstehlik on 17/05/2017.
  */
+
+
 public class GameSystem extends Application {
 
     private final double width = 1280, height = 720; // set screen size
@@ -50,7 +53,7 @@ public class GameSystem extends Application {
         root = new Pane();
         root.setStyle("-fx-background-color: #C0392B");
         Scene scene = new Scene(root, width, height);
-        primaryStage.setTitle("Flappy userCharacter");
+        primaryStage.setTitle("Quidditch gone wrong");
         primaryStage.setScene(scene);
         primaryStage.show();
         initGame();
@@ -118,9 +121,9 @@ public class GameSystem extends Application {
             scoreLabel.setText("Score: " + score);
             incrementOnce = false;
         }
-        Path p3 = (Path) Shape.intersect(userCharacter.getBounds(), tube.lowerBody);
+        Path towerPath = (Path) Shape.intersect(userCharacter.getBounds(), tube.getBounds());
 
-        boolean intersection = !(p3.getElements().isEmpty());
+        boolean intersection = !(towerPath.getElements().isEmpty());
         if (userCharacter.getBounds().getCenterY() + userCharacter.getBounds().getRadiusY() > height || userCharacter.getBounds().getCenterY() - userCharacter.getBounds().getRadiusY() < 0) {
             intersection = true;
         }
@@ -146,14 +149,13 @@ public class GameSystem extends Application {
         scoreLabel.setOpacity(0.8);
         scoreLabel.setText("Score: 0");
         root.getChildren().addAll(userCharacter.getGraphics(), scoreLabel);
+
         for (int i = 0; i < 5; i++) {
             Cloud cloud = new Cloud();
             cloud.setX(Math.random() * width);
             cloud.setY(Math.random() * height * 0.5 + 0.1);
             listOfClouds.add(cloud);
             root.getChildren().add(cloud);
-        }
-        for (int i = 0; i < 5; i++) {
             Lightning lightning = new Lightning();
             lightning.setX(Math.random() * width);
             lightning.setY(Math.random() * height * 0.5 + 0.1);
@@ -161,15 +163,15 @@ public class GameSystem extends Application {
             root.getChildren().add(lightning);
         }
 
-
         for (int i = 0; i < 5; i++) {
             SimpleDoubleProperty y = new SimpleDoubleProperty(0);
             y.set(root.getHeight() * Math.random() / 2.0);
-            Tower tube = new Tower(y, root, false, false);
+            Tower tube = new Tower(res.towerImage, y, root,  false);
             tube.setTranslateX(i * (width / 4 + 10) + 400);
             listOfTubes.add(tube);
             root.getChildren().add(tube);
         }
+
         score = 0;
         incrementOnce = true;
         gameOver = false;
@@ -199,11 +201,11 @@ public class GameSystem extends Application {
                     y.set(root.getHeight() * Math.random() / 2.0);
                     Tower tube;
                     if (Math.random() < 0.4) {
-                        tube = new Tower(y, root, true, false);
+                        tube = new Tower(res.towerImage, y, root,  false);
                     } else if (Math.random() > 0.85) {
-                        tube = new Tower(y, root, true, true);
+                        tube = new Tower(res.towerImage,y, root,  true);
                     } else {
-                        tube = new Tower(y, root, false, false);
+                        tube = new Tower(res.towerImage, y, root,  false);
                     }
                     tube.setTranslateX(listOfTubes.get(listOfTubes.size() - 1).getTranslateX() + (width / 4 + 10));
                     listOfTubes.add(tube);
