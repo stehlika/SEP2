@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1280.0" style="-fx-background-color: #2c3e50;" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox alignment="CENTER" layoutX="482.0" layoutY="236.0" prefHeight="381.0" prefWidth="274.0">
+         <children>
+            <TextField maxWidth="240.0" prefHeight="60.0" promptText="Type in your user name" style="-fx-background-radius: 30; -fx-border-color: #998100; -fx-border-radius: 30; -fx-border-width: 3; -fx-background-color: #ecf0f1;">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </TextField>
+            <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="140.0" style="-fx-background-radius: 25; -fx-background-color: #ecf0f1;" text="SIGN IN">
+               <VBox.margin>
+                  <Insets top="50.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
