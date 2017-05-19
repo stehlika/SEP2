@@ -1,4 +1,4 @@
-package Controller;
+package Quidditch.Controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

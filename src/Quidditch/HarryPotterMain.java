@@ -1,10 +1,11 @@
+package Quidditch;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -13,7 +14,9 @@ import java.util.Optional;
 /**
  * Created by adamstehlik on 13/05/2017.
  */
-public class Main extends Application {
+public class HarryPotterMain extends Application {
+
+    private static Stage _primaryStage;
 
     public static void main(String[] args) {
         launch(args);
@@ -26,6 +29,7 @@ public class Main extends Application {
             primaryStage.setTitle("Jizir Hrncir");
             primaryStage.setScene(new Scene(root, 1280, 720));
             primaryStage.setResizable(false);
+            this._primaryStage = primaryStage;
             primaryStage.show();
         } catch (Exception e) {
             e.printStackTrace();
@@ -35,8 +39,8 @@ public class Main extends Application {
         primaryStage.setOnCloseRequest(we -> {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Confirm Exit");
-            alert.setHeaderText("You are trying to close VIA Bus");
-            alert.setContentText("Are you ok with this? (Back up will be created)");
+            alert.setHeaderText("You are trying to close most epic Harry Potter Game");
+            alert.setContentText("Please don't.");
 
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK) {
@@ -45,5 +49,10 @@ public class Main extends Application {
                 we.consume();
             }
         });
+    }
+
+
+    public static Stage get_primaryStage() {
+        return _primaryStage;
     }
 }

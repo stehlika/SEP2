@@ -8,11 +8,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="768.0" prefWidth="1280.0" style="-fx-background-color: #2c3e50;" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainViewController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="768.0" prefWidth="1280.0" style="-fx-background-color: #2c3e50;" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Quidditch.Controller.MainViewController">
    <children>
       <VBox alignment="CENTER" layoutX="380.0" layoutY="166.0" prefHeight="375.0" prefWidth="522.0">
          <children>
-            <Button fx:id="playBtnMS" mnemonicParsing="false" prefHeight="50.0" prefWidth="250.0" style="-fx-background-radius: 25; -fx-background-color: #ecf0f1;" text="PLAY" textFill="#34495e">
+            <Button fx:id="playBtnMS" onAction="#playGame" mnemonicParsing="false" prefHeight="50.0" prefWidth="250.0" style="-fx-background-radius: 25; -fx-background-color: #ecf0f1;" text="PLAY" textFill="#34495e">
                <VBox.margin>
                   <Insets top="20.0" />
                </VBox.margin>
@@ -20,7 +20,7 @@
                   <Font name="Avenir Roman" size="20.0" />
                </font>
             </Button>
-            <Button fx:id="leaderboardBtn" mnemonicParsing="false" prefHeight="50.0" prefWidth="250.0" style="-fx-background-color: #ecf0f1; -fx-background-radius: 25;" text="LEADERBOARD" textFill="#34495e">
+            <Button fx:id="leaderboardBtn" onAction="#showLeaderBoard" mnemonicParsing="false" prefHeight="50.0" prefWidth="250.0" style="-fx-background-color: #ecf0f1; -fx-background-radius: 25;" text="LEADERBOARD" textFill="#34495e">
                <VBox.margin>
                   <Insets top="20.0" />
                </VBox.margin>
@@ -28,7 +28,7 @@
                   <Font name="Avenir Roman" size="20.0" />
                </font>
             </Button>
-            <Button fx:id="houseCupBtn" mnemonicParsing="false" prefHeight="50.0" prefWidth="250.0" style="-fx-background-color: #ecf0f1; -fx-background-radius: 25;" text="HOUSE CUP" textFill="#34495e">
+            <Button fx:id="houseCupBtn" onAction="#showHouseCup" mnemonicParsing="false" prefHeight="50.0" prefWidth="250.0" style="-fx-background-color: #ecf0f1; -fx-background-radius: 25;" text="HOUSE CUP" textFill="#34495e">
                <VBox.margin>
                   <Insets top="20.0" />
                </VBox.margin>

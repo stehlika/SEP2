@@ -1,8 +1,8 @@
-package GameSystem;
+package Quidditch.GameSystem;
 
-import GameSystem.Resources.Resources;
+import Quidditch.GameSystem.Resources.Resources;
+import Quidditch.HarryPotterMain;
 import javafx.animation.*;
-import javafx.application.Application;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -14,8 +14,6 @@ import javafx.scene.shape.Shape;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import sun.security.provider.SHA;
-
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.FileInputStream;
@@ -27,7 +25,7 @@ import java.util.ArrayList;
  */
 
 
-public class GameSystem extends Application {
+public class GameSystem  {
 
     private final double width = 1280, height = 720; // set screen size
     private Resources res = new Resources();
@@ -48,14 +46,14 @@ public class GameSystem extends Application {
     private ScoreLabel scoreLabel = new ScoreLabel(width, 0);
     private Timeline gameLoop;
 
-    @Override
-    public void start(Stage primaryStage) {
+    public void startGame() {
+        Stage primaryStage = HarryPotterMain.get_primaryStage();
         root = new Pane();
         root.setStyle("-fx-background-color: #C0392B");
         Scene scene = new Scene(root, width, height);
-        primaryStage.setTitle("Quidditch gone wrong");
         primaryStage.setScene(scene);
         primaryStage.show();
+
         initGame();
         root.setPrefSize(width, height);
 
@@ -73,11 +71,9 @@ public class GameSystem extends Application {
             }
 
         });
+
     }
 
-    public static void main(String[] args) {
-        launch(args);
-    }
 
     private void updateCounters() {
         if (counter_30FPS % 4 == 0) {
@@ -88,7 +84,6 @@ public class GameSystem extends Application {
 
     private void jumpflappy() {
         rotator.setDuration(Duration.millis(100));
-        // rotator.setToAngle(-40);
         rotator.stop();
         rotator.play();
         jump.setByY(-50);
@@ -102,7 +97,6 @@ public class GameSystem extends Application {
 
     private void fallFlappy() {
         rotator.setDuration(Duration.millis(100));
-        //  rotator.setToAngle(40);
         rotator.stop();
         rotator.play();
         jump.setByY(50);
@@ -234,20 +228,10 @@ public class GameSystem extends Application {
     }
 
     private void loadHighScore() {
-        try {
-            highScore = new DataInputStream(new FileInputStream("highScore.score")).readInt();
-        } catch (Exception e) {
-            System.out.println("Sorry file not found");
-        }
+
     }
 
     private void saveHighScore() {
-        try {
-            DataOutputStream out = new DataOutputStream(new FileOutputStream("highScore.score"));
-            out.writeInt(score);
-            out.flush();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
     }
 }
