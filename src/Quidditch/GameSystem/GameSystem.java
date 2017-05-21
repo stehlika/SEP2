@@ -14,10 +14,7 @@ import javafx.scene.shape.Shape;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
+
 import java.util.ArrayList;
 
 /**
@@ -39,13 +36,20 @@ public class GameSystem  {
     private UserCharacter userCharacter;
     private TranslateTransition jump;
     private TranslateTransition fall;
-    private RotateTransition rotator;
-    private ArrayList<Tower> listOfTubes = new ArrayList<>();
+  //  private RotateTransition rotator;
+    private ArrayList<Tower> listOfTowers = new ArrayList<>();
     private ArrayList<Cloud> listOfClouds = new ArrayList<>();
     private ArrayList<Lightning> listOfLightnings = new ArrayList<>();
     private ScoreLabel scoreLabel = new ScoreLabel(width, 0);
     private Timeline gameLoop;
 
+    // rotator sluzi na to aby sa mohli charactery a towere naklapat tak ako ste to videli na zaciatku
+
+    /**
+     *  Method that initialises playing screen and checks for user's keyboard input.
+     *  @KeyCode.UP is calling function upMovement.
+     *  @KeyCode.DOWN is calling function downMovement.
+     */
     public void startGame() {
         Stage primaryStage = HarryPotterMain.get_primaryStage();
         root = new Pane();
@@ -60,12 +64,12 @@ public class GameSystem  {
         scene.setOnKeyPressed(event -> {
             if(event.getCode() == KeyCode.UP) {
                 if (!gameOver)
-                    jumpflappy();
+                    upMovement();
                 else
                     initializeGame();
             } else if (event.getCode() == KeyCode.DOWN) {
                 if (!gameOver)
-                    fallFlappy();
+                    downMovement();
                 else
                     initializeGame();
             }
@@ -75,6 +79,9 @@ public class GameSystem  {
     }
 
 
+    /**
+     * This function is taking care of FPS for user movement
+     */
     private void updateCounters() {
         if (counter_30FPS % 4 == 0) {
             counter_30FPS = 1;
@@ -82,10 +89,13 @@ public class GameSystem  {
         counter_30FPS++;
     }
 
-    private void jumpflappy() {
-        rotator.setDuration(Duration.millis(100));
-        rotator.stop();
-        rotator.play();
+    /**
+     * Method that moves user GUI object up 50px and animates the movement.
+     */
+    private void upMovement() {
+       // rotator.setDuration(Duration.millis(100));
+       // rotator.stop();
+       // rotator.play();
         jump.setByY(-50);
         jump.setCycleCount(1);
         userCharacter.jumping = true;
@@ -95,10 +105,14 @@ public class GameSystem  {
 
     }
 
-    private void fallFlappy() {
-        rotator.setDuration(Duration.millis(100));
-        rotator.stop();
-        rotator.play();
+
+    /**
+     * Method is moving down user's GUI object by 50px and animates.
+     */
+    private void downMovement() {
+       // rotator.setDuration(Duration.millis(100));
+       // rotator.stop();
+       // rotator.play();
         jump.setByY(50);
         jump.setCycleCount(1);
         userCharacter.jumping = true;
@@ -109,23 +123,28 @@ public class GameSystem  {
     }
 
     private void checkCollisions() {
-        Tower tube = listOfTubes.get(0);
-        if (tube.getTranslateX() < 35 && incrementOnce) {
+        //toto pocita kolko towerov user uz obisiel
+        Tower tower = listOfTowers.get(0);
+        if (tower.getTranslateX() < 35 && incrementOnce) {
             score++;
             scoreLabel.setText("Score: " + score);
             incrementOnce = false;
         }
-        Path towerPath = (Path) Shape.intersect(userCharacter.getBounds(), tube.getBounds());
-
+        //Getovanie bounds zo shape pre zistenie prieniku suradnic toweru a usera.
+        Path towerPath = (Path) Shape.intersect(userCharacter.getBounds(), tower.getBounds());
+        //porovnava bound toweru a usera a meni premen[[ intersection podla toho
         boolean intersection = !(towerPath.getElements().isEmpty());
         if (userCharacter.getBounds().getCenterY() + userCharacter.getBounds().getRadiusY() > height || userCharacter.getBounds().getCenterY() - userCharacter.getBounds().getRadiusY() < 0) {
             intersection = true;
         }
+
+        // momentalne je to nastavene tak ze sa da game over obrazovka ked sa pretne tower s userom
+        // TODO treba spravit viacero verzii intersection pre tower-user, user-cloud, user-lightning, user-dementor
         if (intersection) {
             GameOverLabel gameOverLabel = new GameOverLabel(width / 2, height / 2);
             highScore = highScore < score ? score : highScore;
             gameOverLabel.setText("Tap to retry. Score: " + score + "\n\tHighScore: " + highScore);
-            saveHighScore();
+          //  saveHighScore(); zatial nie je potreba pre fungovanie
             root.getChildren().add(gameOverLabel);
             root.getChildren().get(1).setOpacity(0);
             gameOver = true;
@@ -133,8 +152,14 @@ public class GameSystem  {
         }
     }
 
+    /**
+     * Method that initializes game, clears lists of towers, clouds, Lightnings, clears view than draws users GUI object
+     * sets X, Y position initializes score screen
+     * Sets up the enviroment distance between towers etc
+     *
+     */
     private void initializeGame() {
-        listOfTubes.clear();
+        listOfTowers.clear();
         listOfClouds.clear();
         listOfLightnings.clear();
         root.getChildren().clear();
@@ -144,12 +169,16 @@ public class GameSystem  {
         scoreLabel.setText("Score: 0");
         root.getChildren().addAll(userCharacter.getGraphics(), scoreLabel);
 
+        //  vytvara cloudy na screen na  random X,Y poziciu a prida do listu cloudov
+        // vytvara lightning na screen na random X,Y poziciu a prida do listu lightning
         for (int i = 0; i < 5; i++) {
+            //Cloud
             Cloud cloud = new Cloud();
             cloud.setX(Math.random() * width);
             cloud.setY(Math.random() * height * 0.5 + 0.1);
             listOfClouds.add(cloud);
             root.getChildren().add(cloud);
+            //Lightning
             Lightning lightning = new Lightning();
             lightning.setX(Math.random() * width);
             lightning.setY(Math.random() * height * 0.5 + 0.1);
@@ -157,13 +186,15 @@ public class GameSystem  {
             root.getChildren().add(lightning);
         }
 
+        // vytvara towery na random pozicie a pridava ich do listu towerov
+
         for (int i = 0; i < 5; i++) {
             SimpleDoubleProperty y = new SimpleDoubleProperty(0);
             y.set(root.getHeight() * Math.random() / 2.0);
-            Tower tube = new Tower(res.towerImage, y, root,  false);
-            tube.setTranslateX(i * (width / 4 + 10) + 400);
-            listOfTubes.add(tube);
-            root.getChildren().add(tube);
+            Tower tower = new Tower(res.towerImage, y, root,  false);
+            tower.setTranslateX(i * (width / 4 + 10) + 400);
+            listOfTowers.add(tower);
+            root.getChildren().add(tower);
         }
 
         score = 0;
@@ -177,20 +208,20 @@ public class GameSystem  {
 
     private void initGame() {
         userCharacter = new UserCharacter(res.userImage);
-        rotator = new RotateTransition(Duration.millis(500), userCharacter.getGraphics());
+      //  rotator = new RotateTransition(Duration.millis(500), userCharacter.getGraphics());
         jump = new TranslateTransition(Duration.millis(450), userCharacter.getGraphics());
         fall = new TranslateTransition(Duration.millis(5 * height), userCharacter.getGraphics());
         jump.setInterpolator(Interpolator.LINEAR);
         fall.setByY(height + 20);
-        rotator.setCycleCount(1);
+       // rotator.setCycleCount(1);
         userCharacter.getGraphics().setRotationAxis(Rotate.Z_AXIS);
         gameLoop = new Timeline(new KeyFrame(Duration.millis(1000 / FPS), new EventHandler<ActionEvent>() {
 
             public void handle(ActionEvent e) {
                 updateCounters();
                 checkCollisions();
-                if (listOfTubes.get(0).getTranslateX() <= -width / 12.3) {
-                    listOfTubes.remove(0);
+                if (listOfTowers.get(0).getTranslateX() <= -width / 12.3) {
+                    listOfTowers.remove(0);
                     SimpleDoubleProperty y = new SimpleDoubleProperty(0);
                     y.set(root.getHeight() * Math.random() / 2.0);
                     Tower tube;
@@ -201,13 +232,13 @@ public class GameSystem  {
                     } else {
                         tube = new Tower(res.towerImage, y, root,  false);
                     }
-                    tube.setTranslateX(listOfTubes.get(listOfTubes.size() - 1).getTranslateX() + (width / 4 + 10));
-                    listOfTubes.add(tube);
+                    tube.setTranslateX(listOfTowers.get(listOfTowers.size() - 1).getTranslateX() + (width / 4 + 10));
+                    listOfTowers.add(tube);
                     incrementOnce = true;
                     root.getChildren().remove(7);
                     root.getChildren().add(tube);
                 }
-                for (int i = 0; i < listOfTubes.size(); i++) {
+                for (int i = 0; i < listOfTowers.size(); i++) {
                     if (listOfClouds.get(i).getX() < -listOfClouds.get(i).getImage().getWidth() * listOfClouds.get(i).getScaleX()) {
                         listOfClouds.get(i).setX(listOfClouds.get(i).getX() + width + listOfClouds.get(i).getImage().getWidth() * listOfClouds.get(i).getScaleX());
                     }
@@ -218,7 +249,7 @@ public class GameSystem  {
                     listOfClouds.get(i).setX(listOfClouds.get(i).getX() - 1);
                     listOfLightnings.get(i).setX(listOfLightnings.get(i).getX() -1);
 
-                    listOfTubes.get(i).setTranslateX(listOfTubes.get(i).getTranslateX() - 2);
+                    listOfTowers.get(i).setTranslateX(listOfTowers.get(i).getTranslateX() - 2);
                 }
             }
         }));

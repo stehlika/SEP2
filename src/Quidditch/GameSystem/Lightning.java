@@ -9,12 +9,17 @@ import javafx.scene.image.ImageView;
  */
 public class Lightning extends ImageView {
 
+    /*
+    * No-argument construcotr get's image from resources package and than sets random H and W with 1 opacity
+    *
+    */
+
     public Lightning() {
         setImage(new Image(Lightning.class.getResourceAsStream("Resources/bolt.png")));
-        setScaleX(Math.random() / 1.0 + 0.5);
-        setScaleY(Math.random() / 1.0 + 0.5);
+       // setScaleX(Math.random() / 1.0 + 0.5);
+       // setScaleY(Math.random() / 1.0 + 0.5);
         setFitWidth(20);
         setFitHeight(30);
-        setOpacity(0.9);
+        setOpacity(1.0);
     }
 }

@@ -21,7 +21,7 @@ public class Tower extends Group {
 
     public ImageView towerBody = new ImageView();
     private double GAP = 120;
-    private Stop[] stops = new Stop[]{new Stop(0, Color.LIGHTGRAY), new Stop(1, Color.GRAY)};
+  //  private Stop[] stops = new Stop[]{new Stop(0, Color.LIGHTGRAY), new Stop(1, Color.GRAY)};
     private double oscillationCenter;
     private Timeline animateTube;
     private int frames = 0;
@@ -30,7 +30,6 @@ public class Tower extends Group {
 
     public Tower(Image frame, SimpleDoubleProperty gapLocation, Pane root, boolean animate) {
         this.frame = frame;
-        this.bounds = new Rectangle(frame.getWidth(), frame.getHeight());
 
         oscillationCenter = gapLocation.get();
         if (animate) {
@@ -44,16 +43,15 @@ public class Tower extends Group {
         towerBody.setImage(this.frame);
         towerBody.setX(2.5);
         towerBody.yProperty().bind(gapLocation.add(GAP).add(root.heightProperty().divide(6)));
-      //  bounds.setHeight(towerBody.getFitHeight());
-      //  bounds.setWidth(towerBody.getFitWidth());
-
+        this.bounds = new Rectangle(frame.getWidth(), frame.getHeight());
         bounds.setFill(Color.TRANSPARENT);
         bounds.setStroke(Color.BLACK);
-        //bounds.centerXProperty().bind(towerBody.translateXProperty().add(frame.getWidth() / 2.0));
-        //bounds.centerYProperty().bind(towerBody.translateYProperty().add(12.0));
+        bounds.setX(towerBody.getX());
+        bounds.setY(towerBody.getY());
         bounds.rotateProperty().bind(towerBody.rotateProperty());
 
         getChildren().addAll(towerBody);
+        getChildren().addAll(bounds);
 
     }
 
