@@ -14,8 +14,6 @@ import java.util.ArrayList;
  */
 public class DatabaseAdapter implements Persistence {
 
-    //TODO save metody, clear
-
     private Database db;
     private static final String DRIVER = "org.postgresql.Driver";
     private static final String URL = "jdbc:postgresql://postgresql.websupport.sk:5432/sep2database";
@@ -68,8 +66,26 @@ public class DatabaseAdapter implements Persistence {
     }
 
     @Override
-    public void save(Player player) throws IOException {
+    public boolean save(Player player) throws IOException {
+        try {
+            String sql = "SELECT nickname FROM sep2database.player WHERE nickname = ?;";
+            ArrayList<Object[]> results = db.query(sql, player.getNickname());
 
+            if (results.size() > 0) { // not a new player
+                return false; // do nothing
+            }
+
+            sql = "INSERT INTO sep2database.player (nickname, playtime, winratio, faculty) "
+                    + "VALUES (? , ? , ? , ?);";
+
+            String temp = player.getNickname();
+
+            db.update(sql, player.getNickname(), player.getPlaytime(), player.getWinratio(), player.getFaculty());
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 
     @Override
@@ -88,7 +104,14 @@ public class DatabaseAdapter implements Persistence {
     }
 
     @Override
-    public void clear() throws IOException {
-        String sql = "TRUNCATE TABLE player.";
+    public boolean clear() throws IOException {
+        try {
+            String sql = "TRUNCATE TABLE sep2database.sep2_schema CASCADE;";
+            db.update(sql);
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+            return false;
     }
 }
