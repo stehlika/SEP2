@@ -12,9 +12,9 @@ public interface Persistence {
 
     public PlayerList load() throws IOException;
     public void save(PlayerList playerList) throws IOException;
-    public void save(Player player) throws IOException;
+    public boolean save(Player player) throws IOException;
     public boolean remove (Player player) throws IOException;
-    public void clear() throws IOException;
+    public boolean clear() throws IOException;
   /*public void save(House faculty) throws IOException;*/
 
 }
