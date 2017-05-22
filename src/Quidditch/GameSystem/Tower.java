@@ -21,7 +21,6 @@ public class Tower extends Group {
 
     public ImageView towerBody = new ImageView();
     private double GAP = 120;
-  //  private Stop[] stops = new Stop[]{new Stop(0, Color.LIGHTGRAY), new Stop(1, Color.GRAY)};
     private double oscillationCenter;
     private Timeline animateTube;
     private int frames = 0;
@@ -30,7 +29,6 @@ public class Tower extends Group {
 
     public Tower(Image frame, SimpleDoubleProperty gapLocation, Pane root, boolean animate) {
         this.frame = frame;
-
         oscillationCenter = gapLocation.get();
         if (animate) {
             animateTube = new Timeline(new KeyFrame(Duration.millis(33), e -> {
