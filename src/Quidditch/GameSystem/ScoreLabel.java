@@ -1,4 +1,4 @@
-package GameSystem;
+package Quidditch.GameSystem;
 
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;

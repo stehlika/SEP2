@@ -1,4 +1,4 @@
-package GameSystem;
+package Quidditch.GameSystem;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -8,6 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Stop;
+import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import javafx.scene.shape.Ellipse;
 
@@ -20,16 +21,15 @@ public class Tower extends Group {
 
     public ImageView towerBody = new ImageView();
     private double GAP = 120;
-    private Stop[] stops = new Stop[]{new Stop(0, Color.LIGHTGRAY), new Stop(1, Color.GRAY)};
+  //  private Stop[] stops = new Stop[]{new Stop(0, Color.LIGHTGRAY), new Stop(1, Color.GRAY)};
     private double oscillationCenter;
     private Timeline animateTube;
     private int frames = 0;
-    private Ellipse bounds;
+    private Rectangle bounds;
     private Image frame;
 
     public Tower(Image frame, SimpleDoubleProperty gapLocation, Pane root, boolean animate) {
         this.frame = frame;
-        this.bounds = new Ellipse(frame.getWidth(), 50);
 
         oscillationCenter = gapLocation.get();
         if (animate) {
@@ -43,19 +43,20 @@ public class Tower extends Group {
         towerBody.setImage(this.frame);
         towerBody.setX(2.5);
         towerBody.yProperty().bind(gapLocation.add(GAP).add(root.heightProperty().divide(6)));
-
+        this.bounds = new Rectangle(frame.getWidth(), frame.getHeight());
         bounds.setFill(Color.TRANSPARENT);
         bounds.setStroke(Color.BLACK);
-        bounds.centerXProperty().bind(towerBody.translateXProperty().add(frame.getWidth() / 2.0));
-        bounds.centerYProperty().bind(towerBody.translateYProperty().add(12.0));
+        bounds.setX(towerBody.getX());
+        bounds.setY(towerBody.getY());
         bounds.rotateProperty().bind(towerBody.rotateProperty());
 
         getChildren().addAll(towerBody);
+        getChildren().addAll(bounds);
 
     }
 
 
-    public Ellipse getBounds() {
+    public Rectangle getBounds() {
         return bounds;
     }
 }

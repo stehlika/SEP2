@@ -1,4 +1,4 @@
-package GameSystem.Resources;
+package Quidditch.GameSystem.Resources;
 
 import javafx.scene.image.Image;
 
