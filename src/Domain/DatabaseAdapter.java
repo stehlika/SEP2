@@ -18,8 +18,6 @@ import java.util.HashMap;
  */
 public class DatabaseAdapter implements Persistence {
 
-    //TODO HOUSE SELECTION
-
     private Database db;
     private static final String DRIVER = "org.postgresql.Driver";
     private static final String URL = "jdbc:postgresql://postgresql.websupport.sk:5432/sep2database";
@@ -162,7 +160,28 @@ public class DatabaseAdapter implements Persistence {
 
     @Override
     public HashMap<String, Integer> getLeaderBoard() throws IOException {
-        return null;
+        HashMap<String, Integer> leaderboard = new HashMap<>();
+
+        String sql = "SELECT playernick, max(score) AS score FROM sep2_schema.player_scores GROUP BY playernick ORDER BY score DESC;";
+        ArrayList<Object[]> result;
+        String playernick = "";
+        int score = 0;
+
+        try {
+            result = db.query(sql);
+
+            for(int i =0; i<3; i++)
+            {
+                Object[] row = result.get(i);
+                playernick = row [0].toString();
+                score = (int) row [1];
+                leaderboard.put(playernick, score);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return leaderboard;
     }
 
     @Override
