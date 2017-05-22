@@ -75,13 +75,12 @@ public class DatabaseAdapter implements Persistence {
                 return false; // do nothing
             }
 
-            sql = "INSERT INTO sep2database.player (nickname, playtime,winratio, faculty) "
+            sql = "INSERT INTO sep2database.player (nickname, playtime, winratio, faculty) "
                     + "VALUES (? , ? , ? , ?);";
 
             String temp = player.getNickname();
 
-            db.update(sql, player.getNickname(), player.getPlaytime(), player.getWinratio(), player.getFaculty(),
-                    "No uploads", "No uploads");
+            db.update(sql, player.getNickname(), player.getPlaytime(), player.getWinratio(), player.getFaculty());
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
