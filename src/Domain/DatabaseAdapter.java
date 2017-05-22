@@ -76,7 +76,7 @@ public class DatabaseAdapter implements Persistence {
             }
 
             sql = "INSERT INTO sep2database.player (nickname, playtime,winratio, faculty) "
-                    + "VALUES (? , ? , ? , ?, ? , ?);";
+                    + "VALUES (? , ? , ? , ?);";
 
             String temp = player.getNickname();
 
