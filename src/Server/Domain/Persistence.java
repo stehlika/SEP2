@@ -4,6 +4,7 @@ import Server.Domain.Model.House;
 import Server.Domain.Model.HouseList;
 import Server.Domain.Model.Player;
 import Server.Domain.Model.PlayerList;
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -26,6 +27,7 @@ public interface Persistence {
     public House getHouse(String faculty) throws IOException;
     public HashMap<String, Integer> getLeaderBoard() throws IOException;
     public boolean remove (Player player) throws IOException;
+    public void updateBestPlayer(String faculty) throws IOException;
     public boolean clear() throws IOException;
 
 

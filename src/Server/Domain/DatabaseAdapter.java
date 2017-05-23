@@ -261,7 +261,7 @@ public class DatabaseAdapter implements Persistence {
         try {
             result = db.query(sql);
 
-            for(int i =0; i<3; i++)
+            for(int i =0; i<result.size(); i++)
             {
                 Object[] row = result.get(i);
                 playernick = row [0].toString();
@@ -288,6 +288,19 @@ public class DatabaseAdapter implements Persistence {
             e.printStackTrace();
         }
         return false;
+
+    }
+
+    @Override
+    public void updateBestPlayer(String faculty) throws IOException {
+        String sql = "UPDATE sep2_schema.house_cup SET bestplayer=(SELECT playernick  FROM sep2_schema.player_scores JOIN (SELECT nickname FROM sep2_schema.player\n" +
+                "  WHERE sep2_schema.player.faculty='?') AS faculty_players ON faculty_players.nickname=player_scores.playernick\n" +
+                "WHERE score=(SELECT max(score) FROM sep2_schema.player_scores)) WHERE faculty='?';";
+        try {
+            db.update(sql,faculty);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 
