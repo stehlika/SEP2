@@ -30,15 +30,19 @@ public abstract class MasterController {
      * @param height - hight of the window
      * @throws IOException
      */
-    public void newPopUpWindow(String source, String name, int height) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource(source));
-        Scene scene = new Scene(root, 400, height);
-        Stage window = new Stage();
-        window.setScene(scene);
-        window.setResizable(false);
-        window.initModality(Modality.APPLICATION_MODAL);
-        window.setTitle(name);
-        window.showAndWait();
+    public void newPopUpWindow(String source, String name, int height) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource(source));
+            Scene scene = new Scene(root, 400, height);
+            Stage window = new Stage();
+            window.setScene(scene);
+            window.setResizable(false);
+            window.initModality(Modality.APPLICATION_MODAL);
+            window.setTitle(name);
+            window.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -48,14 +52,19 @@ public abstract class MasterController {
      * @param actionEvent a button click
      * @throws IOException
      */
-    public void backToMainScreen(Button backBtn, ActionEvent actionEvent) throws IOException {
-        Stage stage;
-        Parent root;
-        stage = (Stage) backBtn.getScene().getWindow();
-        root = FXMLLoader.load(getClass().getResource("../View/mainView.fxml"));
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+    public void backToMainScreen(Button backBtn, ActionEvent actionEvent) {
+        try {
+            Stage stage;
+            Parent root;
+            stage = (Stage) backBtn.getScene().getWindow();
+            root = FXMLLoader.load(getClass().getResource("../View/mainView.fxml"));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     /**
@@ -65,14 +74,19 @@ public abstract class MasterController {
      * @param button button for 'Reservations', 'Chauffeurs' and 'Buses'
      * @throws IOException
      */
-    public void newView(String source, Button button) throws IOException {
-        Stage stage;
-        Parent root;
-        stage = (Stage) button.getScene().getWindow();
-        root = FXMLLoader.load(getClass().getResource(source));
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+    public void newView(String source, Button button)  {
+        try {
+            Stage stage;
+            Parent root;
+            stage = (Stage) button.getScene().getWindow();
+            root = FXMLLoader.load(getClass().getResource(source));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     /**

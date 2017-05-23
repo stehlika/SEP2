@@ -125,6 +125,8 @@ public class GameSystem  {
     private void checkCollisions() {
         //toto pocita kolko towerov user uz obisiel
         Tower tower = listOfTowers.get(0);
+        Cloud cloud = listOfClouds.get(0);
+        Lightning lightning = listOfLightnings.get(0);
         if (tower.getTranslateX() < 35 && incrementOnce) {
             score++;
             scoreLabel.setText("Score: " + score);
@@ -132,15 +134,22 @@ public class GameSystem  {
         }
         //Getovanie bounds zo shape pre zistenie prieniku suradnic toweru a usera.
         Path towerPath = (Path) Shape.intersect(userCharacter.getBounds(), tower.getBounds());
-        //porovnava bound toweru a usera a meni premen[[ intersection podla toho
-        boolean intersection = !(towerPath.getElements().isEmpty());
+        Path cloudPath = (Path) Shape.intersect(userCharacter.getBounds(), cloud.getBounds());
+        Path lightningPath = (Path) Shape.intersect(userCharacter.getBounds(), lightning.getBounds());
+
+        //porovnava bound toweru a usera a meni premennu intersection podla toho
+        boolean towerIntersection = !(towerPath.getElements().isEmpty());
+        boolean lightningIntersection = !(lightningPath.getElements().isEmpty());
+        boolean cloudIntersection = !(cloudPath.getElements().isEmpty());
+
         if (userCharacter.getBounds().getCenterY() + userCharacter.getBounds().getRadiusY() > height || userCharacter.getBounds().getCenterY() - userCharacter.getBounds().getRadiusY() < 0) {
-            intersection = true;
+            towerIntersection = true;
         }
 
         // momentalne je to nastavene tak ze sa da game over obrazovka ked sa pretne tower s userom
         // TODO treba spravit viacero verzii intersection pre tower-user, user-cloud, user-lightning, user-dementor
-        if (intersection) {
+        if (lightningIntersection) {
+
             GameOverLabel gameOverLabel = new GameOverLabel(width / 2, height / 2);
             highScore = highScore < score ? score : highScore;
             gameOverLabel.setText("Tap to retry. Score: " + score + "\n\tHighScore: " + highScore);
@@ -163,7 +172,7 @@ public class GameSystem  {
         listOfClouds.clear();
         listOfLightnings.clear();
         root.getChildren().clear();
-        userCharacter.getGraphics().setTranslateX(100);
+        userCharacter.getGraphics().setTranslateX(100); // Posuva hraca na X osi do lava prava defualt 100
         userCharacter.getGraphics().setTranslateY(150);
         scoreLabel.setOpacity(0.8);
         scoreLabel.setText("Score: 0");
@@ -173,17 +182,23 @@ public class GameSystem  {
         // vytvara lightning na screen na random X,Y poziciu a prida do listu lightning
         for (int i = 0; i < 5; i++) {
             //Cloud
-            Cloud cloud = new Cloud();
-            cloud.setX(Math.random() * width);
-            cloud.setY(Math.random() * height * 0.5 + 0.1);
+            Cloud cloud = new Cloud(res.cloudImage, root);
+           // cloud.setX(Math.random() * width);
+           // cloud.setY(Math.random() * height * 0.5 + 0.1);
             listOfClouds.add(cloud);
             root.getChildren().add(cloud);
+            root.getChildren().add(cloud.getBounds());
+
             //Lightning
             Lightning lightning = new Lightning();
-            lightning.setX(Math.random() * width);
-            lightning.setY(Math.random() * height * 0.5 + 0.1);
+            double xValue = Math.random() * width;
+            double yValue = Math.random() * height * 0.5 + 0.1;
+            lightning.setX(xValue);
+            lightning.setY(yValue);
+            lightning.setPosition(xValue, yValue);
             listOfLightnings.add(lightning);
             root.getChildren().add(lightning);
+            root.getChildren().add(lightning.getBounds());
         }
 
         // vytvara towery na random pozicie a pridava ich do listu towerov
@@ -244,6 +259,7 @@ public class GameSystem  {
                     }
                     if (listOfLightnings.get(i).getX() < -listOfLightnings.get(i).getImage().getWidth() * listOfLightnings.get(i).getScaleY()) {
                         listOfLightnings.get(i).setX(listOfLightnings.get(i).getX() + width + listOfLightnings.get(i).getImage().getWidth() * listOfLightnings.get(i).getScaleX());
+                        listOfLightnings.get(i).setPosition((listOfLightnings.get(i).getX() + width + listOfLightnings.get(i).getImage().getWidth() * listOfLightnings.get(i).getScaleX()), 100);
                     }
 
                     listOfClouds.get(i).setX(listOfClouds.get(i).getX() - 1);
