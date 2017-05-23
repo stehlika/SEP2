@@ -8,7 +8,7 @@ public class House {
     private int totalscore;
     private String bestplayer;
 
-    public House(String faculty) {
+    public House(String faculty, int totalscore, String bestplayer) {
         this.faculty = faculty;
         this.totalscore = totalscore;
         this.bestplayer = bestplayer;

@@ -20,6 +20,7 @@ public interface Persistence {
     public void save(Player player) throws IOException;
     public String houseSelection(House house) throws IOException;
     public Player checkPlayer(String nickname) throws IOException;
+    public House getHouse(String faculty) throws IOException;
     public HashMap<String, Integer> getLeaderBoard() throws IOException;
     public boolean remove (Player player) throws IOException;
     public boolean clear() throws IOException;

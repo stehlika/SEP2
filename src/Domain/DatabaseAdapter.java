@@ -159,6 +159,27 @@ public class DatabaseAdapter implements Persistence {
     }
 
     @Override
+    public House getHouse(String faculty) throws IOException {
+        String sql = "SELECT * FROM sep2_schema.house_cup WHERE faculty = ?;";
+        House house = null;
+
+        try {
+            ResultSet resultSet = (ResultSet) db.query(sql, faculty);
+
+            if(resultSet.equals(null)) return null;
+
+            house = new House(resultSet.getString("faculty"),
+                    resultSet.getInt("totalscore"),
+                    resultSet.getString("bestplayer"));
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return house;
+    }
+
+    @Override
     public HashMap<String, Integer> getLeaderBoard() throws IOException {
         HashMap<String, Integer> leaderboard = new HashMap<>();
 
