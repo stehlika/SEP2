@@ -17,7 +17,10 @@ public interface Persistence {
     public PlayerList load() throws IOException;
     public HouseList loadHouses() throws IOException;
     public void save(PlayerList playerList) throws IOException;
+    public void save (HouseList houseList) throws IOException;
     public void save(Player player) throws IOException;
+    public boolean save(House house) throws IOException;
+    public void saveScore (String playernick, int score) throws IOException;
     public String houseSelection(House house) throws IOException;
     public Player checkPlayer(String nickname) throws IOException;
     public House getHouse(String faculty) throws IOException;
@@ -25,6 +28,5 @@ public interface Persistence {
     public boolean remove (Player player) throws IOException;
     public boolean clear() throws IOException;
 
-  /*public void save(House faculty) throws IOException;*/
 
 }

@@ -27,6 +27,16 @@ public class HouseList {
             houses.add(house);
     }
 
+    public int getNumberOfHouses()
+    {
+        return houses.size();
+    }
+
+    public House getHouse(int index)
+    {
+        return houses.get(index);
+    }
+
     @Override
     public String toString() {
         return "HouseList{" +

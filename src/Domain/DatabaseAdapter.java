@@ -100,7 +100,17 @@ public class DatabaseAdapter implements Persistence {
     }
 
     @Override
+    public void save(HouseList houseList) throws IOException
+    {
+        for (int i = 0; i<houseList.getNumberOfHouses(); i++)
+        {
+            save(houseList.getHouse(i));
+        }
+    }
+
+    @Override
     public void save(Player player) throws IOException {
+        //metoda na vytvoreni playera
         try {
            /* String sql = "SELECT nickname FROM sep2_schema.player WHERE nickname = ?;";
             ArrayList<Object[]> results = db.query(sql, player.getNickname());
@@ -118,8 +128,49 @@ public class DatabaseAdapter implements Persistence {
             e.printStackTrace();
         }
     }
+
     @Override
-    public String houseSelection(House house) throws IOException {
+    public boolean save(House house) throws IOException {
+        //metoda na vytvoreni house
+        try {
+           String sql = "SELECT faculty FROM sep2_schema.house_cup WHERE faculty = ?;";
+            ArrayList<Object[]> results = db.query(sql, house.getFaculty());
+
+            if (results.size() > 0) { // not a house
+                return false; // do nothing
+            }
+
+            sql = "INSERT INTO sep2_schema.house_cup (faculty, totalscore, bestplayer) "
+                    + "VALUES (? , ? , ?);";
+
+
+            db.update(sql, house.getFaculty(), house.getTotalscore(), house.getBestplayer());
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public void saveScore(String playernick, int score) throws IOException
+    {
+        //metoda ktera zapise akorat nahrane skore
+        String sql = "INSERT INTO sep2_schema.player_scores (playernick, score)"
+                + "VALUES (? , ?);";
+
+        try {
+            db.update(sql, playernick, score);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    @Override
+    public String houseSelection(House house) throws IOException
+    {
+        //metoda na zjisteni v jake fakulte je nejmene hracu
         String sql = "SELECT faculty FROM sep2schema.house_cup WHERE totalscore = (SELECT min(totalscore) FROM sep2_schema.house_cup)";
         String randomFaculty = "";
         ArrayList<Object[]> result;
@@ -136,7 +187,9 @@ public class DatabaseAdapter implements Persistence {
     }
 
     @Override
-    public Player checkPlayer(String nickname) throws IOException {
+    public Player checkPlayer(String nickname) throws IOException
+    //metoda se vstupem nickname, projde vsechny players, return player nebo null
+    {
 
         String sql = "SELECT * FROM sep2_schema.player WHERE nickname = ?;";
         Player player = null;
@@ -160,6 +213,7 @@ public class DatabaseAdapter implements Persistence {
 
     @Override
     public House getHouse(String faculty) throws IOException {
+        //metoda ktera vraci house a vsechny data
         String sql = "SELECT * FROM sep2_schema.house_cup WHERE faculty = ?;";
         House house = null;
 
@@ -181,6 +235,7 @@ public class DatabaseAdapter implements Persistence {
 
     @Override
     public HashMap<String, Integer> getLeaderBoard() throws IOException {
+        //leaderboard hracu se skore
         HashMap<String, Integer> leaderboard = new HashMap<>();
 
         String sql = "SELECT playernick, max(score) AS score FROM sep2_schema.player_scores GROUP BY playernick ORDER BY score DESC;";
@@ -207,6 +262,7 @@ public class DatabaseAdapter implements Persistence {
 
     @Override
     public boolean remove(Player player) throws IOException {
+        //mazani playera podle nickname
         try {
             String sql = "DELETE FROM sep2database.player WHERE nickname =?;";
             db.update(sql, player);
@@ -222,6 +278,7 @@ public class DatabaseAdapter implements Persistence {
 
     @Override
     public boolean clear() throws IOException {
+        //todo
         try {
             String sql = "TRUNCATE TABLE sep2database.sep2_schema CASCADE;";
             db.update(sql);
