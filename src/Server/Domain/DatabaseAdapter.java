@@ -166,6 +166,21 @@ public class DatabaseAdapter implements Persistence {
         }
     }
 
+    @Override
+    public void saveTotalScore(String faculty) throws IOException {
+        //metoda ktera zapise nove totalscore house po skonceni hry
+
+        String sql = "UPDATE sep2_schema.house_cup SET totalscore = (SELECT sum(score) FROM sep2_schema.player_scores "
+                + "JOIN sep2_schema.player ON player.nickname = player_scores.playernick WHERE player.faculty = ?) "
+                + "WHERE faculty = ?;";
+
+        try {
+            db.update(sql, faculty);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     @Override
     public String houseSelection(House house) throws IOException

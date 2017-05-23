@@ -20,6 +20,7 @@ public interface Persistence {
     public void save(Player player) throws IOException;
     public boolean save(House house) throws IOException;
     public void saveScore (String playernick, int score) throws IOException;
+    public void saveTotalScore(String faculty) throws IOException;
     public String houseSelection(House house) throws IOException;
     public Player checkPlayer(String nickname) throws IOException;
     public House getHouse(String faculty) throws IOException;
