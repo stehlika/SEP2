@@ -68,7 +68,7 @@
                   <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../GameSystem/Resources/cho.png" />
-                     </image>
+                     </image>p
                   </ImageView>
                   <Label text="Hufflepuff">
                      <font>
