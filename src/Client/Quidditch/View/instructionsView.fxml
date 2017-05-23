@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1280.0" style="-fx-background-color: #2c3e50;" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1"fx:controller="Client.Quidditch.Controller.InstructionsController">
+   <children>
+      <Button fx:id="backBtn" layoutX="58.0" layoutY="58.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="70.0" style="-fx-background-radius: 35; -fx-background-color: #ecf0f1; -fx-opacity: 70%;" text="←" textFill="#34495e" onAction="#back">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </Button>
+      <Label layoutX="446.0" layoutY="134.0" text="Label s instrukciami" textFill="WHITE">
+         <font>
+            <Font size="45.0" />
+         </font>
+      </Label>
+      <Button layoutX="122.0" layoutY="537.0" mnemonicParsing="false" prefHeight="102.0" prefWidth="157.0" text="Multiplayer" />
+      <Button layoutX="974.0" layoutY="521.0" mnemonicParsing="false" prefHeight="117.0" prefWidth="166.0" text="PLAY" />
+   </children>
+</AnchorPane>
