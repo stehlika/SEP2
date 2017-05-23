@@ -26,7 +26,7 @@ public class HarryPotterMain extends Application {
     public void start(Stage primaryStage) throws IOException {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("View/signInView.fxml"));
-            primaryStage.setTitle("Jizir Hrncir");
+            primaryStage.setTitle("Jiri Hrncir");
             primaryStage.setScene(new Scene(root, 1280, 720));
             primaryStage.setResizable(false);
             this._primaryStage = primaryStage;
@@ -39,7 +39,8 @@ public class HarryPotterMain extends Application {
         primaryStage.setOnCloseRequest(we -> {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Confirm Exit");
-            alert.setHeaderText("You are trying to close most epic Harry Potter Game");
+            alert.setHeaderText("You are " +
+                    "trying to close most epic Harry Potter Game");
             alert.setContentText("Please don't.");
 
             Optional<ButtonType> result = alert.showAndWait();

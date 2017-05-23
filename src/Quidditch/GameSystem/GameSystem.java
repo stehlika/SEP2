@@ -182,9 +182,9 @@ public class GameSystem  {
         // vytvara lightning na screen na random X,Y poziciu a prida do listu lightning
         for (int i = 0; i < 5; i++) {
             //Cloud
-            Cloud cloud = new Cloud();
-            cloud.setX(Math.random() * width);
-            cloud.setY(Math.random() * height * 0.5 + 0.1);
+            Cloud cloud = new Cloud(res.cloudImage, root);
+           // cloud.setX(Math.random() * width);
+           // cloud.setY(Math.random() * height * 0.5 + 0.1);
             listOfClouds.add(cloud);
             root.getChildren().add(cloud);
             root.getChildren().add(cloud.getBounds());

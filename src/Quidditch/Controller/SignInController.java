@@ -20,12 +20,7 @@ public class SignInController extends MasterController {
     }
 
     public void signIn(ActionEvent actionEvent) {
-        System.out.println("Stlacilo sa tlacidlo ");
-        System.out.println(usernameTF.textProperty().getValue());
-        try {
-            newView("../View/mainView.fxml", signInBtn);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        //usernameTF.textProperty().getValue();
+        newView("../View/mainView.fxml", signInBtn);
     }
 }

@@ -11,8 +11,10 @@ public class MainViewController extends MasterController {
     public Button playBtnMS;
     public Button leaderboardBtn;
     public Button houseCupBtn;
+    public Button profileBtn;
 
     public void showLeaderBoard(ActionEvent actionEvent) {
+        newView("../View/leaderboardView.fxml", leaderboardBtn);
     }
 
     public void playGame(ActionEvent actionEvent) {
@@ -21,5 +23,10 @@ public class MainViewController extends MasterController {
     }
 
     public void showHouseCup(ActionEvent actionEvent) {
+        newView("../View/houseCupView.fxml", houseCupBtn);
+    }
+
+    public void showProfile(ActionEvent actionEvent) {
+        newView("../View/profileView.fxml", profileBtn);
     }
 }
