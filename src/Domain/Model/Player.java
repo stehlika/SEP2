@@ -7,12 +7,11 @@ import java.time.LocalTime;
  */
 public class Player {
     private String nickname;
-    private LocalTime playtime;
+    private int playtime;
     private double winratio;
-    /*  private String faculty;*/
-    private House faculty;
+    private String faculty;
 
-    public Player(String nickname, LocalTime playtime, double winratio, House faculty) {
+    public Player(String nickname, int playtime, double winratio, String faculty) {
         this.nickname = nickname;
         this.playtime = playtime;
         this.winratio = winratio;
@@ -27,11 +26,11 @@ public class Player {
         this.nickname = nickname;
     }
 
-    public LocalTime getPlaytime() {
+    public int getPlaytime() {
         return playtime;
     }
 
-    public void setPlaytime(LocalTime playtime) {
+    public void setPlaytime(int playtime) {
         this.playtime = playtime;
     }
 
@@ -43,7 +42,12 @@ public class Player {
         this.winratio = winratio;
     }
 
-    public House getFaculty() {
+    public void setFaculty(String faculty)
+    {
+        this.faculty = faculty;
+    }
+
+    public String getFaculty() {
         return faculty;
     }
 

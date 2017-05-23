@@ -8,7 +8,6 @@ import java.util.ArrayList;
  * Created by Karolina on 15/05/2017.
  */
 public class Database {
-    //TODO - dodelat s Liborem a jeho classou
 
     private String url;
     private String user;
