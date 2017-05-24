@@ -77,7 +77,7 @@ public class ModelManager implements ModelMan {
 
     public String houseSelection(House house) throws IOException
     {
-        return storage.houseSelection(house);
+        return storage.houseSelection();
     }
     public void checkPlayer(String nickname) throws IOException
     {
