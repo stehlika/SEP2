@@ -90,7 +90,7 @@ public class ServerRMI extends Observable implements RmiService {
     }
 
     @Override
-    public String houseSelection(House house) throws RemoteException, IOException {
-        return modelManager.houseSelection(house);
+    public String houseSelection() throws RemoteException, IOException {
+        return modelManager.houseSelection();
     }
 }

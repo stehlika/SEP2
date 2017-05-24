@@ -75,7 +75,7 @@ public class ModelManager implements ModelMan {
         return storage.getHouse(faculty);
     }
 
-    public String houseSelection(House house) throws IOException
+    public String houseSelection() throws IOException
     {
         return storage.houseSelection();
     }

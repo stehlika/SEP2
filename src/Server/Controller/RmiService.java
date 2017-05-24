@@ -22,6 +22,6 @@ public interface RmiService extends Remote {
     void checkPlayer(String nickname) throws RemoteException, IOException;
     ArrayList<Pair<String, Integer>> getLeaderBoard() throws RemoteException, IOException;
     House getHouse(String faculty) throws RemoteException, IOException;
-    String houseSelection(House house) throws RemoteException, IOException;
+    String houseSelection() throws RemoteException, IOException;
 
 }
