@@ -1,5 +1,6 @@
 package Server.Domain.Mediator;
 
+import Server.Domain.Model.House;
 import Server.Domain.Model.Player;
 import Server.Domain.Model.PlayerList;
 
@@ -14,6 +15,6 @@ public interface ModelMan {
     PlayerList getPlayers(String nickname);
     int getNumberOfPlayers();
 
-    /*void addFaculty(House faculty);
-    public House getFaculty(String faculty);*/
+    /*public House getHouse(String faculty);*/
+    /*void addFaculty(House faculty);*/
 }

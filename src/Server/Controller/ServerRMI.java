@@ -1,13 +1,18 @@
 package Server.Controller;
 
+import Server.Domain.Mediator.ModelMan;
+import Server.Domain.Mediator.ModelManager;
 import Server.Domain.Model.House;
 import Server.Domain.Model.Player;
+import javafx.util.Pair;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
@@ -18,6 +23,7 @@ import java.util.Observer;
 public class ServerRMI extends Observable implements RmiService {
 
     private static final long servialVersionUID = 1L;
+    private ModelManager modelManager;
 
     private class WrapperObserver implements Observer, Serializable {
         private static final long serialVersionUID = 1L;
@@ -27,6 +33,7 @@ public class ServerRMI extends Observable implements RmiService {
         WrapperObserver(RemoteObserver ro) {
             this.ro = ro;
         }
+
         @Override
         public void update(Observable o, Object arg) {
             try {
@@ -53,33 +60,37 @@ public class ServerRMI extends Observable implements RmiService {
             e.printStackTrace();
         }
     }
+
     @Override
-    public void addPlayer(Player player) throws RemoteException {
+    public void addPlayer(Player player) throws RemoteException, IOException {
+        modelManager.addPlayer(player);
 
     }
 
     @Override
-    public void saveScore(String playerNick, int score) throws RemoteException {
+    public void saveScore(String playerNick, int score) throws RemoteException, IOException {
+        modelManager.saveScore(playerNick, score);
 
     }
 
     @Override
-    public void checkPlayer(String nickname) throws RemoteException {
+    public void checkPlayer(String nickname) throws RemoteException, IOException {
+        modelManager.checkPlayer(nickname);
+    }
+
+    @Override
+    public ArrayList<Pair<String, Integer>> getLeaderBoard() throws RemoteException, IOException {
+        return modelManager.getLeaderboard();
+    }
+
+    @Override
+    public House getHouse(String faculty) throws RemoteException, IOException {
+        return modelManager.getHouse(faculty);
 
     }
 
     @Override
-    public HashMap<String, Integer> getLeaderBoard() throws RemoteException {
-        return null;
-    }
-
-    @Override
-    public House getHouose(String faculty) throws RemoteException {
-        return null;
-    }
-
-    @Override
-    public String houseSelection(House house) throws RemoteException {
-        return null;
+    public String houseSelection(House house) throws RemoteException, IOException {
+        return modelManager.houseSelection(house);
     }
 }

@@ -5,6 +5,7 @@ import Server.Domain.Model.HouseList;
 import Server.Domain.Model.Player;
 import Server.Domain.Model.PlayerList;
 import Server.Persistence.Database;
+import javafx.util.Pair;
 
 import java.io.IOException;
 import java.sql.ResultSet;
@@ -249,9 +250,9 @@ public class DatabaseAdapter implements Persistence {
     }
 
     @Override
-    public HashMap<String, Integer> getLeaderBoard() throws IOException {
+    public ArrayList<Pair<String, Integer>> getLeaderBoard() throws IOException {
         //leaderboard hracu se skore
-        HashMap<String, Integer> leaderboard = new HashMap<>();
+        ArrayList<Pair<String, Integer>> leaderboard = new ArrayList<>();
 
         String sql = "SELECT playernick, max(score) AS score FROM sep2_schema.player_scores GROUP BY playernick ORDER BY score DESC;";
         ArrayList<Object[]> result;
@@ -261,12 +262,11 @@ public class DatabaseAdapter implements Persistence {
         try {
             result = db.query(sql);
 
-            for(int i =0; i<result.size(); i++)
-            {
+            for(int i =0; i<result.size(); i++) {
                 Object[] row = result.get(i);
-                playernick = row [0].toString();
-                score = (int) row [1];
-                leaderboard.put(playernick, score);
+                playernick = row[0].toString();
+                score = (int) row[1];
+                leaderboard.add(new Pair<>(playernick, score));
             }
         } catch (SQLException e) {
             e.printStackTrace();

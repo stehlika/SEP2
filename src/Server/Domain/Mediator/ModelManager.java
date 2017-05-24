@@ -2,11 +2,14 @@ package Server.Domain.Mediator;
 
 
 import Server.Domain.DatabaseAdapter;
+import Server.Domain.Model.House;
 import Server.Domain.Model.Player;
 import Server.Domain.Model.PlayerList;
 import Server.Domain.Persistence;
+import javafx.util.Pair;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 
 /**
@@ -64,4 +67,25 @@ public class ModelManager implements ModelMan {
     public int getNumberOfPlayers() {
         return playerList.getNumberOfPlayers();
     }
+
+    public ArrayList<Pair<String, Integer>> getLeaderboard() throws IOException {
+            return storage.getLeaderBoard();
+    }
+    public House getHouse(String faculty) throws IOException {
+        return storage.getHouse(faculty);
+    }
+
+    public String houseSelection(House house) throws IOException
+    {
+        return storage.houseSelection(house);
+    }
+    public void checkPlayer(String nickname) throws IOException
+    {
+        storage.checkPlayer(nickname);
+    }
+    public void saveScore(String playerNick, int score) throws IOException
+    {
+        storage.saveScore(playerNick, score);
+    }
+
 }

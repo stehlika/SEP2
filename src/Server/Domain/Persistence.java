@@ -5,8 +5,10 @@ import Server.Domain.Model.HouseList;
 import Server.Domain.Model.Player;
 import Server.Domain.Model.PlayerList;
 import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
+import javafx.util.Pair;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -25,7 +27,7 @@ public interface Persistence {
     public String houseSelection(House house) throws IOException;
     public Player checkPlayer(String nickname) throws IOException;
     public House getHouse(String faculty) throws IOException;
-    public HashMap<String, Integer> getLeaderBoard() throws IOException;
+    public ArrayList<Pair<String, Integer>> getLeaderBoard() throws IOException;
     public boolean remove (Player player) throws IOException;
     public void updateBestPlayer(String faculty) throws IOException;
     public boolean clear() throws IOException;
