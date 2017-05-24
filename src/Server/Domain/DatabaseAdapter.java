@@ -184,7 +184,7 @@ public class DatabaseAdapter implements Persistence {
 
 
     @Override
-    public String houseSelection(String faculty) throws IOException
+    public String houseSelection() throws IOException
     {
         //metoda na zjisteni v jake fakulte je nejmene hracu
         String sql = "SELECT faculty FROM sep2schema.house_cup WHERE totalscore = (SELECT min(totalscore) FROM sep2_schema.house_cup)";
@@ -192,7 +192,7 @@ public class DatabaseAdapter implements Persistence {
         ArrayList<Object[]> result;
 
         try {
-            result = db.query(sql, faculty);
+            result = db.query(sql);
             Object [] row = result.get(0);
             randomFaculty = row[0].toString();
         } catch (SQLException e) {
