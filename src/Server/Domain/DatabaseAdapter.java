@@ -211,7 +211,7 @@ public class DatabaseAdapter implements Persistence {
         Player player = null;
 
         try {
-            ResultSet resultSet = (ResultSet) db.query(sql, nickname);
+            ResultSet resultSet = (ResultSet) db.queryRS(sql, nickname);
 
             if(resultSet.equals(null)) return null;
 
@@ -219,6 +219,8 @@ public class DatabaseAdapter implements Persistence {
                     resultSet.getInt("playtime"),
                     resultSet.getDouble("winratio"),
                     resultSet.getString("faculty"));
+            sql = "COMMIT;";
+            db.query(sql);
         }
         catch (SQLException e)
         {

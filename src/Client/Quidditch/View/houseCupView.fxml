@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1280.0" style="-fx-background-color: #2c3e50;" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.Quidditch.Controller.HouseCupController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1280.0" style="-fx-background-color: #2c3e50;" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.Quidditch.Controller.HouseCupController">
    <children>
       <Button fx:id="backBtn" layoutX="68.0" layoutY="68.0" mnemonicParsing="false" onAction="#back" prefHeight="70.0" prefWidth="70.0" style="-fx-background-radius: 35; -fx-background-color: #ecf0f1; -fx-opacity: 70%;" text="←" textFill="#34495e">
          <font>
@@ -37,6 +37,31 @@
                         <Font size="39.0" />
                      </font>
                   </Label>
+                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label text="The best player: " textFill="#d7d7d7">
+                           <font>
+                              <Font name="Avenir Roman" size="20.0" />
+                           </font>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                        </Label>
+                        <Label fx:id="gryffindorPlayerL" text="#playerName" textFill="#cdcdcd">
+                           <padding>
+                              <Insets left="5.0" />
+                           </padding>
+                           <font>
+                              <Font name="Avenir Roman" size="21.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <Label fx:id="gryffindorTotalL" text="#totalScore" textFill="#dadada">
+                     <font>
+                        <Font size="25.0" />
+                     </font>
+                  </Label>
                   <ListView fx:id="gryffindorLV" prefHeight="240.0" prefWidth="300.0">
                      <VBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -56,6 +81,31 @@
                         <Font size="39.0" />
                      </font>
                   </Label>
+                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label text="The best player: " textFill="#d7d7d7">
+                           <font>
+                              <Font name="Avenir Roman" size="20.0" />
+                           </font>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                        </Label>
+                        <Label fx:id="ravenclawPlayerL" text="#playerName" textFill="#cdcdcd">
+                           <padding>
+                              <Insets left="5.0" />
+                           </padding>
+                           <font>
+                              <Font name="Avenir Roman" size="21.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <Label fx:id="ravenclawTotalL" text="#totalScore" textFill="#dadada">
+                     <font>
+                        <Font size="25.0" />
+                     </font>
+                  </Label>
                   <ListView fx:id="ravenclawLV" prefHeight="240.0" prefWidth="300.0">
                      <VBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -68,11 +118,36 @@
                   <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../GameSystem/Resources/cho.png" />
-                     </image>p
+                     </image>
                   </ImageView>
                   <Label text="Hufflepuff">
                      <font>
                         <Font size="39.0" />
+                     </font>
+                  </Label>
+                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label text="The best player: " textFill="#d7d7d7">
+                           <font>
+                              <Font name="Avenir Roman" size="20.0" />
+                           </font>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                        </Label>
+                        <Label fx:id="hufflepuffPlayerL" text="#playerName" textFill="#cdcdcd">
+                           <padding>
+                              <Insets left="5.0" />
+                           </padding>
+                           <font>
+                              <Font name="Avenir Roman" size="21.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <Label fx:id="hufflepuffTotalL" text="#totalScore" textFill="#dadada">
+                     <font>
+                        <Font size="25.0" />
                      </font>
                   </Label>
                   <ListView fx:id="hufflepuffLV" prefHeight="240.0" prefWidth="300.0">
@@ -92,6 +167,31 @@
                   <Label text="Slytherin">
                      <font>
                         <Font size="39.0" />
+                     </font>
+                  </Label>
+                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label text="The best player: " textFill="#d7d7d7">
+                           <font>
+                              <Font name="Avenir Roman" size="20.0" />
+                           </font>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                        </Label>
+                        <Label fx:id="slytherinPlayerL" text="#playerName" textFill="#cdcdcd">
+                           <padding>
+                              <Insets left="5.0" />
+                           </padding>
+                           <font>
+                              <Font name="Avenir Roman" size="21.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <Label fx:id="slytherinTotalL" text="#totalScore" textFill="#dadada">
+                     <font>
+                        <Font size="25.0" />
                      </font>
                   </Label>
                   <ListView fx:id="slytherinLV" prefHeight="240.0" prefWidth="300.0">

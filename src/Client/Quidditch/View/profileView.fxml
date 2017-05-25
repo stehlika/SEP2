@@ -79,7 +79,7 @@
       </GridPane>
       <ImageView fx:id="profileIV" fitHeight="150.0" fitWidth="200.0" layoutX="566.0" layoutY="212.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="" />
+            <Image url="@../GameSystem/Resources/cho.png" />
          </image>
       </ImageView>
    </children>

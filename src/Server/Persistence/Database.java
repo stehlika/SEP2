@@ -61,6 +61,44 @@ public class Database {
      *           if something went wrong in the connection or query
      */
 
+    public ResultSet queryRS (String sql, Object... statementElements) throws SQLException
+    {
+        openDatabase();
+
+        PreparedStatement statement = null;
+        ArrayList<Object[]> list = null;
+        ResultSet resultSet = null;
+        if(sql != null && statement == null)
+        {
+            statement = connection.prepareStatement(sql);
+            if(statementElements != null)
+            {
+                for (int i=0; i<statementElements.length; i++)
+                {
+                    statement.setObject(i+1, statementElements[i]);
+                }
+            }
+
+        }
+        resultSet = statement.executeQuery();
+        list = new ArrayList<Object[]>();
+        while(resultSet.next())
+        {
+            Object [] row = new Object [resultSet.getMetaData().getColumnCount()];
+            for(int i=0; i<row.length; i++)
+            {
+                row[i] = resultSet.getObject(i+1);
+            }
+            list.add(row);
+        }
+        if(resultSet !=null)
+            resultSet.close();
+        if(statement != null)
+            statement.close();
+        closeDatabase();
+        return resultSet;
+    }
+
     public ArrayList<Object[]> query (String sql, Object... statementElements) throws SQLException
     {
         openDatabase();
