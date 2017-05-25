@@ -18,6 +18,8 @@ public interface Persistence {
 
     public PlayerList load() throws IOException;
     public HouseList loadHouses() throws IOException;
+    public void push() throws IOException;
+    public void createPlayer(String nickname, String house) throws IOException;
     public void save(PlayerList playerList) throws IOException;
     public void save (HouseList houseList) throws IOException;
     public void save(Player player) throws IOException;
