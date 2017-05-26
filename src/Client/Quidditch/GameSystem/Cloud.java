@@ -23,8 +23,6 @@ public class Cloud extends Group {
     public Cloud(Image frame, Pane root) {
         this.frame = frame;
         cloudBody.setImage(this.frame);
-      //  setScaleX(Math.random() / 2.0 + 0.5);
-      //  setScaleY(Math.random() / 2.0 + 0.5);
         setOpacity(0.9);
 
         cloudBody.setX(Math.random());

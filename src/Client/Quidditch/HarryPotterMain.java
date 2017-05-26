@@ -1,5 +1,6 @@
 package Client.Quidditch;
 
+import Client.Quidditch.Controller.ClientRMI;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -31,6 +32,7 @@ public class HarryPotterMain extends Application {
             primaryStage.setResizable(false);
             this._primaryStage = primaryStage;
             primaryStage.show();
+            ClientRMI.getInstance().startClient("192.168.1.12", 9998); // Windows 1890
         } catch (Exception e) {
             e.printStackTrace();
         }

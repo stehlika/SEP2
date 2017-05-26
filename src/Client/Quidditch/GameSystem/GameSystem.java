@@ -2,6 +2,7 @@ package Client.Quidditch.GameSystem;
 
 import Client.Quidditch.GameSystem.Resources.Resources;
 import Client.Quidditch.HarryPotterMain;
+import Server.Domain.Model.Player;
 import javafx.animation.*;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.event.ActionEvent;
@@ -50,7 +51,8 @@ public class GameSystem  {
      *  @KeyCode.UP is calling function upMovement.
      *  @KeyCode.DOWN is calling function downMovement.
      */
-    public void startGame() {
+    public void startGame(Player player) {
+
         Stage primaryStage = HarryPotterMain.get_primaryStage();
         root = new Pane();
         root.setStyle("-fx-background-color: #C0392B");
@@ -58,7 +60,7 @@ public class GameSystem  {
         primaryStage.setScene(scene);
         primaryStage.show();
 
-        initGame();
+        initGame(player);
         root.setPrefSize(width, height);
 
         scene.setOnKeyPressed(event -> {
@@ -93,9 +95,6 @@ public class GameSystem  {
      * Method that moves user GUI object up 50px and animates the movement.
      */
     private void upMovement() {
-       // rotator.setDuration(Duration.millis(100));
-       // rotator.stop();
-       // rotator.play();
         jump.setByY(-50);
         jump.setCycleCount(1);
         userCharacter.jumping = true;
@@ -148,7 +147,7 @@ public class GameSystem  {
 
         // momentalne je to nastavene tak ze sa da game over obrazovka ked sa pretne tower s userom
         // TODO treba spravit viacero verzii intersection pre tower-user, user-cloud, user-lightning, user-dementor
-        if (lightningIntersection) {
+        if (towerIntersection) {
 
             GameOverLabel gameOverLabel = new GameOverLabel(width / 2, height / 2);
             highScore = highScore < score ? score : highScore;
@@ -221,8 +220,19 @@ public class GameSystem  {
         gameLoop.play();
     }
 
-    private void initGame() {
-        userCharacter = new UserCharacter(res.userImage);
+    private void initGame(Player player) {
+        if (player.getFaculty().equals("gryffindor")) {
+            userCharacter = new UserCharacter(res.userImageGryf);
+        } else if (player.getFaculty().equals("ravenclaw")) {
+            userCharacter = new UserCharacter(res.userImageRave);
+        } else if (player.getFaculty().equals("hufflepuff")) {
+            userCharacter = new UserCharacter(res.userImageHuff);
+        } else if (player.getFaculty().equals("slytherin")) {
+            userCharacter = new UserCharacter(res.userImageSlyt);
+        } else {
+            System.out.println("jajojaofhohso");
+            userCharacter = new UserCharacter(res.userImage);
+        }
       //  rotator = new RotateTransition(Duration.millis(500), userCharacter.getGraphics());
         jump = new TranslateTransition(Duration.millis(450), userCharacter.getGraphics());
         fall = new TranslateTransition(Duration.millis(5 * height), userCharacter.getGraphics());
@@ -238,7 +248,7 @@ public class GameSystem  {
                 if (listOfTowers.get(0).getTranslateX() <= -width / 12.3) {
                     listOfTowers.remove(0);
                     SimpleDoubleProperty y = new SimpleDoubleProperty(0);
-                    y.set(root.getHeight() * Math.random() / 2.0);
+                    y.set((root.getHeight() * Math.random() / 2.0));
                     Tower tube;
                     if (Math.random() < 0.4) {
                         tube = new Tower(res.towerImage, y, root,  false);
@@ -247,7 +257,7 @@ public class GameSystem  {
                     } else {
                         tube = new Tower(res.towerImage, y, root,  false);
                     }
-                    tube.setTranslateX(listOfTowers.get(listOfTowers.size() - 1).getTranslateX() + (width / 4 + 10));
+                    tube.setTranslateX(listOfTowers.get(listOfTowers.size() - 1).getTranslateX() + (width / 4 + 10) + 0); // po prvom sete towerov + nieco nastavuje vzdialenost towerov
                     listOfTowers.add(tube);
                     incrementOnce = true;
                     root.getChildren().remove(7);

@@ -24,8 +24,8 @@ public class Lightning extends ImageView {
         setFitHeight(30);
         setOpacity(1.0);
         bounds = new Rectangle(20, 30);
-        bounds.setStroke(Color.BLACK);
-        bounds.setFill(Color.BLACK);
+        bounds.setStroke(Color.TRANSPARENT);
+        bounds.setFill(Color.TRANSPARENT);
     }
 
     public void setPosition(double xValue, double yValue) {

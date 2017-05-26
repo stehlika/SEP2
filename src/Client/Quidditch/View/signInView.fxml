@@ -10,6 +10,16 @@
    <children>
       <VBox alignment="CENTER" layoutX="482.0" layoutY="236.0" prefHeight="381.0" prefWidth="274.0">
          <children>
+            <TextField maxWidth="240.0" prefHeight="60.0" promptText="Type in server IP Address (192.168.1.11)" style="-fx-background-radius: 30; -fx-border-color: #998100; -fx-border-radius: 30; -fx-border-width: 3; -fx-background-color: #ecf0f1;" fx:id="serverIPTF">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </TextField>
+            <TextField maxWidth="240.0" prefHeight="60.0" promptText="Type in server Port (9998 for mac 1098 for windows)" style="-fx-background-radius: 30; -fx-border-color: #998100; -fx-border-radius: 30; -fx-border-width: 3; -fx-background-color: #ecf0f1;" fx:id="serverPortTF">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </TextField>
             <TextField maxWidth="240.0" prefHeight="60.0" promptText="Type in your user name" style="-fx-background-radius: 30; -fx-border-color: #998100; -fx-border-radius: 30; -fx-border-width: 3; -fx-background-color: #ecf0f1;" fx:id="usernameTF">
                <VBox.margin>
                   <Insets />

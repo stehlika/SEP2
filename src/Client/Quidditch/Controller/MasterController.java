@@ -138,4 +138,18 @@ public abstract class MasterController {
             return false;
         }
     }
+
+
+    /**
+     * Static method displaying pop-up window indicating to the server error.
+     *
+     * @param mistake kind of the mistake to be displayed in alert window (eg. date)
+     */
+    public static void showAlertView(String mistake, int errorCode) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Wrong " + mistake);
+        alert.setHeaderText(null);
+        alert.setContentText("Sorry, you have entered wrong " + mistake);
+        alert.showAndWait();
+    }
 }

@@ -1,6 +1,7 @@
 package Client.Quidditch.Controller;
 
 import Client.Quidditch.GameSystem.GameSystem;
+import Server.Domain.Model.Player;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 
@@ -19,7 +20,8 @@ public class MainViewController extends MasterController {
 
     public void playGame(ActionEvent actionEvent) {
         GameSystem gameSystem = new GameSystem();
-        gameSystem.startGame();
+        Player player = new Player("Peterko", "hufflepuff");
+        gameSystem.startGame(player);
     }
 
     public void showHouseCup(ActionEvent actionEvent) {

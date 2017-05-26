@@ -17,6 +17,8 @@ public class SignInController extends MasterController {
     public Button signInBtn;
     public TextField usernameTF;
     public DatabaseAdapter db = new DatabaseAdapter();
+    public TextField serverIPTF;
+    public TextField serverPortTF;
 
     @FXML
     public void initialize() {
@@ -24,6 +26,7 @@ public class SignInController extends MasterController {
     }
 
     public void signIn(ActionEvent actionEvent) {
+        ClientRMI.getInstance().startClient(serverIPTF.textProperty().getValue(), Integer.parseInt(serverPortTF.textProperty().getValue()));
         String username = usernameTF.textProperty().getValue();
         boolean newPlayer = false;
         try {

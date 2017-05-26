@@ -11,6 +11,8 @@ public class ServerController {
     public static void startRMIServer() {
         try {
             System.setProperty("java.rmi.server.hostname", InetAddress.getLocalHost().getHostAddress());
+            System.out.println(InetAddress.getLocalHost());
+            ServerRMI.startServer(9998);
             System.out.println("Server started ");
         } catch (UnknownHostException e) {
             e.printStackTrace();

@@ -79,9 +79,9 @@ public class ModelManager implements ModelMan {
     {
         return storage.houseSelection();
     }
-    public void checkPlayer(String nickname) throws IOException
+    public Player checkPlayer(String nickname) throws IOException
     {
-        storage.checkPlayer(nickname);
+        return storage.checkPlayer(nickname);
     }
     public void saveScore(String playerNick, int score) throws IOException
     {

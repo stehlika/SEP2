@@ -1,13 +1,22 @@
 package Server.Domain.Model;
 
+import java.io.Serializable;
+
 /**
  * Created by Karolina on 15/05/2017.
  */
-public class Player {
+public class Player implements Serializable {
     private String nickname;
     private int playtime;
     private double winratio;
     private String faculty;
+
+    public Player(String nickname, String faculty) {
+        this.nickname = nickname;
+        this.playtime = 0;
+        this.winratio = 0;
+        this.faculty = faculty;
+    }
 
     public Player(String nickname, int playtime, double winratio, String faculty) {
         this.nickname = nickname;

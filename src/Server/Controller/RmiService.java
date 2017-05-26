@@ -19,7 +19,7 @@ public interface RmiService extends Remote {
 
     void addPlayer(Player player) throws RemoteException, IOException;
     void saveScore(String playerNick, int score) throws RemoteException, IOException;
-    void checkPlayer(String nickname) throws RemoteException, IOException;
+    Player checkPlayer(String nickname) throws RemoteException, IOException;
     ArrayList<Pair<String, Integer>> getLeaderBoard() throws RemoteException, IOException;
     House getHouse(String faculty) throws RemoteException, IOException;
     String houseSelection() throws RemoteException, IOException;
