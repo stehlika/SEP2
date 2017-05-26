@@ -29,4 +29,6 @@ public interface RmiService extends Remote {
 
     ArrayList<Pair<String, Integer>> getHouseLeaderBoard(String faculty) throws IOException;
 
+    ArrayList<Integer> getHighscoreForPlayer(String name) throws IOException;
+
 }

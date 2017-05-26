@@ -67,4 +67,9 @@ public class ModelManager implements ModelMan {
     public ArrayList<Pair<String,Integer>> getHouseLeaderBoard(String faculty) throws IOException {
         return storage.getHouseLeaderBoard(faculty);
     }
+
+    @Override
+    public ArrayList<Integer> getHighscoreForPlayer(String name) throws IOException {
+        return storage.getHighscoreForPlayer(name);
+    }
 }

@@ -261,4 +261,23 @@ public class DatabaseAdapter implements Persistence {
         }
         return false;
     }
+
+    @Override
+    public ArrayList<Integer> getHighscoreForPlayer(String nickname) throws IOException {
+        String sql = "SELECT score FROM sep2_schema.player_scores WHERE playernick=? ORDER BY score DESC;";
+        ArrayList<Object[]> result;
+        ArrayList<Integer> scores=new ArrayList<>();
+        int score = 0;
+        try {
+            result = db.query(sql,nickname);
+             for (int i = 0; i < result.size(); i++) {
+                 Object[] row = result.get(i);
+                 score = (int) row[0];
+                 scores.add(score);
+             }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return scores;
+    }
 }

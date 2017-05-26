@@ -101,6 +101,11 @@ public class ServerRMI extends Observable implements RmiService {
     }
 
     @Override
+    public ArrayList<Integer> getHighscoreForPlayer(String name) throws IOException {
+        return modelManager.getHighscoreForPlayer(name);
+    }
+
+    @Override
     public String houseSelection() throws  IOException {
         System.out.println("ServerRMI");
         return modelManager.houseSelection();
