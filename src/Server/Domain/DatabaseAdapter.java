@@ -212,8 +212,8 @@ public class DatabaseAdapter implements Persistence {
     @Override
     public void updateBestPlayer(String faculty) throws IOException {
         String sql = "UPDATE sep2_schema.house_cup SET bestplayer=(SELECT playernick  FROM sep2_schema.player_scores JOIN (SELECT nickname FROM sep2_schema.player\n" +
-                "  WHERE sep2_schema.player.faculty='?') AS faculty_players ON faculty_players.nickname=player_scores.playernick\n" +
-                "WHERE score=(SELECT max(score) FROM sep2_schema.player_scores)) WHERE faculty='?';";
+                "  WHERE sep2_schema.player.faculty=?) AS faculty_players ON faculty_players.nickname=player_scores.playernick\n" +
+                "WHERE score=(SELECT max(score) FROM sep2_schema.player_scores)) WHERE faculty=?;";
         try {
             db.update(sql, faculty);
         } catch (SQLException e) {
@@ -225,7 +225,28 @@ public class DatabaseAdapter implements Persistence {
     @Override
     public ArrayList<Pair<String, Integer>> getHouseLeaderBoard(String faculty) throws IOException {
         //TODO
-        return null;
+        //leaderboard hracu se skore z konkretnej fakulty
+        System.out.println("Database adapter zavolala sa metoda getHouseLeaderBoard");
+        ArrayList<Pair<String, Integer>> leaderboard = new ArrayList<>();
+
+        String sql = "SELECT playernick, max(score) AS score FROM sep2_schema.player_scores JOIN sep2_schema.player ON (playernick = nickname) WHERE faculty=? GROUP BY playernick ORDER BY score DESC;";
+        ArrayList<Object[]> result;
+        String playernick = "";
+        int score = 0;
+
+        try {
+            result = db.query(sql, faculty);
+            for (int i = 0; i < result.size(); i++) {
+                Object[] row = result.get(i);
+                playernick = row[0].toString();
+                score = (int) row[1];
+                leaderboard.add(new Pair<>(playernick, score));
+            }
+            return leaderboard;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return leaderboard;
+        }
     }
 
     @Override

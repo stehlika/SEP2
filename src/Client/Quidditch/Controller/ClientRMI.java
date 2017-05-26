@@ -92,6 +92,15 @@ public class ClientRMI extends UnicastRemoteObject implements RemoteObserver {
         }
     }
 
+    public ArrayList<Pair<String, Integer>> getHouseLeaderBoard(String house) throws IOException {
+        try {
+            return rmiService.getHouseLeaderBoard(house);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public House getHouse(String faculty) throws IOException {
         try {
             System.out.println("Client RMI class get house ");

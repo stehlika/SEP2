@@ -6,8 +6,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.util.Pair;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Created by adamstehlik on 22/05/2017.
@@ -36,6 +38,10 @@ public class HouseCupController extends MasterController {
     private String ravenclawBest;
     private String hufflepuffBest;
     private String slytherinBest;
+    private ArrayList<Pair<String, Integer>> scoresGryffindorArrayList = new ArrayList<>();
+    private ArrayList<Pair<String, Integer>> scoresRavenclawArrayList = new ArrayList<>();
+    private ArrayList<Pair<String, Integer>> scoresHufflepuffArrayList = new ArrayList<>();
+    private ArrayList<Pair<String, Integer>> scoresSlytherinArrayList = new ArrayList<>();
 
     @FXML
     public void initialize() {
@@ -43,32 +49,36 @@ public class HouseCupController extends MasterController {
 
 
         try {
+            gryffindor = rmi.getHouse("gryffindor");
+            ravenclaw = rmi.getHouse("ravenclaw");
             hufflepuff = rmi.getHouse("hufflepuff");
             slytherin = rmi.getHouse("slytherin");
-            System.out.println("huff"+hufflepuff.toString());
-            System.out.println("sly"+slytherin.toString());
-//            gryffindorBest = rmi.getHouse("Gryffindor").getBestplayer();
-//            ravenclawBest = rmi.getHouse("Ravenclaw").getBestplayer();
+            scoresGryffindorArrayList = rmi.getHouseLeaderBoard("gryffindor");
+            scoresRavenclawArrayList = rmi.getHouseLeaderBoard("ravenclaw");
+            scoresHufflepuffArrayList = rmi.getHouseLeaderBoard("hufflepuff");
+            scoresSlytherinArrayList = rmi.getHouseLeaderBoard("slytherin");
+            gryffindorBest = gryffindor.getBestplayer();
+            ravenclawBest = ravenclaw.getBestplayer();
             hufflepuffBest = hufflepuff.getBestplayer();
             slytherinBest = slytherin.getBestplayer();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-//        gryffindorPlayerL.setText(gryffindorBest);
-//        ravenclawPlayerL.setText(ravenclawBest);
-//        hufflepuffPlayerL.setText(hufflepuffBest);
-//        slytherinPlayerL.setText(slytherinBest);
+        gryffindorPlayerL.setText(gryffindorBest);
+        ravenclawPlayerL.setText(ravenclawBest);
+        hufflepuffPlayerL.setText(hufflepuffBest);
+        slytherinPlayerL.setText(slytherinBest);
 
-//        gryffindorTotalL.setText(String.valueOf(gryffindor.getTotalscore()));
-//        ravenclawTotalL.setText(String.valueOf(ravenclaw.getTotalscore()));
+        gryffindorTotalL.setText(String.valueOf(gryffindor.getTotalscore()));
+        ravenclawTotalL.setText(String.valueOf(ravenclaw.getTotalscore()));
         hufflepuffTotalL.setText(String.valueOf(hufflepuff.getTotalscore()));
         slytherinTotalL.setText(String.valueOf(slytherin.getTotalscore()));
 
-//        manageList(gryffindorLV, gryffindor, "sth");
-//        manageList(ravenclawLV, ravenclaw, "sth");
-//        manageList(hufflepuffLV, hufflepuff, "sth");
-//        manageList(slytherinLV, slytherin, "sth");
+        manageList(gryffindorLV, scoresGryffindorArrayList, "gryffindorScores");
+        manageList(ravenclawLV, scoresRavenclawArrayList, "ravenclawScores");
+        manageList(hufflepuffLV, scoresHufflepuffArrayList, "hufflepuffScores");
+        manageList(slytherinLV, scoresSlytherinArrayList, "slytherinScores");
     }
 
     public void back(ActionEvent actionEvent) {

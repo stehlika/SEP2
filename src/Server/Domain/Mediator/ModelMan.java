@@ -25,6 +25,6 @@ public interface ModelMan {
 
     void saveScore(String playerNick, int score) throws IOException;
 
-    ArrayList<Pair<String, Integer>> getHouseLeaderBoard(String faculty);
+    ArrayList<Pair<String, Integer>> getHouseLeaderBoard(String faculty) throws IOException;
 
 }

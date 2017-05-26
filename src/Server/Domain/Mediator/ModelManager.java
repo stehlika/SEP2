@@ -64,7 +64,7 @@ public class ModelManager implements ModelMan {
         storage.saveScore(playerNick, score);
     }
 
-    public ArrayList<Pair<String,Integer>> getHouseLeaderBoard(String faculty) {
-        return null;
+    public ArrayList<Pair<String,Integer>> getHouseLeaderBoard(String faculty) throws IOException {
+        return storage.getHouseLeaderBoard(faculty);
     }
 }

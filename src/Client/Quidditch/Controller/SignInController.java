@@ -28,7 +28,7 @@ public class SignInController extends MasterController {
         String serverIP = serverIPTF.textProperty().getValue();
         int serverPort = Integer.parseInt(serverPortTF.textProperty().getValue());
         String username = usernameTF.textProperty().getValue();
-        Player player = null;
+        Player player;
 
 
         if (serverIP.length() > 7 &&  serverIP.length() <= 15 && serverPort > 999 && serverPort < 10000) {
@@ -50,10 +50,12 @@ public class SignInController extends MasterController {
                     player = new Player(username, 0, 0, house);
                     rmi.addPlayer(player);
                     System.out.println(house);
-                    newView("../View/sortingCeremonyView.fxml", signInBtn, player);
+                    System.out.println("Toto je player v Sign In: " + player);
+                    newView("SortingCeremony","../View/sortingCeremonyView.fxml", signInBtn, player);
                 } else {
-                    System.out.println("player existuje");
-                    newView("../View/mainView.fxml", signInBtn);
+                    player = new Player(player.getNickname(), player.getPlaytime(), player.getWinratio(), player.getFaculty());
+                    System.out.println("player existuje: " + player);
+                    newView("MainView","../View/mainView.fxml", signInBtn, player);
                 }
             } catch (IOException e) {
                 e.printStackTrace();

@@ -1,5 +1,6 @@
 package Client.Quidditch.Controller;
 
+import Server.Domain.Model.Player;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -16,6 +17,7 @@ public class LeaderboardController extends MasterController {
     public Button backBtn;
     public ListView leaderboardLV;
     private ClientRMI rmi = ClientRMI.getInstance();
+    public static Player player;
 
     private ArrayList<Pair<String, Integer>> scoresArrayList = new ArrayList<>();
 

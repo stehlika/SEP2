@@ -3,6 +3,7 @@ package Client.Quidditch.Controller;
 import Client.Quidditch.GameSystem.GameSystem;
 import Server.Domain.Model.Player;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
 /**
@@ -13,6 +14,16 @@ public class MainViewController extends MasterController {
     public Button leaderboardBtn;
     public Button houseCupBtn;
     public Button profileBtn;
+
+    public static Player player;
+    private Player _player = player;
+
+    @FXML
+    public void initialize() {
+        System.out.println("player"+player);
+        _player = player;
+        System.out.println("_player"+_player);
+    }
 
     public void showLeaderBoard(ActionEvent actionEvent) {
         newView("../View/leaderboardView.fxml", leaderboardBtn);
@@ -29,6 +40,6 @@ public class MainViewController extends MasterController {
     }
 
     public void showProfile(ActionEvent actionEvent) {
-        newView("../View/profileView.fxml", profileBtn);
+        newView("Profile","../View/profileView.fxml", profileBtn, _player);
     }
 }

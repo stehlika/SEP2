@@ -50,7 +50,7 @@
                   <Font size="25.0" />
                </font>
             </Label>
-            <Label text="High Score:" textFill="WHITE" GridPane.rowIndex="3">
+            <Label text="Win Ratio:" textFill="WHITE" GridPane.rowIndex="3">
                <font>
                   <Font size="25.0" />
                </font>
@@ -60,7 +60,7 @@
                   <Font size="25.0" />
                </font>
             </Label>
-            <Label fx:id="highScoreL" text="#highscore" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <Label fx:id="winRatioL" text="#highscore" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <font>
                   <Font size="25.0" />
                </font>

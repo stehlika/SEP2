@@ -89,11 +89,19 @@ public abstract class MasterController {
         }
     }
 
-    public void newView(String source, Button button, Player player)  {
+    public void newView(String vc, String source, Button button, Player player)  {
         try {
+            if (vc.equals("SortingCeremony")) {
+                SortingCeremonyController.player = player;
+            } else if (vc.equals("Leaderboard")) {
+                LeaderboardController.player = player;
+            }  else if (vc.equals("Profile")) {
+                ProfileController.player = player;
+            } else if (vc.equals("MainView")) {
+                MainViewController.player = player;
+            }
             Stage stage;
             Parent root;
-            SortingCeremonyController.player = player;
             stage = (Stage) button.getScene().getWindow();
             root = FXMLLoader.load(getClass().getResource(source));
             Scene scene = new Scene(root);
@@ -168,4 +176,5 @@ public abstract class MasterController {
         alert.setContentText("Sorry, you have entered wrong " + mistake);
         alert.showAndWait();
     }
+
 }

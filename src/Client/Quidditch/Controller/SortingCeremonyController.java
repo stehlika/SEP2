@@ -18,8 +18,9 @@ public class SortingCeremonyController extends MasterController {
     public Button continueBtn;
     public Label houseChosenL;
     public ImageView houseIV;
-    public static Player player;
     private String faculty;
+
+    public static Player player;
     private Player _player;
 
     @FXML
@@ -31,11 +32,10 @@ public class SortingCeremonyController extends MasterController {
         System.out.println(faculty);
         continueBtn.toFront();
         houseChosenL.setText(faculty);
-
     }
 
     public void showMainView(ActionEvent actionEvent) {
-        newView("../View/mainView.fxml", continueBtn);
+        newView("MainView","../View/mainView.fxml", continueBtn, _player);
     }
 
 }
