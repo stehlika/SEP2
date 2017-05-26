@@ -209,7 +209,7 @@ public class DatabaseAdapter implements Persistence {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        push();
+//        push();
     }
 
     @Override
@@ -219,6 +219,10 @@ public class DatabaseAdapter implements Persistence {
 
         String sql = "SELECT * FROM sep2_schema.player WHERE nickname = ?;";
         Player player = null;
+        String username;
+        int playtime;
+        double winratio;
+        String faculty;
         ArrayList<Object[]> result;
 
         try {
@@ -226,12 +230,17 @@ public class DatabaseAdapter implements Persistence {
 
 
             if (result.size() == 0) return null;
-
             Object[] row = result.get(0);
-            player.setNickname(row[0].toString());
+            username = row[0].toString();
+            playtime = (int) row[1];
+            winratio = (double) row[2];
+            faculty = row[3].toString();
+            player = new Player(username, playtime, winratio, faculty);
+            player.setNickname(username);
             player.setPlaytime((int) row[1]);
-            player.setWinratio((int) row[2]);
+            player.setWinratio((double) row[2]);
             player.setFaculty(row[3].toString());
+            System.out.println(player.toString());
         } catch (SQLException e) {
             e.printStackTrace();
         }

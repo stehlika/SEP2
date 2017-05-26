@@ -25,6 +25,7 @@ public class SignInController extends MasterController {
 
     public void signIn(ActionEvent actionEvent) {
         String username = usernameTF.textProperty().getValue();
+        boolean newPlayer = false;
         try {
             Player player = db.checkPlayer(username);
             if (player == null) {
@@ -33,12 +34,17 @@ public class SignInController extends MasterController {
                 house = db.houseSelection();
                 db.createPlayer(username, house);
                 System.out.println(house);
+                newPlayer = true;
             } else {
                 System.out.println("player existuje");
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        newView("../View/mainView.fxml", signInBtn);
+        if (newPlayer) {
+            newView("../View/sortingCeremonyView.fxml", signInBtn);
+        } else {
+            newView("../View/mainView.fxml", signInBtn);
+        }
     }
 }
