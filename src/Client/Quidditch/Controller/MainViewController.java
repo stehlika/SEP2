@@ -31,8 +31,7 @@ public class MainViewController extends MasterController {
 
     public void playGame(ActionEvent actionEvent) {
         GameSystem gameSystem = new GameSystem();
-        Player player = new Player("Peterko", "hufflepuff");
-        gameSystem.startGame(player);
+        gameSystem.startGame(_player);
     }
 
     public void showHouseCup(ActionEvent actionEvent) {
