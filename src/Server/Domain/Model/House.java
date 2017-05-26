@@ -1,9 +1,11 @@
 package Server.Domain.Model;
 
+import java.io.Serializable;
+
 /**
  * Created by Karolina on 15/05/2017.
  */
-public class House {
+public class House implements Serializable {
     private String faculty;
     private int totalscore;
     private String bestplayer;

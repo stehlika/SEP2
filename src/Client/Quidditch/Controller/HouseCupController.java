@@ -1,6 +1,5 @@
 package Client.Quidditch.Controller;
 
-import Server.Domain.DatabaseAdapter;
 import Server.Domain.Model.House;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -27,7 +26,7 @@ public class HouseCupController extends MasterController {
     public Label slytherinTotalL;
     public Label slytherinPlayerL;
     public Button backBtn;
-    public DatabaseAdapter db = new DatabaseAdapter();
+    private ClientRMI rmi = ClientRMI.getInstance();
 
     private House gryffindor = new House("", 0, "");
     private House ravenclaw = new House("", 0, "");
@@ -42,9 +41,12 @@ public class HouseCupController extends MasterController {
     public void initialize() {
         backBtn.toFront();
 
+
         try {
-            hufflepuff = db.getHouse("hufflepuff");
-            slytherin = db.getHouse("slytherin");
+            hufflepuff = rmi.getHouse("hufflepuff");
+            slytherin = rmi.getHouse("slytherin");
+            System.out.println("huff"+hufflepuff.toString());
+            System.out.println("sly"+slytherin.toString());
 //            gryffindorBest = rmi.getHouse("Gryffindor").getBestplayer();
 //            ravenclawBest = rmi.getHouse("Ravenclaw").getBestplayer();
             hufflepuffBest = hufflepuff.getBestplayer();

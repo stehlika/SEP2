@@ -15,7 +15,7 @@ public class SignInController extends MasterController {
 
     public Button signInBtn;
     public TextField usernameTF;
-    public ClientRMI rmi = ClientRMI.getInstance();
+    private ClientRMI rmi = ClientRMI.getInstance();
     public TextField serverIPTF;
     public TextField serverPortTF;
 
@@ -25,25 +25,41 @@ public class SignInController extends MasterController {
     }
 
     public void signIn(ActionEvent actionEvent) {
-        ClientRMI.getInstance().startClient(serverIPTF.textProperty().getValue(), Integer.parseInt(serverPortTF.textProperty().getValue()));
+        String serverIP = serverIPTF.textProperty().getValue();
+        int serverPort = Integer.parseInt(serverPortTF.textProperty().getValue());
         String username = usernameTF.textProperty().getValue();
         Player player = null;
-        try {
-            player = rmi.checkPlayer(username);
-            if (player == null) {
-                System.out.println("novy player");
-                String house;
-                house = rmi.houseSelection();
-                player = new Player(username, 0, 0, house);
-                rmi.addPlayer(player);
-                System.out.println(house);
-                newView("../View/sortingCeremonyView.fxml", signInBtn, player);
-            } else {
-                System.out.println("player existuje");
-                newView("../View/mainView.fxml", signInBtn);
+
+
+        if (serverIP.length() > 7 &&  serverIP.length() <= 15 && serverPort > 999 && serverPort < 10000) {
+            ClientRMI.getInstance().startClient(serverIP, serverPort);
+            System.out.println("Pusta sa pripojenie ");
+        } else {
+            MasterController.showAlertView("Sorry IP address and port wrong", 300);
+            return;
+        }
+
+        if (username.length() > 3 && username.length() < 15) {
+            try {
+                player = rmi.checkPlayer(username);
+                if (player == null) {
+                    System.out.println("novy player");
+                    String house;
+                    house = rmi.houseSelection();
+                    System.out.println("Toto je house: " + house);
+                    player = new Player(username, 0, 0, house);
+                    rmi.addPlayer(player);
+                    System.out.println(house);
+                    newView("../View/sortingCeremonyView.fxml", signInBtn, player);
+                } else {
+                    System.out.println("player existuje");
+                    newView("../View/mainView.fxml", signInBtn);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        } else {
+            MasterController.showAlertView("Sorry username must be longer than 3", 400);
         }
     }
 }

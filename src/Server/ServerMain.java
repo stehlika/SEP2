@@ -8,7 +8,7 @@ import Server.Controller.ServerController;
 public class ServerMain {
 
     public static void main (String args[]) {
-        ServerController.startRMIServer();
+        ServerController.startRMIServer(9998);
 
     }
 

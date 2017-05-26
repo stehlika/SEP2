@@ -1,6 +1,5 @@
 package Client.Quidditch.Controller;
 
-import Server.Domain.DatabaseAdapter;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -16,7 +15,7 @@ import java.util.ArrayList;
 public class LeaderboardController extends MasterController {
     public Button backBtn;
     public ListView leaderboardLV;
-    public DatabaseAdapter db = new DatabaseAdapter();
+    private ClientRMI rmi = ClientRMI.getInstance();
 
     private ArrayList<Pair<String, Integer>> scoresArrayList = new ArrayList<>();
 
@@ -24,7 +23,7 @@ public class LeaderboardController extends MasterController {
     public void initialize() {
         backBtn.toFront();
         try {
-            scoresArrayList = db.getLeaderBoard();
+            scoresArrayList = rmi.getLeaderBoard();
         } catch (IOException e) {
             e.printStackTrace();
         }

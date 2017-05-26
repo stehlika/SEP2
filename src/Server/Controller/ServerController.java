@@ -8,18 +8,13 @@ import java.net.UnknownHostException;
  */
 public class ServerController {
 
-    public static void startRMIServer() {
+    public static void startRMIServer(int serverPort) {
         try {
             System.setProperty("java.rmi.server.hostname", InetAddress.getLocalHost().getHostAddress());
             System.out.println(InetAddress.getLocalHost());
-            ServerRMI.startServer(9998);
-            System.out.println("Server started ");
+            ServerRMI.startServer(serverPort);
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
-
-        int serverPort = 1099;
-        ServerRMI.startServer(serverPort);
-
     }
 }

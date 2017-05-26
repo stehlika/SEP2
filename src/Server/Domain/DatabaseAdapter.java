@@ -42,25 +42,25 @@ public class DatabaseAdapter implements Persistence {
 
     }
 
-    @Override
-    public void saveHouse(House house) throws IOException {
-        //metoda na vytvoreni house
-        try {
-            String sql = "SELECT faculty FROM sep2_schema.house_cup WHERE faculty = ?;";
-            ArrayList<Object[]> results = db.query(sql, house.getFaculty());
-
-            if (results.size() > 0) { // not a house
-            }
-
-            sql = "INSERT INTO sep2_schema.house_cup (faculty, totalscore, bestplayer) "
-                    + "VALUES (? , ? , ?);";
-
-
-            db.update(sql, house.getFaculty(), house.getTotalscore(), house.getBestplayer());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+//    @Override
+//    public void saveHouse(House house) throws IOException {
+//        //metoda na vytvoreni house
+//        try {
+//            String sql = "SELECT faculty FROM sep2_schema.house_cup WHERE faculty = ?;";
+//            ArrayList<Object[]> results = db.query(sql, house.getFaculty());
+//
+//            if (results.size() > 0) { // not a house
+//            }
+//
+//            sql = "INSERT INTO sep2_schema.house_cup (faculty, totalscore, bestplayer) "
+//                    + "VALUES (? , ? , ?);";
+//
+//
+//            db.update(sql, house.getFaculty(), house.getTotalscore(), house.getBestplayer());
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     @Override
     public void saveScore(String playernick, int score) throws IOException {
@@ -93,20 +93,23 @@ public class DatabaseAdapter implements Persistence {
 
     @Override
     public String houseSelection() throws IOException {
+        System.out.println("Prislo to do funkcie database adapter");
         //metoda na zjisteni v jake fakulte je nejmene hracu
         String sql = "SELECT faculty FROM sep2_schema.house_cup WHERE totalscore = (SELECT min(totalscore) FROM sep2_schema.house_cup)";
         String randomFaculty = "";
         ArrayList<Object[]> result;
 
         try {
+            System.out.println("Prislo to do try ");
             result = db.query(sql);
             Object[] row = result.get(0);
             randomFaculty = row[0].toString();
+            System.out.println("presne pred returnom");
+            return randomFaculty;
         } catch (SQLException e) {
             e.printStackTrace();
+            return "";
         }
-
-        return randomFaculty;
     }
 
 
@@ -148,22 +151,25 @@ public class DatabaseAdapter implements Persistence {
     @Override
     public House getHouse(String faculty) throws IOException {
         //metoda ktera vraci house a vsechny data
+        System.out.println("Database Adapter class get house");
         String sql = "SELECT * FROM sep2_schema.house_cup WHERE faculty = ?;";
         House house = null;
         ArrayList<Object[]> result;
 
         try {
-            result = db.query(sql);
+            result = db.query(sql, faculty);
 
             if (result.size() == 0) return null;
             Object[] row = result.get(0);
-            house.setFaculty(row[0].toString());
-            house.setTotalscore((int) row[1]);
-            house.setBestplayer(row[2].toString());
+            String houseFaculty = row[0].toString();
+            int houseTotalScore  = (int) row[1];
+            String houseBestPlayer = row[2].toString();
+            house = new House(houseFaculty, houseTotalScore, houseBestPlayer);
+            return house;
         } catch (SQLException e) {
             e.printStackTrace();
+            return house;
         }
-        return house;
     }
 
     @Override

@@ -17,7 +17,6 @@ public class SortingCeremonyController extends MasterController {
 
     public Button continueBtn;
     public Label houseChosenL;
-    public DatabaseAdapter db = new DatabaseAdapter();
     public ImageView houseIV;
     public static Player player;
     private String faculty;

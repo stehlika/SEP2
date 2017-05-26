@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class ClientRMI extends UnicastRemoteObject implements RemoteObserver {
 
     private static final long servialVersionUID = 1L;
-    RmiService rmiService;
+    private RmiService rmiService;
 
     private static ClientRMI instance = null;
     private ClientRMI() throws RemoteException {
@@ -94,7 +94,8 @@ public class ClientRMI extends UnicastRemoteObject implements RemoteObserver {
 
     public House getHouse(String faculty) throws IOException {
         try {
-            return getHouse(faculty);
+            System.out.println("Client RMI class get house ");
+            return rmiService.getHouse(faculty);
         } catch (RemoteException e) {
             e.printStackTrace();
             return null;
@@ -103,10 +104,11 @@ public class ClientRMI extends UnicastRemoteObject implements RemoteObserver {
 
     public String houseSelection() throws IOException {
         try {
+            System.out.println("Client RMI class");
             return rmiService.houseSelection();
         } catch (RemoteException e) {
             e.printStackTrace();
-            return null;
+            return "";
         }
     }
 

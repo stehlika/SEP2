@@ -42,6 +42,10 @@ public class ServerRMI extends Observable implements RmiService {
         }
     }
 
+    public ServerRMI() {
+        this.modelManager = new ModelManager();
+    }
+
     @Override
     public synchronized void addObserver(RemoteObserver o) {
         WrapperObserver mo = new WrapperObserver(o);
@@ -80,12 +84,13 @@ public class ServerRMI extends Observable implements RmiService {
     }
 
     @Override
-    public ArrayList<Pair<String, Integer>> getLeaderBoard() throws RemoteException, IOException {
+    public ArrayList<Pair<String, Integer>> getLeaderBoard() throws IOException {
         return modelManager.getLeaderboard();
     }
 
     @Override
-    public House getHouse(String faculty) throws RemoteException, IOException {
+    public House getHouse(String faculty) throws IOException {
+        System.out.println("Server RMI class get house ");
         return modelManager.getHouse(faculty);
 
     }
@@ -96,7 +101,8 @@ public class ServerRMI extends Observable implements RmiService {
     }
 
     @Override
-    public String houseSelection() throws RemoteException, IOException {
+    public String houseSelection() throws  IOException {
+        System.out.println("ServerRMI");
         return modelManager.houseSelection();
     }
 }
