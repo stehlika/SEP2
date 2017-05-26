@@ -1,6 +1,5 @@
 package Server.Controller;
 
-import Server.Domain.Mediator.ModelMan;
 import Server.Domain.Mediator.ModelManager;
 import Server.Domain.Model.House;
 import Server.Domain.Model.Player;
@@ -13,7 +12,6 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -51,6 +49,12 @@ public class ServerRMI extends Observable implements RmiService {
         System.out.println("Client was connected " + mo);
     }
 
+    @Override
+    public void addPlayer(Player player) throws IOException {
+        modelManager.addPlayer(player);
+    }
+
+
     public static void startServer(int serverPort) {
         try {
             Registry reg = LocateRegistry.createRegistry(serverPort);
@@ -63,11 +67,6 @@ public class ServerRMI extends Observable implements RmiService {
         }
     }
 
-    @Override
-    public void addPlayer(Player player) throws RemoteException, IOException {
-        modelManager.addPlayer(player);
-
-    }
 
     @Override
     public void saveScore(String playerNick, int score) throws RemoteException, IOException {
@@ -89,6 +88,11 @@ public class ServerRMI extends Observable implements RmiService {
     public House getHouse(String faculty) throws RemoteException, IOException {
         return modelManager.getHouse(faculty);
 
+    }
+
+    @Override
+    public ArrayList<Pair<String, Integer>> getHouseLeaderBoard(String faculty) throws IOException {
+        return modelManager.getHouseLeaderBoard(faculty);
     }
 
     @Override

@@ -2,7 +2,6 @@ package Client.Quidditch.Controller;
 
 import Server.Domain.DatabaseAdapter;
 import Server.Domain.Model.House;
-import Server.Domain.Model.HouseList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -46,8 +45,8 @@ public class HouseCupController extends MasterController {
         try {
             hufflepuff = db.getHouse("hufflepuff");
             slytherin = db.getHouse("slytherin");
-//            gryffindorBest = db.getHouse("Gryffindor").getBestplayer();
-//            ravenclawBest = db.getHouse("Ravenclaw").getBestplayer();
+//            gryffindorBest = rmi.getHouse("Gryffindor").getBestplayer();
+//            ravenclawBest = rmi.getHouse("Ravenclaw").getBestplayer();
             hufflepuffBest = hufflepuff.getBestplayer();
             slytherinBest = slytherin.getBestplayer();
         } catch (IOException e) {

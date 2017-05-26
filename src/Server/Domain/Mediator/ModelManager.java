@@ -4,12 +4,11 @@ package Server.Domain.Mediator;
 import Server.Domain.DatabaseAdapter;
 import Server.Domain.Model.House;
 import Server.Domain.Model.Player;
-import Server.Domain.Model.PlayerList;
 import Server.Domain.Persistence;
 import javafx.util.Pair;
-
 import java.io.IOException;
 import java.util.ArrayList;
+import Server.Domain.Model.Player;
 
 
 /**
@@ -17,55 +16,30 @@ import java.util.ArrayList;
  */
 public class ModelManager implements ModelMan {
 
-    private PlayerList playerList;
     private Persistence storage;
 
-    public ModelManager()
-    {
+    public ModelManager() {
+        storage = new DatabaseAdapter();
+    }
+
+    @Override
+    public void addPlayer(Player player) {
         try {
-            storage = new DatabaseAdapter();
-            playerList = storage.load();
+            storage.addPlayer(player);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     @Override
-    public PlayerList getAll() {
-        return playerList;
-    }
-
-    @Override
-    public void addPlayer(Player player) {
-        playerList.addPlayer(player);
-    }
-
-    @Override
-    public Player removePlayer(String nickname) {
-        Player player = playerList.removePlayerByNickname(nickname);
+    public void removePlayer(String nickname) {
         try {
-            storage.remove(player);
+              storage.removePlayer(nickname);
         }
         catch (IOException e)
         {
             e.printStackTrace();
         }
-        return player;
-    }
-
-    @Override
-    public Player getPlayer(int index) {
-        return playerList.getPlayer(index);
-    }
-
-    @Override
-    public PlayerList getPlayers(String nickname) {
-        return playerList.getPlayersByNickname(nickname);
-    }
-
-    @Override
-    public int getNumberOfPlayers() {
-        return playerList.getNumberOfPlayers();
     }
 
     public ArrayList<Pair<String, Integer>> getLeaderboard() throws IOException {
@@ -79,6 +53,7 @@ public class ModelManager implements ModelMan {
     {
         return storage.houseSelection();
     }
+
     public Player checkPlayer(String nickname) throws IOException
     {
         return storage.checkPlayer(nickname);
@@ -88,4 +63,7 @@ public class ModelManager implements ModelMan {
         storage.saveScore(playerNick, score);
     }
 
+    public ArrayList<Pair<String,Integer>> getHouseLeaderBoard(String faculty) {
+        return null;
+    }
 }

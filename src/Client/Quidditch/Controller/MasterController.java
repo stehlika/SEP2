@@ -1,5 +1,6 @@
 package Client.Quidditch.Controller;
 
+import Server.Domain.Model.Player;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -86,8 +87,23 @@ public abstract class MasterController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
+
+    public void newView(String source, Button button, Player player)  {
+        try {
+            Stage stage;
+            Parent root;
+            SortingCeremonyController.player = player;
+            stage = (Stage) button.getScene().getWindow();
+            root = FXMLLoader.load(getClass().getResource(source));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     /**
      * Method managing the lists on main screen.

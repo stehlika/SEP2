@@ -1,16 +1,12 @@
 package Server.Domain;
 
 import Server.Domain.Model.House;
-import Server.Domain.Model.HouseList;
 import Server.Domain.Model.Player;
-import Server.Domain.Model.PlayerList;
 import Server.Persistence.Database;
 import javafx.util.Pair;
-
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 
 /**
@@ -35,111 +31,25 @@ public class DatabaseAdapter implements Persistence {
 
 
     @Override
-    public void push() throws IOException {
-        String sql = "COMMIT;";
+    public void addPlayer(Player player) throws IOException {
+
+        String sql = "INSERT INTO sep2_schema.player (nickname, playtime, winratio, faculty) VALUES (? , ? , ? , ?);";
         try {
-            db.query(sql);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public PlayerList load() throws IOException {
-        String sql = "SELECT nickname, playtime, winratio, faculty FROM sep2_schema.player";
-        PlayerList list = new PlayerList();
-        ArrayList<Object[]> result = new ArrayList<>();
-        String nickname = "?", faculty = "?";
-        int playtime;
-        double winratio;
-
-        try {
-            result = db.query(sql);
-
-            for (int i = 0; i < result.size(); i++) {
-                Object[] row = result.get(i);
-                nickname = row[0].toString();
-                playtime = (int) row[1];
-                winratio = (double) row[2];
-                faculty = row[3].toString();
-                System.out.println(nickname + " " + playtime + " " + winratio + " " + faculty);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        }
-        return list;
-    }
-
-    @Override
-    public HouseList loadHouses() throws IOException {
-        String sql = "SELECT faculty, totalscore, bestplayer FROM sep2_schema.house_cup";
-        HouseList list = new HouseList();
-        ArrayList<Object[]> result = new ArrayList<>();
-        String faculty = "?", bestplayer = "?";
-        int totalscore;
-
-        try {
-            result = db.query(sql);
-
-            for (int i = 0; i < result.size(); i++) {
-                Object[] row = result.get(i);
-                faculty = row[0].toString();
-                totalscore = (int) row[1];
-                bestplayer = row[2].toString();
-                System.out.println(faculty + " " + totalscore + " " + bestplayer);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        }
-        return list;
-    }
-
-    @Override
-    public void save(PlayerList playerList) throws IOException {
-        for (int i = 0; i < playerList.getNumberOfPlayers(); i++) {
-            save(playerList.getPlayer(i));
-        }
-    }
-
-    @Override
-    public void save(HouseList houseList) throws IOException {
-        for (int i = 0; i < houseList.getNumberOfHouses(); i++) {
-            save(houseList.getHouse(i));
-        }
-    }
-
-    @Override
-    public void save(Player player) throws IOException {
-        //metoda na vytvoreni playera
-        try {
-           /* String sql = "SELECT nickname FROM sep2_schema.player WHERE nickname = ?;";
-            ArrayList<Object[]> results = db.query(sql, player.getNickname());
-
-            if (results.size() > 0) { // not a new player
-                return false; // do nothing
-            }*/
-
-            String sql = "INSERT INTO sep2_schema.player (nickname, playtime, winratio, faculty) "
-                    + "VALUES (? , ? , ? , ?);";
-
-
             db.update(sql, player.getNickname(), player.getPlaytime(), player.getWinratio(), player.getFaculty());
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
     }
 
     @Override
-    public boolean save(House house) throws IOException {
+    public void saveHouse(House house) throws IOException {
         //metoda na vytvoreni house
         try {
             String sql = "SELECT faculty FROM sep2_schema.house_cup WHERE faculty = ?;";
             ArrayList<Object[]> results = db.query(sql, house.getFaculty());
 
             if (results.size() > 0) { // not a house
-                return false; // do nothing
             }
 
             sql = "INSERT INTO sep2_schema.house_cup (faculty, totalscore, bestplayer) "
@@ -149,9 +59,7 @@ public class DatabaseAdapter implements Persistence {
             db.update(sql, house.getFaculty(), house.getTotalscore(), house.getBestplayer());
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
         }
-        return true;
     }
 
     @Override
@@ -168,7 +76,7 @@ public class DatabaseAdapter implements Persistence {
     }
 
     @Override
-    public void saveTotalScore(String faculty) throws IOException {
+    public void updateTotalScore(String faculty) throws IOException {
         //metoda ktera zapise nove totalscore house po skonceni hry
 
         String sql = "UPDATE sep2_schema.house_cup SET totalscore = (SELECT sum(score) FROM sep2_schema.player_scores "
@@ -201,16 +109,6 @@ public class DatabaseAdapter implements Persistence {
         return randomFaculty;
     }
 
-    @Override
-    public void createPlayer(String nickname, String house) throws IOException {
-        String sql = "INSERT INTO sep2_schema.player (nickname, playtime, winratio, faculty) VALUES (? , ? , ? , ?);";
-        try {
-            db.update(sql, nickname, 0, 0, house);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-//        push();
-    }
 
     @Override
     public Player checkPlayer(String nickname) throws IOException
@@ -295,17 +193,14 @@ public class DatabaseAdapter implements Persistence {
     }
 
     @Override
-    public boolean remove(Player player) throws IOException {
+    public void removePlayer(String nickname) throws IOException {
         //mazani playera podle nickname
         try {
             String sql = "DELETE FROM sep2database.player WHERE nickname =?;";
-            db.update(sql, player);
-            return true;
+            db.update(sql, nickname);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return false;
-
     }
 
     @Override
@@ -319,6 +214,12 @@ public class DatabaseAdapter implements Persistence {
             e.printStackTrace();
         }
 
+    }
+
+    @Override
+    public ArrayList<Pair<String, Integer>> getHouseLeaderBoard(String faculty) throws IOException {
+        //TODO
+        return null;
     }
 
     @Override

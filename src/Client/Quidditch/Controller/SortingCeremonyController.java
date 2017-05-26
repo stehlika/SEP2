@@ -1,6 +1,7 @@
 package Client.Quidditch.Controller;
 
 import Server.Domain.DatabaseAdapter;
+import Server.Domain.Model.Player;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -18,15 +19,19 @@ public class SortingCeremonyController extends MasterController {
     public Label houseChosenL;
     public DatabaseAdapter db = new DatabaseAdapter();
     public ImageView houseIV;
+    public static Player player;
+    private String faculty;
+    private Player _player;
 
     @FXML
     public void initialize() {
-//        continueBtn.toFront();
-//        try {
-//            houseChosenL.setText(db.houseSelection());
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        System.out.println("player"+player);
+        _player = player;
+        System.out.println("_player"+_player);
+        faculty = _player.getFaculty();
+        System.out.println(faculty);
+        continueBtn.toFront();
+        houseChosenL.setText(faculty);
 
     }
 
