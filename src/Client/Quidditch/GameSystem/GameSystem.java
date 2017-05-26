@@ -1,5 +1,6 @@
 package Client.Quidditch.GameSystem;
 
+import Client.Quidditch.Controller.ClientRMI;
 import Client.Quidditch.GameSystem.Resources.Resources;
 import Client.Quidditch.HarryPotterMain;
 import Server.Domain.Model.Player;
@@ -16,6 +17,7 @@ import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -43,6 +45,7 @@ public class GameSystem  {
     private ArrayList<Lightning> listOfLightnings = new ArrayList<>();
     private ScoreLabel scoreLabel = new ScoreLabel(width, 0);
     private Timeline gameLoop;
+    private Player _player;
 
     // rotator sluzi na to aby sa mohli charactery a towere naklapat tak ako ste to videli na zaciatku
 
@@ -52,6 +55,7 @@ public class GameSystem  {
      *  @KeyCode.DOWN is calling function downMovement.
      */
     public void startGame(Player player) {
+        _player = player;
 
         Stage primaryStage = HarryPotterMain.get_primaryStage();
         root = new Pane();
@@ -60,7 +64,7 @@ public class GameSystem  {
         primaryStage.setScene(scene);
         primaryStage.show();
 
-        initGame(player);
+        initGame(_player);
         root.setPrefSize(width, height);
 
         scene.setOnKeyPressed(event -> {
@@ -189,12 +193,12 @@ public class GameSystem  {
             root.getChildren().add(cloud.getBounds());
 
             //Lightning
-            Lightning lightning = new Lightning();
-            double xValue = Math.random() * width;
-            double yValue = Math.random() * height * 0.5 + 0.1;
-            lightning.setX(xValue);
-            lightning.setY(yValue);
-            lightning.setPosition(xValue, yValue);
+            Lightning lightning = new Lightning(res.lightningImage, root);
+//            double xValue = Math.random() * width;
+//            double yValue = Math.random() * height * 0.5 + 0.1;
+//            lightning.setX(xValue);
+//            lightning.setY(yValue);
+//            lightning.setPosition(xValue, yValue);
             listOfLightnings.add(lightning);
             root.getChildren().add(lightning);
             root.getChildren().add(lightning.getBounds());
@@ -263,20 +267,20 @@ public class GameSystem  {
                     root.getChildren().remove(7);
                     root.getChildren().add(tube);
                 }
-                for (int i = 0; i < listOfTowers.size(); i++) {
-                    if (listOfClouds.get(i).getX() < -listOfClouds.get(i).getImage().getWidth() * listOfClouds.get(i).getScaleX()) {
-                        listOfClouds.get(i).setX(listOfClouds.get(i).getX() + width + listOfClouds.get(i).getImage().getWidth() * listOfClouds.get(i).getScaleX());
-                    }
-                    if (listOfLightnings.get(i).getX() < -listOfLightnings.get(i).getImage().getWidth() * listOfLightnings.get(i).getScaleY()) {
-                        listOfLightnings.get(i).setX(listOfLightnings.get(i).getX() + width + listOfLightnings.get(i).getImage().getWidth() * listOfLightnings.get(i).getScaleX());
-                        listOfLightnings.get(i).setPosition((listOfLightnings.get(i).getX() + width + listOfLightnings.get(i).getImage().getWidth() * listOfLightnings.get(i).getScaleX()), 100);
-                    }
-
-                    listOfClouds.get(i).setX(listOfClouds.get(i).getX() - 1);
-                    listOfLightnings.get(i).setX(listOfLightnings.get(i).getX() -1);
-
-                    listOfTowers.get(i).setTranslateX(listOfTowers.get(i).getTranslateX() - 2);
-                }
+//                for (int i = 0; i < listOfTowers.size(); i++) {
+//                    if (listOfClouds.get(i).getX() < -listOfClouds.get(i).getImage().getWidth() * listOfClouds.get(i).getScaleX()) {
+//                        listOfClouds.get(i).setX(listOfClouds.get(i).getX() + width + listOfClouds.get(i).getImage().getWidth() * listOfClouds.get(i).getScaleX());
+//                    }
+//                    if (listOfLightnings.get(i).getTranslateX() < -listOfLightnings.get(i).frame.getWidth() * listOfLightnings.get(i).getScaleY()) {
+//                        listOfLightnings.get(i).setTranslateX(listOfLightnings.get(i).getTranslateX() + width + listOfLightnings.get(i).frame.getWidth() * listOfLightnings.get(i).getScaleX());
+//                        listOfLightnings.get(i).setTranslateX((listOfLightnings.get(i).getTranslateX() + width + listOfLightnings.get(i).frame.getWidth() * listOfLightnings.get(i).getScaleX()), 100);
+//                    }
+//
+//                    listOfClouds.get(i).setX(listOfClouds.get(i).getX() - 1);
+//                    listOfLightnings.get(i).setX(listOfLightnings.get(i).getX() -1);
+//
+//                    listOfTowers.get(i).setTranslateX(listOfTowers.get(i).getTranslateX() - 2);
+//                }
             }
         }));
         gameLoop.setCycleCount(-1);
@@ -285,6 +289,17 @@ public class GameSystem  {
     }
 
     private void loadHighScore() {
+        try {
+            ArrayList<Integer> highScores = ClientRMI.getInstance().getHighScoreForPlayer(_player.getNickname());
+            if (highScores.size() > 0) {
+                highScore = highScores.get(0);
+            } else {
+                highScore = -1;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            highScore = -1;
+        }
 
     }
 

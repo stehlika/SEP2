@@ -121,6 +121,15 @@ public class ClientRMI extends UnicastRemoteObject implements RemoteObserver {
         }
     }
 
+    public ArrayList<Integer> getHighScoreForPlayer(String nickname) throws IOException {
+        try {
+            return rmiService.getHighscoreForPlayer(nickname);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     @Override
     public void update(Object observable, Object msg) throws RemoteException {
 

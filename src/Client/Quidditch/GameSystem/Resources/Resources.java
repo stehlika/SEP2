@@ -34,7 +34,7 @@ public class Resources {
             userImageSlyt = new Image(getClass().getResourceAsStream("draco.png"));
             userImageHuff = new Image(getClass().getResourceAsStream("cedric.png"));
 
-            towerImage = new Image(getClass().getResourceAsStream("hufflepuff_tower2.png"));
+            towerImage = new Image(getClass().getResourceAsStream("hufflepuff_tower.png"));
             towerImageGryf = new Image(getClass().getResourceAsStream("towerHufflepuff.png"));
 
 
