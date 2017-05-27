@@ -134,6 +134,14 @@ public class ClientRMI extends UnicastRemoteObject implements RemoteObserver {
     public void update(Object observable, Object msg) throws RemoteException {
 
     }
+
+    public void updateUserPosition(double x, double y, String fromWho) {
+        try {
+            rmiService.updateUserPosition(x, y, fromWho);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
 
 

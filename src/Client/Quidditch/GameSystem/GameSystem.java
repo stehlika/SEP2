@@ -46,6 +46,7 @@ public class GameSystem  {
     private ScoreLabel scoreLabel = new ScoreLabel(width, 0);
     private Timeline gameLoop;
     private Player _player;
+    private Dementor dementor;
 
     // rotator sluzi na to aby sa mohli charactery a towere naklapat tak ako ste to videli na zaciatku
 
@@ -69,13 +70,17 @@ public class GameSystem  {
 
         scene.setOnKeyPressed(event -> {
             if(event.getCode() == KeyCode.UP) {
-                if (!gameOver)
+                if (!gameOver) {
                     upMovement();
+                    ClientRMI.getInstance().updateUserPosition(50, 0, "leftSlave");
+                }
                 else
                     initializeGame();
             } else if (event.getCode() == KeyCode.DOWN) {
-                if (!gameOver)
+                if (!gameOver) {
                     downMovement();
+                    ClientRMI.getInstance().updateUserPosition(-50, 0 , "leftSlave");
+                }
                 else
                     initializeGame();
             }
@@ -145,6 +150,9 @@ public class GameSystem  {
         boolean lightningIntersection = !(lightningPath.getElements().isEmpty());
         boolean cloudIntersection = !(cloudPath.getElements().isEmpty());
 
+
+
+
         if (userCharacter.getBounds().getCenterY() + userCharacter.getBounds().getRadiusY() > height || userCharacter.getBounds().getCenterY() - userCharacter.getBounds().getRadiusY() < 0) {
             towerIntersection = true;
         }
@@ -177,9 +185,11 @@ public class GameSystem  {
         root.getChildren().clear();
         userCharacter.getGraphics().setTranslateX(100); // Posuva hraca na X osi do lava prava defualt 100
         userCharacter.getGraphics().setTranslateY(150);
+        dementor.getGraphics().setTranslateX(20);
+        dementor.getGraphics().setTranslateY(400);
         scoreLabel.setOpacity(0.8);
         scoreLabel.setText("Score: 0");
-        root.getChildren().addAll(userCharacter.getGraphics(), scoreLabel);
+        root.getChildren().addAll(userCharacter.getGraphics(), scoreLabel, dementor);
 
         //  vytvara cloudy na screen na  random X,Y poziciu a prida do listu cloudov
         // vytvara lightning na screen na random X,Y poziciu a prida do listu lightning
@@ -237,6 +247,9 @@ public class GameSystem  {
             System.out.println("jajojaofhohso");
             userCharacter = new UserCharacter(res.userImage);
         }
+
+        dementor = new Dementor(res.deatheaterImage, root);
+
       //  rotator = new RotateTransition(Duration.millis(500), userCharacter.getGraphics());
         jump = new TranslateTransition(Duration.millis(450), userCharacter.getGraphics());
         fall = new TranslateTransition(Duration.millis(5 * height), userCharacter.getGraphics());
@@ -267,20 +280,20 @@ public class GameSystem  {
                     root.getChildren().remove(7);
                     root.getChildren().add(tube);
                 }
-//                for (int i = 0; i < listOfTowers.size(); i++) {
-//                    if (listOfClouds.get(i).getX() < -listOfClouds.get(i).getImage().getWidth() * listOfClouds.get(i).getScaleX()) {
-//                        listOfClouds.get(i).setX(listOfClouds.get(i).getX() + width + listOfClouds.get(i).getImage().getWidth() * listOfClouds.get(i).getScaleX());
-//                    }
-//                    if (listOfLightnings.get(i).getTranslateX() < -listOfLightnings.get(i).frame.getWidth() * listOfLightnings.get(i).getScaleY()) {
-//                        listOfLightnings.get(i).setTranslateX(listOfLightnings.get(i).getTranslateX() + width + listOfLightnings.get(i).frame.getWidth() * listOfLightnings.get(i).getScaleX());
-//                        listOfLightnings.get(i).setTranslateX((listOfLightnings.get(i).getTranslateX() + width + listOfLightnings.get(i).frame.getWidth() * listOfLightnings.get(i).getScaleX()), 100);
-//                    }
-//
-//                    listOfClouds.get(i).setX(listOfClouds.get(i).getX() - 1);
-//                    listOfLightnings.get(i).setX(listOfLightnings.get(i).getX() -1);
-//
-//                    listOfTowers.get(i).setTranslateX(listOfTowers.get(i).getTranslateX() - 2);
-//                }
+                for (int i = 0; i < listOfTowers.size(); i++) {
+                    if (listOfClouds.get(i).getX() < -listOfClouds.get(i).getImage().getWidth() * listOfClouds.get(i).getScaleX()) {
+                        listOfClouds.get(i).setX(listOfClouds.get(i).getX() + width + listOfClouds.get(i).getImage().getWidth() * listOfClouds.get(i).getScaleX());
+                    }
+                    if (listOfLightnings.get(i).getTranslateX() < -listOfLightnings.get(i).frame.getWidth() * listOfLightnings.get(i).getScaleY()) {
+                        listOfLightnings.get(i).setTranslateX(listOfLightnings.get(i).getTranslateX() + width + listOfLightnings.get(i).frame.getWidth() * listOfLightnings.get(i).getScaleX());
+                      //  listOfLightnings.get(i).setTranslateX((listOfLightnings.get(i).getTranslateX() + width + listOfLightnings.get(i).frame.getWidth() * listOfLightnings.get(i).getScaleX()), 100);
+                    }
+
+                    listOfClouds.get(i).setX(listOfClouds.get(i).getX() - 1);
+                   // listOfLightnings.get(i).setX(listOfLightnings.get(i).getX() -1);
+
+                    listOfTowers.get(i).setTranslateX(listOfTowers.get(i).getTranslateX() - 2);
+                }
             }
         }));
         gameLoop.setCycleCount(-1);
