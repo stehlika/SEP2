@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 /**
@@ -71,6 +72,11 @@ public class GameSystem  {
         scene.setOnKeyPressed(event -> {
             if(event.getCode() == KeyCode.UP) {
                 if (!gameOver) {
+                    try {
+                        ClientRMI.getInstance().update(ClientRMI.getInstance(), "Ahoj adam odtilato som pri3iel");
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
                     ClientRMI.getInstance().updateUserPosition(50, 0, _player.getNickname());
                     upMovement();
                 }
@@ -321,7 +327,7 @@ public class GameSystem  {
     }
 
     public static void updateFromServer(double x, double y, String fromWho) {
-        String userovskyPostup = ("User sa pohol o x: " + x + " y: " + y + " islo to od: " + fromWho);
+        String userovskyPostup = ("User sa pohol na klientovi  o x: " + x + " y: " + y + " islo to od: " + fromWho);
         System.out.println(userovskyPostup);
 
     }
