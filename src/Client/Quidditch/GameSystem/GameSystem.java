@@ -72,13 +72,13 @@ public class GameSystem  {
         scene.setOnKeyPressed(event -> {
             if(event.getCode() == KeyCode.UP) {
                 if (!gameOver) {
+                    upMovement();
+                    ClientRMI.getInstance().updateUserPosition(50, 0, _player.getNickname());
                     try {
                         ClientRMI.getInstance().update(ClientRMI.getInstance(), "Ahoj adam odtilato som pri3iel");
                     } catch (RemoteException e) {
                         e.printStackTrace();
                     }
-                    ClientRMI.getInstance().updateUserPosition(50, 0, _player.getNickname());
-                    upMovement();
                 }
                 else
                     initializeGame();
