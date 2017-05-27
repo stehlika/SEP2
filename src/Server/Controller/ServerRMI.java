@@ -109,6 +109,7 @@ public class ServerRMI extends Observable implements RmiService {
     public void updateUserPosition(double x, double y, String fromWho) {
         String userovskyPostup = ("User sa pohol o x: " + x + " y: " + y + " islo to od: " + fromWho);
         System.out.println(userovskyPostup);
+        setChanged();
         notifyObservers(userovskyPostup);
     }
 

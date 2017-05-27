@@ -134,7 +134,12 @@ public class ClientRMI extends UnicastRemoteObject implements RemoteObserver {
     @Override
     public void update(Object observable, Object msg) throws RemoteException {
         GameSystem.updateFromServer(123,123, (String) msg);
-        notifyAll();
+        System.out.println("Client rmi je: " + msg);
+//        try {
+//            rmiService.updateUserPosition(0, 0, "co si len prajes to pride ");
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
 
 
