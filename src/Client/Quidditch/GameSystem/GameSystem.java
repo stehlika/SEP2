@@ -71,15 +71,15 @@ public class GameSystem  {
         scene.setOnKeyPressed(event -> {
             if(event.getCode() == KeyCode.UP) {
                 if (!gameOver) {
+                    ClientRMI.getInstance().updateUserPosition(50, 0, _player.getNickname());
                     upMovement();
-                    ClientRMI.getInstance().updateUserPosition(50, 0, "leftSlave");
                 }
                 else
                     initializeGame();
             } else if (event.getCode() == KeyCode.DOWN) {
                 if (!gameOver) {
+                    ClientRMI.getInstance().updateUserPosition(-50, 0 , _player.getNickname());
                     downMovement();
-                    ClientRMI.getInstance().updateUserPosition(-50, 0 , "leftSlave");
                 }
                 else
                     initializeGame();
@@ -317,6 +317,12 @@ public class GameSystem  {
     }
 
     private void saveHighScore() {
+
+    }
+
+    public static void updateFromServer(double x, double y, String fromWho) {
+        String userovskyPostup = ("User sa pohol o x: " + x + " y: " + y + " islo to od: " + fromWho);
+        System.out.println(userovskyPostup);
 
     }
 }
