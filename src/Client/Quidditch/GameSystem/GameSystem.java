@@ -358,6 +358,8 @@ public class GameSystem  {
 
     public void updateUser2UP(UserMovement userMovement) {
         if (!(userMovement.getPlayer().equals(this._player))) {
+            System.out.println("Rovnaky user ");
+        } else {
             System.out.println("Prislo to od ineho usera ako odo mna:  " + userMovement);
             if (userMovement.getMovement().equals("UP")) {
                 System.out.println("User 2 mus9 ist hore");
@@ -380,8 +382,6 @@ public class GameSystem  {
             } else {
                 System.out.println("Nerozpoznany prikaz");
             }
-        } else {
-            System.out.println("Prijate od sameho seba ");
         }
     }
 
