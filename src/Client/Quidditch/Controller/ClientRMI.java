@@ -133,8 +133,8 @@ public class ClientRMI extends UnicastRemoteObject implements RemoteObserver {
 
     @Override
     public void update(Object observable, Object msg) throws RemoteException {
-        GameSystem.updateFromServer(123,123, (String) msg);
-        GameSystem.getInstance().updateUser2UP();
+//        GameSystem.updateFromServer(123,123, (String) msg);
+        GameSystem.getInstance().updateUser2UP((String) msg);
 //        try {
 //            rmiService.updateUserPosition(0, 0, "co si len prajes to pride ");
 //        } catch (IOException e) {
@@ -143,9 +143,9 @@ public class ClientRMI extends UnicastRemoteObject implements RemoteObserver {
     }
 
 
-    public void updateUserPosition(double x, double y, String fromWho) {
+    public void updateUserPosition(String command) {
         try {
-            rmiService.updateUserPosition(x, y, fromWho);
+            rmiService.updateUserPosition(command);
         } catch (IOException e) {
             e.printStackTrace();
         }
