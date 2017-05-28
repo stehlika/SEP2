@@ -11,6 +11,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
+import java.util.DoubleSummaryStatistics;
 
 /**
  * Created by terezamadova on 27/05/2017.
@@ -21,19 +22,29 @@ public class Level {
 
     private Resources res = new Resources();
     private Pane root;
-    private ArrayList<Tower> listOfTowers = new ArrayList<>();
-    private ArrayList<Cloud> listOfClouds = new ArrayList<>();
-    private ArrayList<Lightning> listOfLightnings = new ArrayList<>();
+    private ArrayList<Double> listOfTowersX = new ArrayList<>();
+    private ArrayList<Double> listOfTowersY = new ArrayList<>();
+    private ArrayList<Double> listOfCloudsX = new ArrayList<>();
+    private ArrayList<Double> listOfCloudsY = new ArrayList<>();
+    private ArrayList<Double> listOfLightningsX = new ArrayList<>();
+    private ArrayList<Double> listOfLightningsY = new ArrayList<>();
 
     public Level() {
-        Stage primaryStage = HarryPotterMain.get_primaryStage();
-        root = new Pane();Scene scene = new Scene(root, width, height);
-        primaryStage.setScene(scene);
-        primaryStage.show();
 
-        Cloud cloud = new Cloud(res.cloudImage, root);
-        cloud.setX(20);
-        listOfClouds.add(cloud);
+
+        for (int i = 1; i < 20; i++) {
+            listOfTowersX.add(i * 400.0);
+            listOfCloudsX.add(i * 200.0 + 120);
+            listOfCloudsY.add(Math.random() * 220 + 20.0);
+        }
+//        listOfTowersX.add(100.0);
+//        listOfTowersX.add(300.0);
+//        listOfTowersX.add(500.0);
+//        listOfTowersX.add(700.0);
+//        listOfTowersX.add(900.0);
+//        listOfTowersY.add(1100.0);
+//        listOfTowersY.add(200.0);
+//        listOfTowersY.add(200.0);
 
 //        for (int i = 0; i < 5; i++) {
 //
@@ -96,27 +107,51 @@ public class Level {
 //        }
     }
 
-    public ArrayList<Tower> getListOfTowers() {
-        return listOfTowers;
+    public ArrayList<Double> getListOfTowersX() {
+        return listOfTowersX;
     }
 
-    public void setListOfTowers(ArrayList<Tower> listOfTowers) {
-        this.listOfTowers = listOfTowers;
+    public void setListOfTowersX(ArrayList<Double> listOfTowersX) {
+        this.listOfTowersX = listOfTowersX;
     }
 
-    public ArrayList<Cloud> getListOfClouds() {
-        return listOfClouds;
+    public ArrayList<Double> getListOfTowersY() {
+        return listOfTowersY;
     }
 
-    public void setListOfClouds(ArrayList<Cloud> listOfClouds) {
-        this.listOfClouds = listOfClouds;
+    public void setListOfTowersY(ArrayList<Double> listOfTowersY) {
+        this.listOfTowersY = listOfTowersY;
     }
 
-    public ArrayList<Lightning> getListOfLightnings() {
-        return listOfLightnings;
+    public ArrayList<Double> getListOfCloudsX() {
+        return listOfCloudsX;
     }
 
-    public void setListOfLightnings(ArrayList<Lightning> listOfLightnings) {
-        this.listOfLightnings = listOfLightnings;
+    public void setListOfCloudsX(ArrayList<Double> listOfCloudsX) {
+        this.listOfCloudsX = listOfCloudsX;
+    }
+
+    public ArrayList<Double> getListOfCloudsY() {
+        return listOfCloudsY;
+    }
+
+    public void setListOfCloudsY(ArrayList<Double> listOfCloudsY) {
+        this.listOfCloudsY = listOfCloudsY;
+    }
+
+    public ArrayList<Double> getListOfLightningsX() {
+        return listOfLightningsX;
+    }
+
+    public void setListOfLightningsX(ArrayList<Double> listOfLightningsX) {
+        this.listOfLightningsX = listOfLightningsX;
+    }
+
+    public ArrayList<Double> getListOfLightningsY() {
+        return listOfLightningsY;
+    }
+
+    public void setListOfLightningsY(ArrayList<Double> listOfLightningsY) {
+        this.listOfLightningsY = listOfLightningsY;
     }
 }

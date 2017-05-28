@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Path;
 import javafx.scene.shape.Shape;
 import javafx.scene.transform.Rotate;
@@ -177,8 +178,13 @@ public class GameSystem  {
         boolean towerIntersection = !(towerPath.getElements().isEmpty());
         boolean lightningIntersection = !(lightningPath.getElements().isEmpty());
         boolean cloudIntersection = !(cloudPath.getElements().isEmpty());
+//        boolean lightningIntersection = !(lightningPath.getElements().isEmpty());
+//        boolean cloudIntersection = !(cloudPath.getElements().isEmpty());
 
 
+        if (cloudIntersection) {
+            cloud.getBounds().setStroke(Color.YELLOW);
+        }
 
 
         if (userCharacter1.getBounds().getCenterY() + userCharacter1.getBounds().getRadiusY() > height || userCharacter1.getBounds().getCenterY() - userCharacter1.getBounds().getRadiusY() < 0) {
@@ -257,13 +263,29 @@ public class GameSystem  {
 
         // vytvara towery na random pozicie a pridava ich do listu towerov
 
-        for (int i = 0; i < 5; i++) {
+        Level level = new Level();
+        for (int i = 0; i < level.getListOfTowersX().size(); i++) {
             SimpleDoubleProperty y = new SimpleDoubleProperty(0);
             y.set(root.getHeight() * Math.random() / 2.0);
-            Tower tower = new Tower(res.towerImage, y, root,  false);
-            tower.setTranslateX(i * (width / 4 + 10) + 400);
+            Tower tower;
+            if (Math.random() < 0.4) {
+                tower = new Tower(res.towerImage, y, root, false);
+            } else if (Math.random() > 0.85) {
+                tower = new Tower(res.towerImage, y, root, true);
+            } else {
+                tower = new Tower(res.towerImage, y, root, false);
+            }
+
+//            tower.setTranslateX(i * (width / 4 + 10) + 400);
+            tower.setTranslateX(level.getListOfTowersX().get(i));
             listOfTowers.add(tower);
-//            root.getChildren().add(tower);
+            root.getChildren().add(tower);
+
+            Cloud cloud = new Cloud(res.cloudImage, root);
+            cloud.setTranslateX(level.getListOfCloudsX().get(i));
+            cloud.setTranslateY(level.getListOfCloudsY().get(i));
+            listOfClouds.add(cloud);
+            root.getChildren().add(cloud);
         }
 
         score = 0;
@@ -311,19 +333,18 @@ public class GameSystem  {
         user2fall.setByY(height + 20);
         userCharacter2.getGraphics().setRotationAxis(Rotate.Z_AXIS);
 
-
         gameLoop = new Timeline(new KeyFrame(Duration.millis(1000 / FPS), new EventHandler<ActionEvent>() {
 
             public void handle(ActionEvent e) {
-            //    Level level = new Level();
+                Level level = new Level();
 
-            //    Cloud cloudisko = level.getListOfClouds().get(0);
-              //  root.getChildren().add(cloudisko);
 
-//                updateCounters();
-//                checkCollisions();
-//                if (listOfTowers.get(0).getTranslateX() <= -width / 12.3) {
-//                    listOfTowers.remove(0);
+
+                updateCounters();
+                checkCollisions();
+                if (listOfTowers.get(0).getTranslateX() <= -width / 12.3) {
+                    listOfTowers.remove(0);
+                    listOfClouds.remove(0);
 //                    SimpleDoubleProperty y = new SimpleDoubleProperty(0);
 //                    y.set((root.getHeight() * Math.random() / 2.0));
 //                    Tower tube;
@@ -339,8 +360,8 @@ public class GameSystem  {
 //                    incrementOnce = true;
 //                    root.getChildren().remove(7);
 //                    root.getChildren().add(tube);
-//                }
-//                for (int i = 0; i < listOfTowers.size(); i++) {
+                }
+                for (int i = 0; i < listOfTowers.size(); i++) {
 //                    if (listOfClouds.get(i).getX() < -listOfClouds.get(i).getImage().getWidth() * listOfClouds.get(i).getScaleX()) {
 //                        listOfClouds.get(i).setX(listOfClouds.get(i).getX() + width + listOfClouds.get(i).getImage().getWidth() * listOfClouds.get(i).getScaleX());
 //                    }
@@ -350,10 +371,11 @@ public class GameSystem  {
 //                    }
 //
 //                    listOfClouds.get(i).setX(listOfClouds.get(i).getX() - 1);
-//                   // listOfLightnings.get(i).setX(listOfLightnings.get(i).getX() -1);
-//
-//                    listOfTowers.get(i).setTranslateX(listOfTowers.get(i).getTranslateX() - 2);
-//                }
+                   // listOfLightnings.get(i).setX(listOfLightnings.get(i).getX() -1);
+
+                    listOfTowers.get(i).setTranslateX(listOfTowers.get(i).getTranslateX() - 2);
+                    listOfClouds.get(i).setTranslateX(listOfClouds.get(i).getTranslateX() - 2);
+                }
             }
         }));
         gameLoop.setCycleCount(-1);
