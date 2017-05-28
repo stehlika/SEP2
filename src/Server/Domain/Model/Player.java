@@ -67,4 +67,30 @@ public class Player implements Serializable {
                 ", faculty='" + faculty + '\'' +
                 '}';
     }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Player player = (Player) o;
+
+        if (playtime != player.playtime) return false;
+        if (Double.compare(player.winratio, winratio) != 0) return false;
+        if (nickname != null ? !nickname.equals(player.nickname) : player.nickname != null) return false;
+        return faculty != null ? faculty.equals(player.faculty) : player.faculty == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        result = nickname != null ? nickname.hashCode() : 0;
+        result = 31 * result + playtime;
+        temp = Double.doubleToLongBits(winratio);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (faculty != null ? faculty.hashCode() : 0);
+        return result;
+    }
 }
