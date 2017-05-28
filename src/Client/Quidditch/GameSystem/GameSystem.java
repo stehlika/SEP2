@@ -77,6 +77,7 @@ public class GameSystem  {
      */
     public void startGame(Player player) {
         _player = player;
+        System.out.println("Player: " + _player);
 
         Stage primaryStage = HarryPotterMain.get_primaryStage();
         root = new Pane();
@@ -253,9 +254,6 @@ public class GameSystem  {
         user1fall.stop();
         user1fall.play();
 
-        userCharacter2.jumping = false;
-        user2fall.stop();
-        user2fall.play();
 
 
         gameLoop.play();
@@ -357,6 +355,7 @@ public class GameSystem  {
 
 
     public void updateUser2UP(UserMovement userMovement) {
+        System.out.println("User z update movemetn: " + userMovement.getPlayer());
         if (!(userMovement.getPlayer().equals(this._player))) {
             System.out.println("Rovnaky user ");
         } else {
