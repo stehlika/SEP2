@@ -107,7 +107,7 @@ public class ServerRMI extends Observable implements RmiService {
 
     @Override
     public void updateUserPosition(String command) {
-        System.out.println("Uzivatelsky prikaz z Server RMI:" + command);
+        System.out.println("Uzivatelsky prikaz z Server RMI: " + command);
         setChanged();
         notifyObservers(command);
     }

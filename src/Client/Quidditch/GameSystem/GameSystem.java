@@ -94,13 +94,8 @@ public class GameSystem  {
         scene.setOnKeyPressed(event -> {
             if(event.getCode() == KeyCode.UP) {
                 if (!gameOver) {
-                    upMovement();
                     ClientRMI.getInstance().updateUserPosition("moveUP");
-                    try {
-                        ClientRMI.getInstance().update(ClientRMI.getInstance(), "Ahoj adam odtilato som pri3iel");
-                    } catch (RemoteException e) {
-                        e.printStackTrace();
-                    }
+                    upMovement();
                 }
                 else
                     initializeGame();
@@ -184,7 +179,7 @@ public class GameSystem  {
         // momentalne je to nastavene tak ze sa da game over obrazovka ked sa pretne tower s userom
         // TODO treba spravit viacero verzii intersection pre tower-user, user-cloud, user-lightning, user-dementor
         if (towerIntersection) {
-
+            ClientRMI.getInstance().updateUserPosition("userCharacter2died");
             GameOverLabel gameOverLabel = new GameOverLabel(width / 2, height / 2);
             highScore = highScore < score ? score : highScore;
             gameOverLabel.setText("Tap to retry. Score: " + score + "\n\tHighScore: " + highScore);
@@ -373,12 +368,12 @@ public class GameSystem  {
             user2jump.stop();
             user2jump.play();
         } else if (msg.equals("moveDOWN")) {
-            user1jump.setByY(50);
-            user1jump.setCycleCount(1);
-            userCharacter1.jumping = true;
-            user1fall.stop();
-            user1jump.stop();
-            user1jump.play();
+            user2jump.setByY(50);
+            user2jump.setCycleCount(1);
+            userCharacter2.jumping = true;
+            user2fall.stop();
+            user2jump.stop();
+            user2jump.play();
         } else if (msg.equals("userCharacter2died")) {
             System.out.println("User character 2 died");
         } else {
