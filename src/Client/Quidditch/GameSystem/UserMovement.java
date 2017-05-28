@@ -43,4 +43,13 @@ public class UserMovement implements Serializable {
     public void setMovement(String movement) {
         this.movement = movement;
     }
+
+    @Override
+    public String toString() {
+        return "UserMovement{" +
+                "timestamp=" + timestamp +
+                ", player=" + player +
+                ", movement='" + movement + '\'' +
+                '}';
+    }
 }

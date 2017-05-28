@@ -94,15 +94,15 @@ public class GameSystem  {
         scene.setOnKeyPressed(event -> {
             if(event.getCode() == KeyCode.UP) {
                 if (!gameOver) {
-                    ClientRMI.getInstance().userUpdate(new UserMovement(this._player, "UP"));
                     upMovement();
+                    ClientRMI.getInstance().userUpdate(new UserMovement(this._player, "UP"));
                 }
                 else
                     initializeGame();
             } else if (event.getCode() == KeyCode.DOWN) {
                 if (!gameOver) {
-                    ClientRMI.getInstance().userUpdate(new UserMovement(this._player, "DOWN"));
                     downMovement();
+                    ClientRMI.getInstance().userUpdate(new UserMovement(this._player, "DOWN"));
                 }
                 else
                     initializeGame();
@@ -180,6 +180,7 @@ public class GameSystem  {
         // TODO treba spravit viacero verzii intersection pre tower-user, user-cloud, user-lightning, user-dementor
         if (towerIntersection) {
             ClientRMI.getInstance().userUpdate(new UserMovement(this._player, "DIE"));
+
             GameOverLabel gameOverLabel = new GameOverLabel(width / 2, height / 2);
             highScore = highScore < score ? score : highScore;
             gameOverLabel.setText("Tap to retry. Score: " + score + "\n\tHighScore: " + highScore);
@@ -353,11 +354,6 @@ public class GameSystem  {
 
     }
 
-    public static void updateFromServer(double x, double y, String fromWho) {
-        String userovskyPostup = ("User sa pohol na klientovi  o x: " + x + " y: " + y + " islo to od: " + fromWho);
-        System.out.println(userovskyPostup);
-
-    }
 
     public void updateUser2UP(UserMovement userMovement) {
         if (!(userMovement.getPlayer().equals(this._player))) {
