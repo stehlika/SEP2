@@ -57,8 +57,6 @@ public class GameSystem  {
     private Timeline gameLoop;
     private Player _player;
 
-
-
     private static GameSystem instance = null;
     private GameSystem()  {
 
@@ -67,7 +65,6 @@ public class GameSystem  {
     public static GameSystem getInstance() {
         if(instance == null)
                 instance = new GameSystem();
-
         return instance;
     }
 
@@ -256,6 +253,10 @@ public class GameSystem  {
         user1fall.stop();
         user1fall.play();
 
+        userCharacter2.jumping = false;
+        user2fall.stop();
+        user2fall.play();
+
 
         gameLoop.play();
     }
@@ -357,7 +358,9 @@ public class GameSystem  {
 
     public void updateUser2UP(UserMovement userMovement) {
         if (!(userMovement.getPlayer().equals(this._player))) {
+            System.out.println("Prislo to od ineho usera ako odo mna:  " + userMovement);
             if (userMovement.getMovement().equals("UP")) {
+                System.out.println("User 2 mus9 ist hore");
                 user2jump.setByY(-50);
                 user2jump.setCycleCount(1);
                 userCharacter2.jumping = true;
@@ -365,6 +368,7 @@ public class GameSystem  {
                 user2jump.stop();
                 user2jump.play();
             } else if (userMovement.getMovement().equals("DOWN")) {
+                System.out.println("user 2 musi ist dole ");
                 user2jump.setByY(50);
                 user2jump.setCycleCount(1);
                 userCharacter2.jumping = true;
@@ -379,8 +383,6 @@ public class GameSystem  {
         } else {
             System.out.println("Prijate od sameho seba ");
         }
-
-
     }
 
 
