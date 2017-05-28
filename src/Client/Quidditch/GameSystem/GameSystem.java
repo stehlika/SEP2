@@ -37,9 +37,18 @@ public class GameSystem  {
     private int highScore = 0;
     private double FPS = 40;
     private int counter_30FPS = 0;
-    private UserCharacter userCharacter;
-    private TranslateTransition jump;
-    private TranslateTransition fall;
+
+
+    private UserCharacter userCharacter1;
+    public UserCharacter userCharacter2;
+
+
+    private TranslateTransition user1jump;
+    private TranslateTransition user1fall;
+
+    private TranslateTransition user2jump;
+    private TranslateTransition user2fall;
+
   //  private RotateTransition rotator;
     private ArrayList<Tower> listOfTowers = new ArrayList<>();
     private ArrayList<Cloud> listOfClouds = new ArrayList<>();
@@ -47,7 +56,20 @@ public class GameSystem  {
     private ScoreLabel scoreLabel = new ScoreLabel(width, 0);
     private Timeline gameLoop;
     private Player _player;
-    private Dementor dementor;
+
+
+
+    private static GameSystem instance = null;
+    private GameSystem()  {
+
+    }
+
+    public static GameSystem getInstance() {
+        if(instance == null)
+                instance = new GameSystem();
+
+        return instance;
+    }
 
     // rotator sluzi na to aby sa mohli charactery a towere naklapat tak ako ste to videli na zaciatku
 
@@ -89,6 +111,11 @@ public class GameSystem  {
                 }
                 else
                     initializeGame();
+            } else if (event.getCode() == KeyCode.LEFT) {
+                if (!gameOver) {
+
+                    updateUser2UP();
+                }
             }
 
         });
@@ -110,12 +137,12 @@ public class GameSystem  {
      * Method that moves user GUI object up 50px and animates the movement.
      */
     private void upMovement() {
-        jump.setByY(-50);
-        jump.setCycleCount(1);
-        userCharacter.jumping = true;
-        fall.stop();
-        jump.stop();
-        jump.play();
+        user1jump.setByY(-50);
+        user1jump.setCycleCount(1);
+        userCharacter1.jumping = true;
+        user1fall.stop();
+        user1jump.stop();
+        user1jump.play();
 
     }
 
@@ -124,15 +151,12 @@ public class GameSystem  {
      * Method is moving down user's GUI object by 50px and animates.
      */
     private void downMovement() {
-       // rotator.setDuration(Duration.millis(100));
-       // rotator.stop();
-       // rotator.play();
-        jump.setByY(50);
-        jump.setCycleCount(1);
-        userCharacter.jumping = true;
-        fall.stop();
-        jump.stop();
-        jump.play();
+        user1jump.setByY(50);
+        user1jump.setCycleCount(1);
+        userCharacter1.jumping = true;
+        user1fall.stop();
+        user1jump.stop();
+        user1jump.play();
 
     }
 
@@ -147,9 +171,9 @@ public class GameSystem  {
             incrementOnce = false;
         }
         //Getovanie bounds zo shape pre zistenie prieniku suradnic toweru a usera.
-        Path towerPath = (Path) Shape.intersect(userCharacter.getBounds(), tower.getBounds());
-        Path cloudPath = (Path) Shape.intersect(userCharacter.getBounds(), cloud.getBounds());
-        Path lightningPath = (Path) Shape.intersect(userCharacter.getBounds(), lightning.getBounds());
+        Path towerPath = (Path) Shape.intersect(userCharacter1.getBounds(), tower.getBounds());
+        Path cloudPath = (Path) Shape.intersect(userCharacter1.getBounds(), cloud.getBounds());
+        Path lightningPath = (Path) Shape.intersect(userCharacter1.getBounds(), lightning.getBounds());
 
         //porovnava bound toweru a usera a meni premennu intersection podla toho
         boolean towerIntersection = !(towerPath.getElements().isEmpty());
@@ -159,7 +183,7 @@ public class GameSystem  {
 
 
 
-        if (userCharacter.getBounds().getCenterY() + userCharacter.getBounds().getRadiusY() > height || userCharacter.getBounds().getCenterY() - userCharacter.getBounds().getRadiusY() < 0) {
+        if (userCharacter1.getBounds().getCenterY() + userCharacter1.getBounds().getRadiusY() > height || userCharacter1.getBounds().getCenterY() - userCharacter1.getBounds().getRadiusY() < 0) {
             towerIntersection = true;
         }
 
@@ -189,13 +213,17 @@ public class GameSystem  {
         listOfClouds.clear();
         listOfLightnings.clear();
         root.getChildren().clear();
-        userCharacter.getGraphics().setTranslateX(100); // Posuva hraca na X osi do lava prava defualt 100
-        userCharacter.getGraphics().setTranslateY(150);
-        dementor.getGraphics().setTranslateX(20);
-        dementor.getGraphics().setTranslateY(400);
+
+        userCharacter1.getGraphics().setTranslateX(100); // Posuva hraca na X osi do lava prava defualt 100
+        userCharacter1.getGraphics().setTranslateY(150);
+
+        userCharacter2.getGraphics().setTranslateX(100);
+        userCharacter2.getGraphics().setTranslateY(200);
+        userCharacter2.getGraphics().setOpacity(0.5);
+
         scoreLabel.setOpacity(0.8);
         scoreLabel.setText("Score: 0");
-        root.getChildren().addAll(userCharacter.getGraphics(), scoreLabel, dementor);
+        root.getChildren().addAll(userCharacter1.getGraphics(), scoreLabel, userCharacter2.getGraphics());
 
         //  vytvara cloudy na screen na  random X,Y poziciu a prida do listu cloudov
         // vytvara lightning na screen na random X,Y poziciu a prida do listu lightning
@@ -234,35 +262,45 @@ public class GameSystem  {
         score = 0;
         incrementOnce = true;
         gameOver = false;
-        userCharacter.jumping = false;
-        fall.stop();
-        fall.play();
+        userCharacter1.jumping = false;
+        user1fall.stop();
+        user1fall.play();
+
+
         gameLoop.play();
     }
 
     private void initGame(Player player) {
         if (player.getFaculty().equals("gryffindor")) {
-            userCharacter = new UserCharacter(res.userImageGryf);
+            userCharacter1 = new UserCharacter(res.userImageGryf);
         } else if (player.getFaculty().equals("ravenclaw")) {
-            userCharacter = new UserCharacter(res.userImageRave);
+            userCharacter1 = new UserCharacter(res.userImageRave);
         } else if (player.getFaculty().equals("hufflepuff")) {
-            userCharacter = new UserCharacter(res.userImageHuff);
+            userCharacter1 = new UserCharacter(res.userImageHuff);
         } else if (player.getFaculty().equals("slytherin")) {
-            userCharacter = new UserCharacter(res.userImageSlyt);
+            userCharacter1 = new UserCharacter(res.userImageSlyt);
         } else {
             System.out.println("jajojaofhohso");
-            userCharacter = new UserCharacter(res.userImage);
+            userCharacter1 = new UserCharacter(res.userImage);
         }
 
-        dementor = new Dementor(res.deatheaterImage, root);
+        userCharacter2 = new UserCharacter(res.userImageGryf);
 
-      //  rotator = new RotateTransition(Duration.millis(500), userCharacter.getGraphics());
-        jump = new TranslateTransition(Duration.millis(450), userCharacter.getGraphics());
-        fall = new TranslateTransition(Duration.millis(5 * height), userCharacter.getGraphics());
-        jump.setInterpolator(Interpolator.LINEAR);
-        fall.setByY(height + 20);
-       // rotator.setCycleCount(1);
-        userCharacter.getGraphics().setRotationAxis(Rotate.Z_AXIS);
+
+        user1jump = new TranslateTransition(Duration.millis(450), userCharacter1.getGraphics());
+        user1fall = new TranslateTransition(Duration.millis(5 * height), userCharacter1.getGraphics());
+
+        user2jump = new TranslateTransition(Duration.millis(450), userCharacter2.getGraphics());
+        user2fall = new TranslateTransition(Duration.millis(5 * height), userCharacter2.getGraphics());
+
+        user1jump.setInterpolator(Interpolator.LINEAR);
+        user1fall.setByY(height + 20);
+        userCharacter1.getGraphics().setRotationAxis(Rotate.Z_AXIS);
+
+        user2jump.setInterpolator(Interpolator.LINEAR);
+        user2fall.setByY(height + 20);
+        userCharacter2.getGraphics().setRotationAxis(Rotate.Z_AXIS);
+
         gameLoop = new Timeline(new KeyFrame(Duration.millis(1000 / FPS), new EventHandler<ActionEvent>() {
 
             public void handle(ActionEvent e) {
@@ -331,4 +369,16 @@ public class GameSystem  {
         System.out.println(userovskyPostup);
 
     }
+
+    public void updateUser2UP() {
+        user2jump.setByY(-50);
+        user2jump.setCycleCount(1);
+        userCharacter2.jumping = true;
+        user2fall.stop();
+        user2jump.stop();
+        user2jump.play();
+    }
+
+
+
 }
