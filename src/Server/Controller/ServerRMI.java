@@ -118,4 +118,7 @@ public class ServerRMI extends Observable implements RmiService {
         System.out.println("ServerRMI");
         return modelManager.houseSelection();
     }
+
+
+
 }

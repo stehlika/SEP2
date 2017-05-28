@@ -9,7 +9,6 @@ import Server.Domain.Model.Player;
 import javafx.util.Pair;
 
 import java.io.IOException;
-import java.net.InetAddress;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -135,7 +134,7 @@ public class ClientRMI extends UnicastRemoteObject implements RemoteObserver {
     @Override
     public void update(Object observable, Object msg) throws RemoteException {
 //        GameSystem.updateFromServer(123,123, (String) msg);
-        GameSystem.getInstance().updateUser2UP((UserMovement) msg);
+        GameSystem.getInstance().updateUser2((UserMovement) msg);
 
     }
 
@@ -146,6 +145,9 @@ public class ClientRMI extends UnicastRemoteObject implements RemoteObserver {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void removeOberserverisko() {
     }
 }
 

@@ -39,6 +39,9 @@ public class GameSystem  {
     private double FPS = 40;
     private int counter_30FPS = 0;
 
+    private boolean player1ready = false;
+    private boolean player2ready = false;
+
 
     private UserCharacter userCharacter1;
     public UserCharacter userCharacter2;
@@ -49,6 +52,8 @@ public class GameSystem  {
 
     private TranslateTransition user2jump;
     private TranslateTransition user2fall;
+
+    StartScreen startScreen = new StartScreen(400, 300);
 
   //  private RotateTransition rotator;
     private ArrayList<Tower> listOfTowers = new ArrayList<>();
@@ -105,6 +110,11 @@ public class GameSystem  {
                 }
                 else
                     initializeGame();
+            } else if (event.getCode() == KeyCode.ENTER) {
+                startScreen.setText("Waiting for player 2");
+                player1ready = true;
+                initializeGame();
+                ClientRMI.getInstance().userUpdate(new UserMovement(this._player, "START"));
             }
         });
 
@@ -198,6 +208,14 @@ public class GameSystem  {
      *
      */
     private void initializeGame() {
+        if (!player1ready || !player2ready) {
+            startScreen.setOpacity(1.0);
+            System.out.println("Som wo while ");
+            return;
+
+        }
+        System.out.println("us sme ready");
+
         listOfTowers.clear();
         listOfClouds.clear();
         listOfLightnings.clear();
@@ -261,6 +279,8 @@ public class GameSystem  {
     }
 
     private void initGame(Player player) {
+        root.getChildren().add(startScreen);
+
         if (player.getFaculty().equals("gryffindor")) {
             userCharacter1 = new UserCharacter(res.userImageGryf);
         } else if (player.getFaculty().equals("ravenclaw")) {
@@ -291,13 +311,14 @@ public class GameSystem  {
         user2fall.setByY(height + 20);
         userCharacter2.getGraphics().setRotationAxis(Rotate.Z_AXIS);
 
+
         gameLoop = new Timeline(new KeyFrame(Duration.millis(1000 / FPS), new EventHandler<ActionEvent>() {
 
             public void handle(ActionEvent e) {
-                Level level = new Level();
+            //    Level level = new Level();
 
-                Cloud cloudisko = level.getListOfClouds().get(0);
-                root.getChildren().add(cloudisko);
+            //    Cloud cloudisko = level.getListOfClouds().get(0);
+              //  root.getChildren().add(cloudisko);
 
 //                updateCounters();
 //                checkCollisions();
@@ -360,7 +381,7 @@ public class GameSystem  {
     }
 
 
-    public void updateUser2UP(UserMovement userMovement) {
+    public void updateUser2(UserMovement userMovement) {
         System.out.println("User z update movemetn: " + userMovement.getPlayer());
         if ((userMovement.getPlayer().equals(this._player))) {
             System.out.println("Rovnaky user ");
@@ -384,6 +405,12 @@ public class GameSystem  {
                 user2jump.play();
             } else if (userMovement.getMovement().equals("DIE")) {
                 System.out.println("User character 2 died");
+                GameOverLabel gameOverLabel = new GameOverLabel(width / 2, height / 2);
+
+            } else if (userMovement.getMovement().equals("START")) {
+                player2ready = true;
+                initializeGame();
+
             } else {
                 System.out.println("Nerozpoznany prikaz");
             }
