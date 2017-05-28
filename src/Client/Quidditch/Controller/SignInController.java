@@ -21,7 +21,9 @@ public class SignInController extends MasterController {
 
     @FXML
     public void initialize() {
-
+        usernameTF.setText("Tejka");
+        serverIPTF.setText("localhost");
+        serverPortTF.setText("9998");
     }
 
     public void signIn(ActionEvent actionEvent) {

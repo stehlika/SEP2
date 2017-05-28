@@ -35,7 +35,10 @@ public class Resources {
             userImageHuff = new Image(getClass().getResourceAsStream("cedric.png"));
 
             towerImage = new Image(getClass().getResourceAsStream("hufflepuff_tower.png"));
-            towerImageGryf = new Image(getClass().getResourceAsStream("towerHufflepuff.png"));
+            towerImageGryf = new Image(getClass().getResourceAsStream("gryffindor_tower.png"));
+            towerImageRave = new Image(getClass().getResourceAsStream("ravenclaw_tower.png"));
+            towerImageHuff = new Image(getClass().getResourceAsStream("hufflepuff_tower.png"));
+            towerImageSlyt = new Image(getClass().getResourceAsStream("slytherin_tower.png"));
 
 
         } catch (Exception e) {

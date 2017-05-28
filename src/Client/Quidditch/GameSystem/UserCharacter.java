@@ -34,11 +34,11 @@ public class UserCharacter {
         this.bounds = new Ellipse(frame.getWidth() / 2.0, 11.5);
         graphics.setImage(frame);
         bounds.setFill(Color.TRANSPARENT);
-        bounds.setStroke(Color.BLACK);
         // vycentruje graficky prvok hraca s tou elipsou aby bol v strede elipsy
         bounds.centerXProperty().bind(graphics.translateXProperty().add(frame.getWidth() / 2.0));
         bounds.centerYProperty().bind(graphics.translateYProperty().add(12.0));
         bounds.rotateProperty().bind(graphics.rotateProperty());
-        bounds.setFill(Color.BLACK);
+//        bounds.setFill(Color.BLACK);
+        bounds.setStroke(Color.BLACK);
     }
 }

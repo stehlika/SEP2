@@ -25,11 +25,12 @@ public class Cloud extends Group {
         cloudBody.setImage(this.frame);
         setOpacity(0.9);
 
-        cloudBody.setX(Math.random());
+        cloudBody.setX(Math.random() * root.getWidth());
+        cloudBody.setY(Math.random() * root.getHeight() / 3);
 
         bounds = new Rectangle(frame.getWidth(), frame.getHeight());
         bounds.setStroke(Color.BLACK);
-        bounds.setFill(Color.BLACK);
+        bounds.setFill(Color.TRANSPARENT);
 
         getChildren().addAll(cloudBody);
         getChildren().addAll(bounds);

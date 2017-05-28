@@ -40,7 +40,7 @@ public class Tower extends Group {
         towerBody.setX(2.5);
         towerBody.yProperty().bind(gapLocation.add(GAP).add(root.heightProperty().divide(6)));
         this.bounds = new Rectangle(frame.getWidth(), frame.getHeight());
-        bounds.setStroke(Color.TRANSPARENT);
+        bounds.setStroke(Color.BLACK);
         bounds.setFill(Color.TRANSPARENT);
         bounds.setX(towerBody.getX());
         bounds.setY(towerBody.getY());

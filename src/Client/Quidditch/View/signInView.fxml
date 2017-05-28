@@ -10,24 +10,24 @@
    <children>
       <VBox alignment="CENTER" layoutX="482.0" layoutY="236.0" prefHeight="381.0" prefWidth="274.0">
          <children>
-            <TextField maxWidth="240.0" prefHeight="60.0" promptText="Type in server IP Address (192.168.1.11)" style="-fx-background-radius: 30; -fx-border-color: #998100; -fx-border-radius: 30; -fx-border-width: 3; -fx-background-color: #ecf0f1;" fx:id="serverIPTF">
+            <TextField fx:id="serverIPTF" maxWidth="240.0" prefHeight="60.0" promptText="Type in server IP Address (192.168.1.11)" style="-fx-background-radius: 30; -fx-border-color: #998100; -fx-border-radius: 30; -fx-border-width: 3; -fx-background-color: #ecf0f1;">
                <VBox.margin>
-                  <Insets />
+                  <Insets top="20.0" />
                </VBox.margin>
             </TextField>
-            <TextField maxWidth="240.0" prefHeight="60.0" promptText="Type in server Port (9998 for mac 1098 for windows)" style="-fx-background-radius: 30; -fx-border-color: #998100; -fx-border-radius: 30; -fx-border-width: 3; -fx-background-color: #ecf0f1;" fx:id="serverPortTF">
+            <TextField fx:id="serverPortTF" maxWidth="240.0" prefHeight="60.0" promptText="Type in server Port (9998 for mac 1098 for windows)" style="-fx-background-radius: 30; -fx-border-color: #998100; -fx-border-radius: 30; -fx-border-width: 3; -fx-background-color: #ecf0f1;">
                <VBox.margin>
-                  <Insets />
+                  <Insets top="20.0" />
                </VBox.margin>
             </TextField>
-            <TextField maxWidth="240.0" prefHeight="60.0" promptText="Type in your user name" style="-fx-background-radius: 30; -fx-border-color: #998100; -fx-border-radius: 30; -fx-border-width: 3; -fx-background-color: #ecf0f1;" fx:id="usernameTF">
+            <TextField fx:id="usernameTF" maxWidth="240.0" prefHeight="60.0" promptText="Type in your user name" style="-fx-background-radius: 30; -fx-border-color: #998100; -fx-border-radius: 30; -fx-border-width: 3; -fx-background-color: #ecf0f1;">
                <VBox.margin>
-                  <Insets />
+                  <Insets top="20.0" />
                </VBox.margin>
             </TextField>
-            <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="140.0" style="-fx-background-radius: 25; -fx-background-color: #ecf0f1;" text="SIGN IN" fx:id="signInBtn" onAction="#signIn">
+            <Button fx:id="signInBtn" mnemonicParsing="false" onAction="#signIn" prefHeight="50.0" prefWidth="140.0" style="-fx-background-radius: 25; -fx-background-color: #ecf0f1;" text="SIGN IN">
                <VBox.margin>
-                  <Insets top="50.0" />
+                  <Insets top="40.0" />
                </VBox.margin>
             </Button>
          </children>

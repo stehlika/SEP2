@@ -70,10 +70,10 @@ public class HouseCupController extends MasterController {
         hufflepuffPlayerL.setText(hufflepuffBest);
         slytherinPlayerL.setText(slytherinBest);
 
-        gryffindorTotalL.setText(String.valueOf(gryffindor.getTotalscore()));
-        ravenclawTotalL.setText(String.valueOf(ravenclaw.getTotalscore()));
-        hufflepuffTotalL.setText(String.valueOf(hufflepuff.getTotalscore()));
-        slytherinTotalL.setText(String.valueOf(slytherin.getTotalscore()));
+        gryffindorTotalL.setText(String.valueOf(gryffindor.getTotalscore()) + " house points");
+        ravenclawTotalL.setText(String.valueOf(ravenclaw.getTotalscore()) + " house points");
+        hufflepuffTotalL.setText(String.valueOf(hufflepuff.getTotalscore()) + " house points");
+        slytherinTotalL.setText(String.valueOf(slytherin.getTotalscore()) + " house points");
 
         manageList(gryffindorLV, scoresGryffindorArrayList, "gryffindorScores");
         manageList(ravenclawLV, scoresRavenclawArrayList, "ravenclawScores");
