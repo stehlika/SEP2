@@ -94,14 +94,14 @@ public class GameSystem  {
         scene.setOnKeyPressed(event -> {
             if(event.getCode() == KeyCode.UP) {
                 if (!gameOver) {
-                    ClientRMI.getInstance().updateUserPosition("moveUP");
+                    ClientRMI.getInstance().userUpdate(new UserMovement(this._player, "UP"));
                     upMovement();
                 }
                 else
                     initializeGame();
             } else if (event.getCode() == KeyCode.DOWN) {
                 if (!gameOver) {
-                    ClientRMI.getInstance().updateUserPosition("moveDOWN");
+                    ClientRMI.getInstance().userUpdate(new UserMovement(this._player, "DOWN"));
                     downMovement();
                 }
                 else
@@ -179,7 +179,7 @@ public class GameSystem  {
         // momentalne je to nastavene tak ze sa da game over obrazovka ked sa pretne tower s userom
         // TODO treba spravit viacero verzii intersection pre tower-user, user-cloud, user-lightning, user-dementor
         if (towerIntersection) {
-            ClientRMI.getInstance().updateUserPosition("userCharacter2died");
+            ClientRMI.getInstance().userUpdate(new UserMovement(this._player, "DIE"));
             GameOverLabel gameOverLabel = new GameOverLabel(width / 2, height / 2);
             highScore = highScore < score ? score : highScore;
             gameOverLabel.setText("Tap to retry. Score: " + score + "\n\tHighScore: " + highScore);
@@ -359,26 +359,31 @@ public class GameSystem  {
 
     }
 
-    public void updateUser2UP(String msg) {
-        if (msg.equals("moveUP")) {
-            user2jump.setByY(-50);
-            user2jump.setCycleCount(1);
-            userCharacter2.jumping = true;
-            user2fall.stop();
-            user2jump.stop();
-            user2jump.play();
-        } else if (msg.equals("moveDOWN")) {
-            user2jump.setByY(50);
-            user2jump.setCycleCount(1);
-            userCharacter2.jumping = true;
-            user2fall.stop();
-            user2jump.stop();
-            user2jump.play();
-        } else if (msg.equals("userCharacter2died")) {
-            System.out.println("User character 2 died");
+    public void updateUser2UP(UserMovement userMovement) {
+        if (!(userMovement.getPlayer().equals(this._player))) {
+            if (userMovement.getMovement().equals("UP")) {
+                user2jump.setByY(-50);
+                user2jump.setCycleCount(1);
+                userCharacter2.jumping = true;
+                user2fall.stop();
+                user2jump.stop();
+                user2jump.play();
+            } else if (userMovement.getMovement().equals("DOWN")) {
+                user2jump.setByY(50);
+                user2jump.setCycleCount(1);
+                userCharacter2.jumping = true;
+                user2fall.stop();
+                user2jump.stop();
+                user2jump.play();
+            } else if (userMovement.getMovement().equals("DIE")) {
+                System.out.println("User character 2 died");
+            } else {
+                System.out.println("Nerozpoznany prikaz");
+            }
         } else {
-            System.out.println("Nerozpoznany prikaz");
+            System.out.println("Prijate od sameho seba ");
         }
+
 
     }
 

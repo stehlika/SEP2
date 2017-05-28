@@ -1,5 +1,6 @@
 package Server.Controller;
 
+import Client.Quidditch.GameSystem.UserMovement;
 import Server.Domain.Mediator.ModelManager;
 import Server.Domain.Model.House;
 import Server.Domain.Model.Player;
@@ -106,10 +107,10 @@ public class ServerRMI extends Observable implements RmiService {
     }
 
     @Override
-    public void updateUserPosition(String command) {
-        System.out.println("Uzivatelsky prikaz z Server RMI: " + command);
+    public void updateUserPosition(UserMovement userMovement) {
+        System.out.println("Uzivatelsky prikaz z Server RMI: " + userMovement);
         setChanged();
-        notifyObservers(command);
+        notifyObservers(userMovement);
     }
 
     @Override

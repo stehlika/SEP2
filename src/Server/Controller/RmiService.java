@@ -1,5 +1,6 @@
 package Server.Controller;
 
+import Client.Quidditch.GameSystem.UserMovement;
 import Server.Domain.Model.House;
 import Server.Domain.Model.Player;
 import javafx.util.Pair;
@@ -31,6 +32,6 @@ public interface RmiService extends Remote {
 
     ArrayList<Integer> getHighscoreForPlayer(String name) throws IOException;
 
-    void updateUserPosition(String command) throws IOException;
+    void updateUserPosition(UserMovement userMovement) throws IOException;
 
 }

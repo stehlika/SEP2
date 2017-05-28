@@ -1,6 +1,7 @@
 package Client.Quidditch.Controller;
 
 import Client.Quidditch.GameSystem.GameSystem;
+import Client.Quidditch.GameSystem.UserMovement;
 import Server.Controller.RemoteObserver;
 import Server.Controller.RmiService;
 import Server.Domain.Model.House;
@@ -143,9 +144,9 @@ public class ClientRMI extends UnicastRemoteObject implements RemoteObserver {
     }
 
 
-    public void updateUserPosition(String command) {
+    public void userUpdate(UserMovement userMovement) {
         try {
-            rmiService.updateUserPosition(command);
+            rmiService.updateUserPosition(userMovement);
         } catch (IOException e) {
             e.printStackTrace();
         }
