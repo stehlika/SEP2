@@ -29,7 +29,7 @@ public class Level {
 
         for (int i = 1; i < 2000; i++) {
             listOfTowersX.add(i * 400.0);
-            listOfTowersY.add(height * Math.random() / 2.0);
+            listOfTowersY.add(350.0 + Math.random() * 200);
             listOfCloudsX.add(i * 400.0);
             listOfCloudsY.add(Math.random() * 300.0);
             listOfLightningsX.add(i * 400.0 + 200);
