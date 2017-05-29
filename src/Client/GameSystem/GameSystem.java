@@ -208,13 +208,13 @@ public class GameSystem  {
      *
      */
     private void initializeGame() {
-        if (!player1ready || !player2ready) {
-            startScreen.setOpacity(1.0);
-            System.out.println("Som wo while ");
-            return;
-
-        }
-        System.out.println("us sme ready");
+//        if (!player1ready || !player2ready) {
+//            startScreen.setOpacity(1.0);
+//            System.out.println("Som wo while ");
+//            return;
+//
+//        }
+//        System.out.println("us sme ready");
 
         listOfTowers.clear();
         listOfClouds.clear();
@@ -352,7 +352,7 @@ public class GameSystem  {
             }
         }));
         gameLoop.setCycleCount(-1);
-        initializeGame();
+      //  initializeGame();
         loadHighScore();
     }
 
@@ -379,8 +379,6 @@ public class GameSystem  {
     public void updateUser2(UserMovement userMovement) {
         if ((userMovement.getPlayer().equals(this._player))) {
             //ignore own requests
-            player1ready = true;
-            initializeGame();
         } else {
             System.out.println("Prislo to od ineho usera ako odo mna:  " + userMovement);
             if (userMovement.getMovement().equals("UP")) {
