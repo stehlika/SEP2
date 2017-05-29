@@ -4,17 +4,16 @@ import Client.GameSystem.Resources.Resources;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.layout.Pane;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by terezamadova on 27/05/2017.
  */
-public class Level {
+public class Level implements Serializable {
 
     private final double width = 4000, height = 720;
 
-    private Resources res = new Resources();
-    private Pane root;
     private ArrayList<Double> listOfTowersX = new ArrayList<>();
     private ArrayList<Double> listOfTowersY = new ArrayList<>();
     private ArrayList<Double> listOfCloudsX = new ArrayList<>();

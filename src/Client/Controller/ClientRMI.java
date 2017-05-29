@@ -152,6 +152,12 @@ public class ClientRMI extends UnicastRemoteObject implements RemoteObserver {
     }
 
     public Level getLevel() {
-        return rmiService.getLevel();
+        try {
+            return rmiService.getLevel();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Vratila sa hola pica ");
+            return null;
+        }
     }
 }

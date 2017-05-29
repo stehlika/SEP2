@@ -116,7 +116,7 @@ public class ServerRMI extends Observable implements RmiService {
     }
 
     @Override
-    public Level getLevel() {
+    public Level getLevel() throws IOException {
         return modelManager.getLevel();
     }
 

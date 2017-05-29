@@ -283,9 +283,7 @@ public class GameSystem  {
         score = 0;
         incrementOnce = true;
         gameOver = false;
-        userCharacter1.jumping = false;
-        user1fall.stop();
-        user1fall.play();
+//        userCharacter1.jumping = false;
 
 
 

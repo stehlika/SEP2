@@ -34,6 +34,7 @@ public interface RmiService extends Remote {
     ArrayList<Integer> getHighscoreForPlayer(String name) throws IOException;
 
     void updateUserPosition(UserMovement userMovement) throws IOException;
-    Level getLevel();
+
+    Level getLevel() throws IOException;
 
 }
