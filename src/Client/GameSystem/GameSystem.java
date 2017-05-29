@@ -111,7 +111,6 @@ public class GameSystem  {
                     initializeGame();
             } else if (event.getCode() == KeyCode.ENTER) {
                 startScreen.setText("Waiting for player 2");
-                player1ready = true;
                 ClientRMI.getInstance().userUpdate(new UserMovement(this._player, "START"));
             }
         });
@@ -360,7 +359,7 @@ public class GameSystem  {
             }
         }));
         gameLoop.setCycleCount(-1);
-      //  initializeGame();
+
         loadHighScore();
     }
 
