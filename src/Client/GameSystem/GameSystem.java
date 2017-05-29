@@ -210,13 +210,6 @@ public class GameSystem  {
      *
      */
     private void initializeGame() {
-//        if (!player1ready || !player2ready) {
-//            startScreen.setOpacity(1.0);
-//            System.out.println("Som wo while ");
-//            return;
-//
-//        }
-//        System.out.println("us sme ready");
 
         listOfTowers.clear();
         listOfClouds.clear();
@@ -359,7 +352,7 @@ public class GameSystem  {
             }
         }));
         gameLoop.setCycleCount(-1);
-
+        initializeGame();
         loadHighScore();
     }
 
@@ -408,9 +401,6 @@ public class GameSystem  {
 
             } else if (userMovement.getMovement().equals("START")) {
                 System.out.println("Player 2 je ready ");
-                player2ready = true;
-                player1ready = true;
-                initializeGame();
             } else {
                 System.out.println("Nerozpoznany prikaz");
             }
