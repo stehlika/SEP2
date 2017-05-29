@@ -233,7 +233,7 @@ public class GameSystemSingle {
         for (int i = 0; i < 5; i++) {
             //Cloud
 
-            Cloud cloud = new Cloud(res.cloudImage, y, root, false);
+            Cloud cloud = new Cloud(res.cloudImage, root, false);
            // cloud.setX(Math.random() * width);
            // cloud.setY(Math.random() * height * 0.5 + 0.1);
             listOfClouds.add(cloud);
@@ -259,11 +259,11 @@ public class GameSystemSingle {
         for (int i = 0; i < level.getListOfTowersX().size(); i++) {
             Tower tower;
             if (Math.random() < 0.4) {
-                tower = new Tower(res.towerImage, y, root, false);
+                tower = new Tower(res.towerImage, root, false);
             } else if (Math.random() > 0.85) {
-                tower = new Tower(res.towerImage, y, root, true);
+                tower = new Tower(res.towerImage, root, true);
             } else {
-                tower = new Tower(res.towerImage, y, root, false);
+                tower = new Tower(res.towerImage, root, false);
             }
 
             tower.setTranslateX(level.getListOfTowersX().get(i));
@@ -272,7 +272,7 @@ public class GameSystemSingle {
         }
         for (int i = 0; i < level.getListOfCloudsX().size(); i++) {
 
-            Cloud cloud = new Cloud(res.cloudImage, y, root, false);
+            Cloud cloud = new Cloud(res.cloudImage, root, false);
             cloud.setTranslateX(level.getListOfCloudsX().get(i));
             listOfClouds.add(cloud);
             root.getChildren().add(cloud);
