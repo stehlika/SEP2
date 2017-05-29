@@ -1,6 +1,8 @@
 package Client.Quidditch.GameSystem.Resources;
 
 import javafx.scene.image.Image;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 /**
  * Created by adamstehlik on 17/05/2017.
@@ -20,6 +22,8 @@ public class Resources {
     public Image towerImageRave;
     public Image towerImageSlyt;
     public Image towerImageHuff;
+
+    public Media harryPotterThemeSong;
 
 
     public Resources() {
@@ -44,5 +48,10 @@ public class Resources {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+
+        String path =  getClass().getResource("Harry-Potter-Theme-Song.mp3").toString();
+        harryPotterThemeSong = new Media(path);
+
     }
 }

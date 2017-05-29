@@ -36,7 +36,7 @@ public class MainViewController extends MasterController {
     }
 
     public void playMultiGame(ActionEvent actionEvent) {
-//        GameSystem.getInstance().startGame(_player);
+        GameSystem.getInstance().startGame(_player);
     }
 
     public void showHouseCup(ActionEvent actionEvent) {

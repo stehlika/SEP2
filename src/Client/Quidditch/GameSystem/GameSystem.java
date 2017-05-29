@@ -113,7 +113,7 @@ public class GameSystem  {
                     initializeGame();
             } else if (event.getCode() == KeyCode.ENTER) {
                 startScreen.setText("Waiting for player 2");
-                player1ready = true;
+                player2ready = true;
                 initializeGame();
                 ClientRMI.getInstance().userUpdate(new UserMovement(this._player, "START"));
             }
@@ -405,7 +405,6 @@ public class GameSystem  {
     public void updateUser2(UserMovement userMovement) {
         System.out.println("User z update movemetn: " + userMovement.getPlayer());
         if ((userMovement.getPlayer().equals(this._player))) {
-            System.out.println("Rovnaky user ");
         } else {
             System.out.println("Prislo to od ineho usera ako odo mna:  " + userMovement);
             if (userMovement.getMovement().equals("UP")) {
@@ -429,6 +428,7 @@ public class GameSystem  {
                 GameOverLabel gameOverLabel = new GameOverLabel(width / 2, height / 2);
 
             } else if (userMovement.getMovement().equals("START")) {
+                System.out.println("Player 2 je ready ");
                 player2ready = true;
                 initializeGame();
 
