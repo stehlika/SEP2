@@ -15,8 +15,16 @@
                   <Insets top="40.0" />
                </VBox.margin>
                <font>
-                  <Font name="Avenir Roman" size="25.0" />
+                  <Font name="Avenir Roman" size="29.0" />
                </font>
+            </Button>
+            <Button fx:id="playMultiBtnMS" mnemonicParsing="false" onAction="#playMultiGame" prefHeight="60.0" prefWidth="250.0" style="-fx-background-radius: 30; -fx-background-color: #ecf0f1;" text="PLAY MULTIPLAYER" textFill="#34495e">
+               <font>
+                  <Font name="Avenir Roman" size="20.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="40.0" />
+               </VBox.margin>
             </Button>
             <Button fx:id="leaderboardBtn" mnemonicParsing="false" onAction="#showLeaderBoard" prefHeight="60.0" prefWidth="250.0" style="-fx-background-color: #ecf0f1; -fx-background-radius: 30;" text="LEADERBOARD" textFill="#34495e">
                <VBox.margin>

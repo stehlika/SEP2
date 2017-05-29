@@ -32,10 +32,12 @@ public class Level {
     public Level() {
 
 
-        for (int i = 1; i < 20; i++) {
+        for (int i = 1; i < 2000; i++) {
             listOfTowersX.add(i * 400.0);
-            listOfCloudsX.add(i * 200.0 + 120);
-            listOfCloudsY.add(Math.random() * 220 + 20.0);
+            listOfCloudsX.add(i * 200.0);
+//            listOfCloudsY.add(Math.random() * 220 + 20.0);
+            listOfLightningsX.add(i * 500.0 + 180);
+            listOfLightningsY.add(Math.random() * 20 + 5.0);
         }
 //        listOfTowersX.add(100.0);
 //        listOfTowersX.add(300.0);

@@ -1,6 +1,7 @@
 package Client.Quidditch.Controller;
 
 import Client.Quidditch.GameSystem.GameSystem;
+import Client.Quidditch.GameSystem.GameSystemSingle;
 import Server.Domain.Model.Player;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,6 +12,7 @@ import javafx.scene.control.Button;
  */
 public class MainViewController extends MasterController {
     public Button playBtnMS;
+    public Button playMultiBtnMS;
     public Button leaderboardBtn;
     public Button houseCupBtn;
     public Button profileBtn;
@@ -30,7 +32,11 @@ public class MainViewController extends MasterController {
     }
 
     public void playGame(ActionEvent actionEvent) {
-        GameSystem.getInstance().startGame(_player);
+        GameSystemSingle.getInstance().startGame(_player);
+    }
+
+    public void playMultiGame(ActionEvent actionEvent) {
+//        GameSystem.getInstance().startGame(_player);
     }
 
     public void showHouseCup(ActionEvent actionEvent) {

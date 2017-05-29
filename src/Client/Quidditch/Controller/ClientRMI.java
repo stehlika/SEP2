@@ -150,15 +150,3 @@ public class ClientRMI extends UnicastRemoteObject implements RemoteObserver {
     public void removeOberserverisko() {
     }
 }
-
-
-
-
-/*
-
-    @Override
-    public void update(Object observable, Object updateMsg) throws RemoteException {
-        System.out.println("New trip created:" + updateMsg);
-    }
-
-*/

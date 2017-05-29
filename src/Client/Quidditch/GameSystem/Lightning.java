@@ -28,13 +28,16 @@ public class Lightning extends Group {
 //        setFitWidth(20);
 //        setFitHeight(30);
 
-        lightningBody.setImage(frame);
-        lightningBody.setX(Math.random());
-        lightningBody.yProperty().bind(root.heightProperty().divide(2));
+        lightningBody.setImage(this.frame);
+        lightningBody.setX(2.5);
+        lightningBody.setY(30);
+//        lightningBody.yProperty().bind(root.heightProperty().divide(2));
         setOpacity(1.0);
         bounds = new Rectangle(frame.getWidth(), frame.getHeight());
-        bounds.setStroke(Color.TRANSPARENT);
+        bounds.setStroke(Color.BLACK);
         bounds.setFill(Color.TRANSPARENT);
+        bounds.setX(lightningBody.getX());
+        bounds.setY(lightningBody.getY());
 
         getChildren().addAll(lightningBody);
         getChildren().addAll(bounds);

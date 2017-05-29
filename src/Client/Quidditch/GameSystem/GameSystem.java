@@ -237,12 +237,13 @@ public class GameSystem  {
         scoreLabel.setOpacity(0.8);
         scoreLabel.setText("Score: 0");
         root.getChildren().addAll(userCharacter1.getGraphics(), scoreLabel, userCharacter2.getGraphics());
-
+        SimpleDoubleProperty y = new SimpleDoubleProperty(0);
+        y.set(root.getHeight() * Math.random() / 2.0);
         //  vytvara cloudy na screen na  random X,Y poziciu a prida do listu cloudov
         // vytvara lightning na screen na random X,Y poziciu a prida do listu lightning
         for (int i = 0; i < 5; i++) {
             //Cloud
-            Cloud cloud = new Cloud(res.cloudImage, root);
+            Cloud cloud = new Cloud(res.cloudImage, y, root, false);
            // cloud.setX(Math.random() * width);
            // cloud.setY(Math.random() * height * 0.5 + 0.1);
             listOfClouds.add(cloud);
@@ -265,8 +266,6 @@ public class GameSystem  {
 
         Level level = new Level();
         for (int i = 0; i < level.getListOfTowersX().size(); i++) {
-            SimpleDoubleProperty y = new SimpleDoubleProperty(0);
-            y.set(root.getHeight() * Math.random() / 2.0);
             Tower tower;
             if (Math.random() < 0.4) {
                 tower = new Tower(res.towerImage, y, root, false);
@@ -281,7 +280,7 @@ public class GameSystem  {
             listOfTowers.add(tower);
             root.getChildren().add(tower);
 
-            Cloud cloud = new Cloud(res.cloudImage, root);
+            Cloud cloud = new Cloud(res.cloudImage, y, root, false);
             cloud.setTranslateX(level.getListOfCloudsX().get(i));
             cloud.setTranslateY(level.getListOfCloudsY().get(i));
             listOfClouds.add(cloud);
