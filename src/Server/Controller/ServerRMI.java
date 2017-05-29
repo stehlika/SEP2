@@ -3,6 +3,7 @@ package Server.Controller;
 import Client.GameSystem.UserMovement;
 import Server.Domain.Mediator.ModelManager;
 import Server.Domain.Model.House;
+import Server.Domain.Model.Level;
 import Server.Domain.Model.Player;
 import javafx.util.Pair;
 
@@ -112,6 +113,11 @@ public class ServerRMI extends Observable implements RmiService {
         System.out.println("Uzivatelsky prikaz z Server RMI: " + userMovement);
         setChanged();
         notifyObservers(userMovement);
+    }
+
+    @Override
+    public Level getLevel() {
+        return modelManager.getLevel();
     }
 
     @Override

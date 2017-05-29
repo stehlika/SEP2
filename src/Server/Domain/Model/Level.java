@@ -1,4 +1,4 @@
-package Client.GameSystem;
+package Server.Domain.Model;
 
 import Client.GameSystem.Resources.Resources;
 import javafx.beans.property.SimpleDoubleProperty;

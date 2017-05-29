@@ -5,6 +5,7 @@ import Client.GameSystem.UserMovement;
 import Server.Controller.RemoteObserver;
 import Server.Controller.RmiService;
 import Server.Domain.Model.House;
+import Server.Domain.Model.Level;
 import Server.Domain.Model.Player;
 import javafx.util.Pair;
 
@@ -148,5 +149,9 @@ public class ClientRMI extends UnicastRemoteObject implements RemoteObserver {
     }
 
     public void removeOberserverisko() {
+    }
+
+    public Level getLevel() {
+        return rmiService.getLevel();
     }
 }

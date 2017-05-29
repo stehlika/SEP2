@@ -3,6 +3,7 @@ package Server.Domain.Mediator;
 
 import Server.Domain.DatabaseAdapter;
 import Server.Domain.Model.House;
+import Server.Domain.Model.Level;
 import Server.Domain.Model.Player;
 import Server.Domain.Persistence;
 import javafx.util.Pair;
@@ -17,9 +18,11 @@ import Server.Domain.Model.Player;
 public class ModelManager implements ModelMan {
 
     private Persistence storage;
+    private Level level;
 
     public ModelManager() {
         storage = new DatabaseAdapter();
+        level = new Level();
     }
 
     @Override
@@ -71,5 +74,10 @@ public class ModelManager implements ModelMan {
     @Override
     public ArrayList<Integer> getHighscoreForPlayer(String name) throws IOException {
         return storage.getHighscoreForPlayer(name);
+    }
+
+    @Override
+    public Level getLevel() {
+        return level;
     }
 }

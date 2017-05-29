@@ -3,9 +3,9 @@ package Client.GameSystem;
 import Client.Controller.ClientRMI;
 import Client.GameSystem.Resources.Resources;
 import Client.HarryPotterMain;
+import Server.Domain.Model.Level;
 import Server.Domain.Model.Player;
 import javafx.animation.*;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -63,8 +63,10 @@ public class GameSystem  {
     private Player _player;
 
     private static GameSystem instance = null;
-    private GameSystem()  {
 
+    private Level level;
+    private GameSystem()  {
+        level = ClientRMI.getInstance().getLevel();
     }
 
     public static GameSystem getInstance() {
@@ -244,7 +246,6 @@ public class GameSystem  {
 
         // vytvara towery na random pozicie a pridava ich do listu towerov
 
-        Level level = new Level();
         for (int i = 0; i < level.getListOfTowersX().size(); i++) {
             Tower tower;
             if (Math.random() < 0.4) {

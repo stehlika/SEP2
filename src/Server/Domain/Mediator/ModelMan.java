@@ -1,6 +1,7 @@
 package Server.Domain.Mediator;
 
 import Server.Domain.Model.House;
+import Server.Domain.Model.Level;
 import Server.Domain.Model.Player;
 import javafx.util.Pair;
 import java.io.IOException;
@@ -28,5 +29,7 @@ public interface ModelMan {
     ArrayList<Pair<String, Integer>> getHouseLeaderBoard(String faculty) throws IOException;
 
     ArrayList<Integer> getHighscoreForPlayer(String name) throws IOException;
+
+    Level getLevel();
 
 }

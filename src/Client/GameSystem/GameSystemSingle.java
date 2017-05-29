@@ -3,6 +3,7 @@ package Client.GameSystem;
 import Client.Controller.ClientRMI;
 import Client.GameSystem.Resources.Resources;
 import Client.HarryPotterMain;
+import Server.Domain.Model.Level;
 import Server.Domain.Model.Player;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;

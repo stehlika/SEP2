@@ -2,6 +2,7 @@ package Server.Controller;
 
 import Client.GameSystem.UserMovement;
 import Server.Domain.Model.House;
+import Server.Domain.Model.Level;
 import Server.Domain.Model.Player;
 import javafx.util.Pair;
 import java.io.IOException;
@@ -33,5 +34,6 @@ public interface RmiService extends Remote {
     ArrayList<Integer> getHighscoreForPlayer(String name) throws IOException;
 
     void updateUserPosition(UserMovement userMovement) throws IOException;
+    Level getLevel();
 
 }
