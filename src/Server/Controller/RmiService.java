@@ -1,6 +1,6 @@
 package Server.Controller;
 
-import Client.Quidditch.GameSystem.UserMovement;
+import Client.GameSystem.UserMovement;
 import Server.Domain.Model.House;
 import Server.Domain.Model.Player;
 import javafx.util.Pair;

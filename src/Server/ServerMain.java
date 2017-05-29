@@ -7,10 +7,28 @@ import Server.Controller.ServerController;
  */
 public class ServerMain {
 
-    public static void main (String args[]) {
-        ServerController.startRMIServer(9998);
+    private static String OS = null;
+    private static int serverPort;
 
+    public static void main (String args[]) {
+        getOsName();
+        ServerController.startRMIServer(serverPort);
     }
 
+    private static void getOsName()
+    {
+        OS = System.getProperty("os.name");
 
+        if(OS != null) {
+            if (OS.startsWith("Mac")) {
+                serverPort = 9900;
+            } else if (OS.startsWith("Windows")) {
+                serverPort = 1100;
+            } else {
+                serverPort = 5000;
+            }
+        } else {
+            serverPort = 2000;
+        }
+    }
 }
