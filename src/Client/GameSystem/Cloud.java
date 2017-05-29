@@ -30,12 +30,12 @@ public class Cloud extends Group {
     private Rectangle bounds;
     private Image frame;
 
-    public Cloud(Image frame, SimpleDoubleProperty gapLocation, Pane root, boolean animate) {
+    public Cloud(Image frame, Pane root, boolean animate) {
         this.frame = frame;
-        oscillationCenter = gapLocation.get();
+//        oscillationCenter = gapLocation.get();
         if (animate) {
             animateTube = new Timeline(new KeyFrame(Duration.millis(33), e -> {
-                gapLocation.set(25 * Math.cos(Math.PI / 60 * frames) + oscillationCenter);
+//                gapLocation.set(25 * Math.cos(Math.PI / 60 * frames) + oscillationCenter);
                 frames = (frames + 1) % 120;
             }));
             animateTube.setCycleCount(-1);
@@ -43,7 +43,8 @@ public class Cloud extends Group {
         }
         cloudBody.setImage(this.frame);
         cloudBody.setX(2.5);
-        cloudBody.yProperty().bind(gapLocation.add(GAP).add(root.heightProperty().divide(6)));
+        cloudBody.setY(2.5);
+//        cloudBody.yProperty().bind(gapLocation.add(GAP).add(root.heightProperty().divide(6)));
         this.bounds = new Rectangle(frame.getWidth(), frame.getHeight());
         bounds.setStroke(Color.BLACK);
         bounds.setFill(Color.TRANSPARENT);

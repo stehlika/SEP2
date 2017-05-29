@@ -180,6 +180,9 @@ public class GameSystem  {
             cloud.getBounds().setStroke(Color.YELLOW);
         }
 
+        if (lightningIntersection) {
+            lightning.getBounds().setStroke(Color.YELLOW);
+        }
 
         if (userCharacter1.getBounds().getCenterY() + userCharacter1.getBounds().getRadiusY() > height || userCharacter1.getBounds().getCenterY() - userCharacter1.getBounds().getRadiusY() < 0) {
             towerIntersection = true;
@@ -232,29 +235,18 @@ public class GameSystem  {
         scoreLabel.setText("Score: 0");
         root.getChildren().addAll(userCharacter1.getGraphics(), scoreLabel, userCharacter2.getGraphics());
 
-        SimpleDoubleProperty y = new SimpleDoubleProperty(0);
-        y.set(root.getHeight() * Math.random() / 2.0);
+//        SimpleDoubleProperty y = new SimpleDoubleProperty(0);
+//        y.set(root.getHeight() * Math.random() / 2.0);
         //  vytvara cloudy na screen na  random X,Y poziciu a prida do listu cloudov
         // vytvara lightning na screen na random X,Y poziciu a prida do listu lightning
         for (int i = 0; i < 5; i++) {
             //Cloud
-            Cloud cloud = new Cloud(res.cloudImage, y, root, false);
-           // cloud.setX(Math.random() * width);
-           // cloud.setY(Math.random() * height * 0.5 + 0.1);
+            Cloud cloud = new Cloud(res.cloudImage, root, false);
             listOfClouds.add(cloud);
-//            root.getChildren().add(cloud);
-//            root.getChildren().add(cloud.getBounds());
 
             //Lightning
             Lightning lightning = new Lightning(res.lightningImage, root);
-//            double xValue = Math.random() * width;
-//            double yValue = Math.random() * height * 0.5 + 0.1;
-//            lightning.setX(xValue);
-//            lightning.setY(yValue);
-//            lightning.setPosition(xValue, yValue);
             listOfLightnings.add(lightning);
-//            root.getChildren().add(lightning);
-//            root.getChildren().add(lightning.getBounds());
         }
 
         // vytvara towery na random pozicie a pridava ich do listu towerov
@@ -263,25 +255,35 @@ public class GameSystem  {
         for (int i = 0; i < level.getListOfTowersX().size(); i++) {
             Tower tower;
             if (Math.random() < 0.4) {
-                tower = new Tower(res.towerImage, y, root, false);
+                tower = new Tower(res.towerImage, root, false);
             } else if (Math.random() > 0.85) {
-                tower = new Tower(res.towerImage, y, root, true);
+                tower = new Tower(res.towerImage, root, true);
             } else {
-                tower = new Tower(res.towerImage, y, root, false);
+                tower = new Tower(res.towerImage, root, false);
             }
 
 //            tower.setTranslateX(i * (width / 4 + 10) + 400);
             tower.setTranslateX(level.getListOfTowersX().get(i));
+            tower.setTranslateY(level.getListOfTowersY().get(i));
             listOfTowers.add(tower);
             root.getChildren().add(tower);
 
         }
         for (int i = 0; i < level.getListOfCloudsX().size(); i++) {
 
-            Cloud cloud = new Cloud(res.cloudImage, y, root, false);
+            Cloud cloud = new Cloud(res.cloudImage, root, false);
             cloud.setTranslateX(level.getListOfCloudsX().get(i));
+            cloud.setTranslateY(level.getListOfCloudsY().get(i));
             listOfClouds.add(cloud);
             root.getChildren().add(cloud);
+        }
+        for (int i = 0; i < level.getListOfLightningsX().size(); i++) {
+
+            Lightning bolt = new Lightning(res.lightningImage, root);
+            bolt.setTranslateX(level.getListOfLightningsX().get(i));
+            bolt.setTranslateY(level.getListOfLightningsY().get(i));
+            listOfLightnings.add(bolt);
+            root.getChildren().add(bolt);
         }
 
         score = 0;
@@ -343,8 +345,14 @@ public class GameSystem  {
                 if (listOfTowers.get(0).getTranslateX() <= -width / 12.3) {
                     listOfTowers.remove(0);
                 }
+                if (listOfLightnings.get(0).getTranslateX() <= -width / 12.3) {
+                    listOfLightnings.remove(0);
+                }
                 for (int i = 0; i < listOfClouds.size(); i++) {
                     listOfClouds.get(i).setTranslateX(listOfClouds.get(i).getTranslateX() - 2);
+                }
+                for (int i = 0; i < listOfLightnings.size(); i++) {
+                    listOfLightnings.get(i).setTranslateX(listOfLightnings.get(i).getTranslateX() - 2);
                 }
                 for (int i = 0; i < listOfTowers.size(); i++) {
                     listOfTowers.get(i).setTranslateX(listOfTowers.get(i).getTranslateX() - 2);

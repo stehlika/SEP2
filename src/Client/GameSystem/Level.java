@@ -1,6 +1,7 @@
 package Client.GameSystem;
 
 import Client.GameSystem.Resources.Resources;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.layout.Pane;
 
 import java.util.ArrayList;
@@ -21,15 +22,18 @@ public class Level {
     private ArrayList<Double> listOfLightningsX = new ArrayList<>();
     private ArrayList<Double> listOfLightningsY = new ArrayList<>();
 
+
+
     public Level() {
 
 
         for (int i = 1; i < 2000; i++) {
             listOfTowersX.add(i * 400.0);
-            listOfCloudsX.add(i * 200.0);
-//            listOfCloudsY.add(Math.random() * 220 + 20.0);
-            listOfLightningsX.add(i * 500.0 + 180);
-            listOfLightningsY.add(Math.random() * 20 + 5.0);
+            listOfTowersY.add(height * Math.random() / 2.0);
+            listOfCloudsX.add(i * 400.0);
+            listOfCloudsY.add(Math.random() * 300.0);
+            listOfLightningsX.add(i * 400.0 + 200);
+            listOfLightningsY.add(Math.random() * 350);
         }
 //        listOfTowersX.add(100.0);
 //        listOfTowersX.add(300.0);
