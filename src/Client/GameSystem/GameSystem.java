@@ -224,7 +224,7 @@ public class GameSystem  {
         userCharacter1.getGraphics().setTranslateY(150);
 
         userCharacter2.getGraphics().setTranslateX(100);
-        userCharacter2.getGraphics().setTranslateY(200);
+        userCharacter2.getGraphics().setTranslateY(150);
         userCharacter2.getGraphics().setOpacity(0.5);
 
         scoreLabel.setOpacity(0.8);

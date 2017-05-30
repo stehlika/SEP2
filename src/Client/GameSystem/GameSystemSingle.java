@@ -227,7 +227,7 @@ public class GameSystemSingle {
         userCharacter.getGraphics().setTranslateY(150);
 
         scoreLabel.setOpacity(0.8);
-        scoreLabel.setText("Score: 0");
+        scoreLabel.setText("Score: " + score);
         root.getChildren().addAll(userCharacter.getGraphics(), scoreLabel);
 
         //  vytvara cloudy na screen na  random X,Y poziciu a prida do listu cloudov
@@ -281,7 +281,7 @@ public class GameSystemSingle {
         dementor.setTranslateY(100.0);
         root.getChildren().add(dementor);
 
-        score = 0;
+//        score = 0;
         incrementOnce = true;
         gameOver = false;
         userCharacter.jumping = false;
