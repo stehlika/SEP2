@@ -9,13 +9,11 @@ import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Path;
 import javafx.scene.shape.Shape;
 import javafx.scene.transform.Rotate;
@@ -44,6 +42,7 @@ public class GameSystemSingle {
     private int counter_30FPS = 0;
 
     private UserCharacter userCharacter;
+    private Dementor dementor;
 
     private TranslateTransition userjump;
     private TranslateTransition userfall;
@@ -90,14 +89,12 @@ public class GameSystemSingle {
             if(event.getCode() == KeyCode.UP) {
                 if (!gameOver) {
                     upMovement();
-                    ClientRMI.getInstance().userUpdate(new UserMovement(this._player, "UP"));
                 }
                 else
                     initializeGame();
             } else if (event.getCode() == KeyCode.DOWN) {
                 if (!gameOver) {
                     downMovement();
-                    ClientRMI.getInstance().userUpdate(new UserMovement(this._player, "DOWN"));
                 }
                 else
                     initializeGame();
@@ -164,6 +161,7 @@ public class GameSystemSingle {
         boolean cloudIntersection = !(cloudPath.getElements().isEmpty());
         boolean towerIntersection = !(towerPath.getElements().isEmpty());
         boolean lightningIntersection = !(lightningPath.getElements().isEmpty());
+        boolean dementorApproached = false;
 
         if (towerIntersection) {
             System.out.println("TOWER " + tower.getBounds() + " path " + towerPath);
@@ -172,6 +170,10 @@ public class GameSystemSingle {
             System.out.println("CLOUD " + cloud.getBounds() + " path " + cloudPath);
         }
 
+        if (dementor.getTranslateX() + dementor.getBounds().getWidth() >= 200) {
+            System.out.println("GAME OVER");
+            dementorApproached =  true;
+        }
 
         //toto su vrchne a spodne bounds (towerIntersection je len zavolane aby to vtedy spomalilo - asi lepsie zavolat gameover?)
         if (userCharacter.getBounds().getCenterY() + userCharacter.getBounds().getRadiusY() > height || userCharacter.getBounds().getCenterY() - userCharacter.getBounds().getRadiusY() < 0) {
@@ -183,29 +185,30 @@ public class GameSystemSingle {
         if (towerIntersection) {
             System.out.println("TOWER intersection " + new Date());
             gameLoop.setRate(0.05);
+            dementor.setTranslateX(dementor.getTranslateX() + 10);
         } else if (cloudIntersection) {
             System.out.println("CLOUD intersection");
-            gameLoop.setRate(0.02);
+            gameLoop.setRate(0.2);
+            dementor.setTranslateX(dementor.getTranslateX() + 4);
         } else if (lightningIntersection) {
             System.out.println("LIGHTNING intersection");
-            lightning.getBounds().setStroke(Color.YELLOW);
         } else {
             gameLoop.setRate(1.0);
 //            System.out.println("Game resumed " + new Date());
         }
 
-//        if (lightningIntersection) {
-//            ClientRMI.getInstance().userUpdate(new UserMovement(this._player, "DIE"));
-//
-//            GameOverLabel gameOverLabel = new GameOverLabel(width / 2, height / 2);
-//            highScore = highScore < score ? score : highScore;
-//            gameOverLabel.setText("Tap to retry. Score: " + score + "\n\tHighScore: " + highScore);
-//          //  saveHighScore(); zatial nie je potreba pre fungovanie
-//            root.getChildren().add(gameOverLabel);
-//            root.getChildren().get(1).setOpacity(0);
-//            gameOver = true;
-//            gameLoop.stop();
-//        }
+        if (lightningIntersection || dementorApproached) {
+            ClientRMI.getInstance().userUpdate(new UserMovement(this._player, "DIE"));
+
+            GameOverLabel gameOverLabel = new GameOverLabel(width / 2, height / 2);
+            highScore = highScore < score ? score : highScore;
+            gameOverLabel.setText("Tap to retry. Score: " + score + "\n\tHighScore: " + highScore);
+          //  saveHighScore(); zatial nie je potreba pre fungovanie
+            root.getChildren().add(gameOverLabel);
+            root.getChildren().get(1).setOpacity(0);
+            gameOver = true;
+            gameLoop.stop();
+        }
     }
 
     /**
@@ -220,37 +223,21 @@ public class GameSystemSingle {
         listOfLightnings.clear();
         root.getChildren().clear();
 
-        userCharacter.getGraphics().setTranslateX(100); // Posuva hraca na X osi do lava prava defualt 100
+        userCharacter.getGraphics().setTranslateX(200); // Posuva hraca na X osi do lava prava defualt 100
         userCharacter.getGraphics().setTranslateY(150);
 
         scoreLabel.setOpacity(0.8);
         scoreLabel.setText("Score: 0");
         root.getChildren().addAll(userCharacter.getGraphics(), scoreLabel);
 
-        SimpleDoubleProperty y = new SimpleDoubleProperty(0);
-        y.set(root.getHeight() * Math.random() / 2.0);
         //  vytvara cloudy na screen na  random X,Y poziciu a prida do listu cloudov
         // vytvara lightning na screen na random X,Y poziciu a prida do listu lightning
         for (int i = 0; i < 5; i++) {
-            //Cloud
-
             Cloud cloud = new Cloud(res.cloudImage, root, false);
-           // cloud.setX(Math.random() * width);
-           // cloud.setY(Math.random() * height * 0.5 + 0.1);
             listOfClouds.add(cloud);
-//            root.getChildren().add(cloud);
-//            root.getChildren().add(cloud.getBounds());
 
-            //Lightning
             Lightning lightning = new Lightning(res.lightningImage, root);
-//            double xValue = Math.random() * width;
-//            double yValue = Math.random() * height * 0.5 + 0.1;
-//            lightning.setX(xValue);
-//            lightning.setY(yValue);
-//            lightning.setPosition(xValue, yValue);
             listOfLightnings.add(lightning);
-//            root.getChildren().add(lightning);
-//            root.getChildren().add(lightning.getBounds());
         }
 
         // vytvara towery na random pozicie a pridava ich do listu towerov
@@ -268,6 +255,7 @@ public class GameSystemSingle {
             }
 
             tower.setTranslateX(level.getListOfTowersX().get(i));
+            tower.setTranslateY(level.getListOfTowersY().get(i));
             listOfTowers.add(tower);
             root.getChildren().add(tower);
         }
@@ -275,6 +263,7 @@ public class GameSystemSingle {
 
             Cloud cloud = new Cloud(res.cloudImage, root, false);
             cloud.setTranslateX(level.getListOfCloudsX().get(i));
+            cloud.setTranslateY(level.getListOfCloudsY().get(i));
             listOfClouds.add(cloud);
             root.getChildren().add(cloud);
         }
@@ -287,14 +276,17 @@ public class GameSystemSingle {
             root.getChildren().add(bolt);
         }
 
+        dementor = new Dementor(res.deatheaterImage, root);
+        dementor.setTranslateX(40.0);
+        dementor.setTranslateY(100.0);
+        root.getChildren().add(dementor);
+
         score = 0;
         incrementOnce = true;
         gameOver = false;
         userCharacter.jumping = false;
-        userfall.stop();
-        userfall.play();
-
-
+//        userfall.stop();
+//        userfall.play();
 
         gameLoop.play();
     }
@@ -337,11 +329,17 @@ public class GameSystemSingle {
                 if (listOfTowers.get(0).getTranslateX() <= -width / 12.3) {
                     listOfTowers.remove(0);
                 }
+                if (listOfLightnings.get(0).getTranslateX() <= -width / 12.3) {
+                    listOfLightnings.remove(0);
+                }
                 for (int i = 0; i < listOfClouds.size(); i++) {
                     listOfClouds.get(i).setTranslateX(listOfClouds.get(i).getTranslateX() - 2);
                 }
                 for (int i = 0; i < listOfTowers.size(); i++) {
                     listOfTowers.get(i).setTranslateX(listOfTowers.get(i).getTranslateX() - 2);
+                }
+                for (int i = 0; i < listOfLightnings.size(); i++) {
+                    listOfLightnings.get(i).setTranslateX(listOfLightnings.get(i).getTranslateX() - 2);
                 }
             }
         }));
@@ -368,44 +366,4 @@ public class GameSystemSingle {
     private void saveHighScore() {
 
     }
-
-
-//    public void updateUser2(UserMovement userMovement) {
-//        System.out.println("User z update movemetn: " + userMovement.getPlayer());
-//        if ((userMovement.getPlayer().equals(this._player))) {
-//            System.out.println("Rovnaky user ");
-//        } else {
-//            System.out.println("Prislo to od ineho usera ako odo mna:  " + userMovement);
-//            if (userMovement.getMovement().equals("UP")) {
-//                System.out.println("User 2 mus9 ist hore");
-//                user2jump.setByY(-50);
-//                user2jump.setCycleCount(1);
-//                userCharacter2.jumping = true;
-//                user2fall.stop();
-//                user2jump.stop();
-//                user2jump.play();
-//            } else if (userMovement.getMovement().equals("DOWN")) {
-//                System.out.println("user 2 musi ist dole ");
-//                user2jump.setByY(50);
-//                user2jump.setCycleCount(1);
-//                userCharacter2.jumping = true;
-//                user2fall.stop();
-//                user2jump.stop();
-//                user2jump.play();
-//            } else if (userMovement.getMovement().equals("DIE")) {
-//                System.out.println("User character 2 died");
-//                GameOverLabel gameOverLabel = new GameOverLabel(width / 2, height / 2);
-//
-//            } else if (userMovement.getMovement().equals("START")) {
-//                player2ready = true;
-//                initializeGame();
-//
-//            } else {
-//                System.out.println("Nerozpoznany prikaz");
-//            }
-//        }
-//    }
-
-
-
 }

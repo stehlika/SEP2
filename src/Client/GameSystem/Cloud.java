@@ -44,9 +44,10 @@ public class Cloud extends Group {
         cloudBody.setImage(this.frame);
         cloudBody.setX(2.5);
         cloudBody.setY(2.5);
+        cloudBody.setOpacity(0.8);
 //        cloudBody.yProperty().bind(gapLocation.add(GAP).add(root.heightProperty().divide(6)));
         this.bounds = new Rectangle(frame.getWidth(), frame.getHeight());
-        bounds.setStroke(Color.BLACK);
+        bounds.setStroke(Color.TRANSPARENT);
         bounds.setFill(Color.TRANSPARENT);
         bounds.setX(cloudBody.getX());
         bounds.setY(cloudBody.getY());

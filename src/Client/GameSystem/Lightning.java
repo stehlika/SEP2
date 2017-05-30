@@ -34,7 +34,7 @@ public class Lightning extends Group {
 //        lightningBody.yProperty().bind(root.heightProperty().divide(2));
         setOpacity(1.0);
         bounds = new Rectangle(frame.getWidth(), frame.getHeight());
-        bounds.setStroke(Color.BLACK);
+        bounds.setStroke(Color.TRANSPARENT);
         bounds.setFill(Color.TRANSPARENT);
         bounds.setX(lightningBody.getX());
         bounds.setY(lightningBody.getY());
