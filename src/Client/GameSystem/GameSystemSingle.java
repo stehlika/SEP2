@@ -198,7 +198,7 @@ public class GameSystemSingle {
         }
 
         if (lightningIntersection || dementorApproached) {
-            ClientRMI.getInstance().userUpdate(new UserMovement(this._player, "DIE", 0.0));
+            ClientRMI.getInstance().userUpdate(new UserMovement(this._player, "DIE"));
 
             GameOverLabel gameOverLabel = new GameOverLabel(width / 2, height / 2);
             highScore = highScore < score ? score : highScore;
