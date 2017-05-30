@@ -28,7 +28,7 @@ import java.util.ArrayList;
 
 public class GameSystem  {
 
-    private final double width = 800, height = 600; // set screen size
+    private final double width = 1280, height = 720; // set screen size
     private Resources res = new Resources();
     private Pane root;
     private boolean gameOver = false;
@@ -100,20 +100,27 @@ public class GameSystem  {
             if(event.getCode() == KeyCode.UP) {
                 if (!gameOver) {
                     upMovement();
-                    ClientRMI.getInstance().userUpdate(new UserMovement(this._player, "UP"));
+                    ClientRMI.getInstance().userUpdate(new UserMovement(this._player, "UP", userCharacter1.getGraphics().getTranslateY()));
+                    System.out.println(userCharacter1.getCoordinates());
+                    System.out.println("Y: " + userCharacter1.getGraphics().getTranslateY());
+                    System.out.println("X: " + userCharacter1.getGraphics().getTranslateX());
                 }
                 else
                     initializeGame();
             } else if (event.getCode() == KeyCode.DOWN) {
                 if (!gameOver) {
                     downMovement();
-                    ClientRMI.getInstance().userUpdate(new UserMovement(this._player, "DOWN"));
+                    ClientRMI.getInstance().userUpdate(new UserMovement(this._player, "DOWN", userCharacter1.getGraphics().getTranslateY()));
+                    System.out.println(userCharacter1.getCoordinates());
+                    System.out.println("Y: " + userCharacter1.getGraphics().getY());
+                    System.out.println("X: " + userCharacter1.getGraphics().getX());
+
                 }
                 else
                     initializeGame();
             } else if (event.getCode() == KeyCode.ENTER) {
                 startScreen.setText("Waiting for player 2");
-                ClientRMI.getInstance().userUpdate(new UserMovement(this._player, "START"));
+                ClientRMI.getInstance().userUpdate(new UserMovement(this._player, "START", 0.0));
             }
         });
 
@@ -380,24 +387,31 @@ public class GameSystem  {
         if ((userMovement.getPlayer().equals(this._player))) {
             //ignore own requests
         } else {
-            System.out.println("Prislo to od ineho usera ako odo mna:  " + userMovement);
             if (userMovement.getMovement().equals("UP")) {
-                user2jump.setByY(-50);
+                userCharacter2.getGraphics().setY(userMovement.getNewY());
+              //  user2jump.setByY(-50);
                 user2jump.setCycleCount(1);
                 userCharacter2.jumping = true;
                 user2fall.stop();
                 user2jump.stop();
                 user2jump.play();
+                System.out.println(userCharacter2.getCoordinates());
+
             } else if (userMovement.getMovement().equals("DOWN")) {
-                user2jump.setByY(50);
+                userCharacter2.getGraphics().setY(userMovement.getNewY());
+                //user2jump.setByY(50);
                 user2jump.setCycleCount(1);
                 userCharacter2.jumping = true;
                 user2fall.stop();
                 user2jump.stop();
                 user2jump.play();
+                System.out.println(userCharacter2.getCoordinates());
+
             } else if (userMovement.getMovement().equals("DIE")) {
                 System.out.println("User character 2 died");
                 GameOverLabel gameOverLabel = new GameOverLabel(width / 2, height / 2);
+                System.out.println(userCharacter2.getCoordinates());
+
 
             } else if (userMovement.getMovement().equals("START")) {
                 System.out.println("Player 2 je ready ");

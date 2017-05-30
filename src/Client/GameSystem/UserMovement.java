@@ -13,11 +13,13 @@ public class UserMovement implements Serializable {
     private Date timestamp;
     private Player player;
     private String movement;
+    private Double newY;
 
-    UserMovement(Player player, String movement) {
+    UserMovement(Player player, String movement, Double newY) {
         this.player = player;
         this.movement = movement;
-        timestamp = new Date();
+        this.timestamp = new Date();
+        this.newY = newY;
     }
 
     public Date getTimestamp() {
@@ -34,6 +36,10 @@ public class UserMovement implements Serializable {
 
     public String getMovement() {
         return movement;
+    }
+
+    public Double getNewY() {
+        return newY;
     }
 
     @Override
