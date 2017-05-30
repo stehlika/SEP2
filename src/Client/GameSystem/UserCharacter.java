@@ -42,8 +42,4 @@ public class UserCharacter {
         bounds.setStroke(Color.BLACK);
     }
 
-    public String getCoordinates() {
-        return "Coordinates: X: " + graphics.getTranslateX() + " Y: " + graphics.getTranslateY();
-
-    }
 }

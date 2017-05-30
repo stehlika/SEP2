@@ -100,27 +100,21 @@ public class GameSystem  {
             if(event.getCode() == KeyCode.UP) {
                 if (!gameOver) {
                     upMovement();
-                    ClientRMI.getInstance().userUpdate(new UserMovement(this._player, "UP", userCharacter1.getGraphics().getTranslateY()));
-                    System.out.println(userCharacter1.getCoordinates());
-                    System.out.println("Y: " + userCharacter1.getGraphics().getTranslateY());
-                    System.out.println("X: " + userCharacter1.getGraphics().getTranslateX());
+                    ClientRMI.getInstance().userUpdate(new UserMovement(this._player, "UP"));
                 }
                 else
                     initializeGame();
             } else if (event.getCode() == KeyCode.DOWN) {
                 if (!gameOver) {
                     downMovement();
-                    ClientRMI.getInstance().userUpdate(new UserMovement(this._player, "DOWN", userCharacter1.getGraphics().getTranslateY()));
-                    System.out.println(userCharacter1.getCoordinates());
-                    System.out.println("Y: " + userCharacter1.getGraphics().getY());
-                    System.out.println("X: " + userCharacter1.getGraphics().getX());
+                    ClientRMI.getInstance().userUpdate(new UserMovement(this._player, "DOWN"));
 
                 }
                 else
                     initializeGame();
             } else if (event.getCode() == KeyCode.ENTER) {
                 startScreen.setText("Waiting for player 2");
-                ClientRMI.getInstance().userUpdate(new UserMovement(this._player, "START", 0.0));
+                ClientRMI.getInstance().userUpdate(new UserMovement(this._player, "START"));
             }
         });
 
@@ -290,9 +284,6 @@ public class GameSystem  {
         score = 0;
         incrementOnce = true;
         gameOver = false;
-//        userCharacter1.jumping = false;
-
-
 
         gameLoop.play();
     }
@@ -333,8 +324,6 @@ public class GameSystem  {
         gameLoop = new Timeline(new KeyFrame(Duration.millis(1000 / FPS), new EventHandler<ActionEvent>() {
 
             public void handle(ActionEvent e) {
-
-
 
                 updateCounters();
                 checkCollisions();
@@ -388,30 +377,24 @@ public class GameSystem  {
             //ignore own requests
         } else {
             if (userMovement.getMovement().equals("UP")) {
-                userCharacter2.getGraphics().setY(userMovement.getNewY());
-              //  user2jump.setByY(-50);
+                user2jump.setByY(-50);
                 user2jump.setCycleCount(1);
                 userCharacter2.jumping = true;
                 user2fall.stop();
                 user2jump.stop();
                 user2jump.play();
-                System.out.println(userCharacter2.getCoordinates());
 
             } else if (userMovement.getMovement().equals("DOWN")) {
-                userCharacter2.getGraphics().setY(userMovement.getNewY());
-                //user2jump.setByY(50);
+                user2jump.setByY(50);
                 user2jump.setCycleCount(1);
                 userCharacter2.jumping = true;
                 user2fall.stop();
                 user2jump.stop();
                 user2jump.play();
-                System.out.println(userCharacter2.getCoordinates());
 
             } else if (userMovement.getMovement().equals("DIE")) {
                 System.out.println("User character 2 died");
                 GameOverLabel gameOverLabel = new GameOverLabel(width / 2, height / 2);
-                System.out.println(userCharacter2.getCoordinates());
-
 
             } else if (userMovement.getMovement().equals("START")) {
                 System.out.println("Player 2 je ready ");
