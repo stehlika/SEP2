@@ -53,7 +53,6 @@ public class ServerRMI extends Observable implements RmiService {
     public synchronized void addObserver(RemoteObserver o) {
         WrapperObserver mo = new WrapperObserver(o);
         addObserver(mo);
-        System.out.println("Client was connected " + mo);
     }
 
     @Override
@@ -61,24 +60,15 @@ public class ServerRMI extends Observable implements RmiService {
         modelManager.addPlayer(player);
     }
 
-
-    public static void startServer(int serverPort) {
-        try {
-            Registry reg = LocateRegistry.createRegistry(serverPort);
-            RmiService rmiService = (RmiService) UnicastRemoteObject.exportObject(new ServerRMI(), serverPort);
-            reg.bind("RmiService", rmiService);
-            System.out.println("Server started on " + serverPort + " with IPv4 address: " + InetAddress.getLocalHost());
-        } catch (Exception e) {
-            System.out.println("We were unable to start server");
-            e.printStackTrace();
-        }
+    static void startServer(int serverPort) throws Exception {
+        Registry reg = LocateRegistry.createRegistry(serverPort);
+        RmiService rmiService = (RmiService) UnicastRemoteObject.exportObject(new ServerRMI(), serverPort);
+        reg.bind("RmiService", rmiService);
     }
-
 
     @Override
     public void saveScore(String playerNick, int score) throws RemoteException, IOException {
         modelManager.saveScore(playerNick, score);
-
     }
 
     @Override
@@ -93,9 +83,7 @@ public class ServerRMI extends Observable implements RmiService {
 
     @Override
     public House getHouse(String faculty) throws IOException {
-        System.out.println("Server RMI class get house ");
         return modelManager.getHouse(faculty);
-
     }
 
     @Override
@@ -110,7 +98,6 @@ public class ServerRMI extends Observable implements RmiService {
 
     @Override
     public void updateUserPosition(UserMovement userMovement) {
-        System.out.println("Uzivatelsky prikaz z Server RMI: " + userMovement);
         setChanged();
         notifyObservers(userMovement);
     }
@@ -122,10 +109,6 @@ public class ServerRMI extends Observable implements RmiService {
 
     @Override
     public String houseSelection() throws  IOException {
-        System.out.println("ServerRMI");
         return modelManager.houseSelection();
     }
-
-
-
 }

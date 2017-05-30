@@ -27,7 +27,7 @@ public class HarryPotterMain extends Application {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("View/signInView.fxml"));
             primaryStage.setTitle("Jiri Hrncir");
-            primaryStage.setScene(new Scene(root, 1280, 720));
+            primaryStage.setScene(new Scene(root, 800, 600));
             primaryStage.setResizable(false);
             this._primaryStage = primaryStage;
             primaryStage.show();

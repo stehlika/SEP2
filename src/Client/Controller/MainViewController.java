@@ -22,9 +22,7 @@ public class MainViewController extends MasterController {
 
     @FXML
     public void initialize() {
-        System.out.println("player"+player);
         _player = player;
-        System.out.println("_player"+_player);
     }
 
     public void showLeaderBoard(ActionEvent actionEvent) {

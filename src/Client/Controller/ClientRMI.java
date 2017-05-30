@@ -76,7 +76,6 @@ public class ClientRMI extends UnicastRemoteObject implements RemoteObserver {
                 player = rmiService.checkPlayer(nickname);
                 return player;
             } catch (NullPointerException e) {
-//                System.out.println("Tu sme ");
                 return null;
             }
         } catch (RemoteException e) {
@@ -105,7 +104,6 @@ public class ClientRMI extends UnicastRemoteObject implements RemoteObserver {
 
     public House getHouse(String faculty) throws IOException {
         try {
-//            System.out.println("Client RMI class get house ");
             return rmiService.getHouse(faculty);
         } catch (RemoteException e) {
             e.printStackTrace();
@@ -115,7 +113,6 @@ public class ClientRMI extends UnicastRemoteObject implements RemoteObserver {
 
     public String houseSelection() throws IOException {
         try {
-//            System.out.println("Client RMI class");
             return rmiService.houseSelection();
         } catch (RemoteException e) {
             e.printStackTrace();
@@ -134,9 +131,7 @@ public class ClientRMI extends UnicastRemoteObject implements RemoteObserver {
 
     @Override
     public void update(Object observable, Object msg) throws RemoteException {
-//        GameSystem.updateFromServer(123,123, (String) msg);
         GameSystem.getInstance().updateUser2((UserMovement) msg);
-
     }
 
 
@@ -148,15 +143,12 @@ public class ClientRMI extends UnicastRemoteObject implements RemoteObserver {
         }
     }
 
-    public void removeOberserverisko() {
-    }
 
     public Level getLevel() {
         try {
             return rmiService.getLevel();
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println("Vratila sa hola pica ");
             return null;
         }
     }

@@ -22,11 +22,8 @@ public class SortingCeremonyController extends MasterController {
 
     @FXML
     public void initialize() {
-        System.out.println("player"+player);
         _player = player;
-        System.out.println("_player"+_player);
         faculty = _player.getFaculty();
-        System.out.println(faculty);
         continueBtn.toFront();
         houseChosenL.setText(faculty);
     }

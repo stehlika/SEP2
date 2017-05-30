@@ -172,7 +172,7 @@ public abstract class MasterController {
     public static void showAlertView(String mistake, int errorCode) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Wrong " + mistake);
-        alert.setHeaderText(null);
+        alert.setHeaderText(String.valueOf(errorCode));
         alert.setContentText("Sorry, you have entered wrong " + mistake);
         alert.showAndWait();
     }

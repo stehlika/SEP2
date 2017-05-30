@@ -28,7 +28,7 @@ import java.util.ArrayList;
 
 public class GameSystem  {
 
-    private final double width = 1280, height = 720; // set screen size
+    private final double width = 800, height = 600; // set screen size
     private Resources res = new Resources();
     private Pane root;
     private boolean gameOver = false;
@@ -52,7 +52,7 @@ public class GameSystem  {
     private TranslateTransition user2jump;
     private TranslateTransition user2fall;
 
-    StartScreen startScreen = new StartScreen(400, 300);
+    private StartScreen startScreen = new StartScreen(400, 300);
 
   //  private RotateTransition rotator;
     private ArrayList<Tower> listOfTowers = new ArrayList<>();

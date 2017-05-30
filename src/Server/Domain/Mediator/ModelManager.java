@@ -49,12 +49,10 @@ public class ModelManager implements ModelMan {
             return storage.getLeaderBoard();
     }
     public House getHouse(String faculty) throws IOException {
-        System.out.println("Model manager get house");
         return storage.getHouse(faculty);
     }
 
     public String houseSelection() throws IOException {
-        System.out.println("Model Manager house selection");
         return storage.houseSelection();
     }
 

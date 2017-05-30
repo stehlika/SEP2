@@ -1,6 +1,7 @@
 package Server;
 
 import Server.Controller.ServerController;
+import Server.View.ServerView;
 
 /**
  * Created by adamstehlik on 23/05/2017.
@@ -9,26 +10,29 @@ public class ServerMain {
 
     private static String OS = null;
     private static int serverPort;
+    private static ServerController controller;
+    private static ServerView view;
 
     public static void main (String args[]) {
-        getOsName();
-        ServerController.startRMIServer(serverPort);
+        view = new ServerView();
+        controller = new ServerController(view);
+        controller.startRMIServer(getServerPort());
     }
 
-    private static void getOsName()
+    private static int getServerPort()
     {
         OS = System.getProperty("os.name");
 
         if(OS != null) {
             if (OS.startsWith("Mac")) {
-                serverPort = 9900;
+                return  9900;
             } else if (OS.startsWith("Windows")) {
-                serverPort = 1100;
+                return 1100;
             } else {
-                serverPort = 5000;
+                return 5000;
             }
         } else {
-            serverPort = 2000;
+            return 2000;
         }
     }
 }

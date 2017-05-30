@@ -1,5 +1,7 @@
 package Server.Controller;
 
+import Server.View.ServerView;
+
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
@@ -8,12 +10,25 @@ import java.net.UnknownHostException;
  */
 public class ServerController {
 
-    public static void startRMIServer(int serverPort) {
+    private ServerView view;
+    public ServerController(ServerView view) {
+        this.view = view;
+        this.view.showStartUPScreen();
+    }
+
+    public void startRMIServer(int serverPort) {
         try {
             System.setProperty("java.rmi.server.hostname", InetAddress.getLocalHost().getHostAddress());
-            ServerRMI.startServer(serverPort);
+            try {
+                ServerRMI.startServer(serverPort);
+                view.say("Server is running on: " + InetAddress.getLocalHost().getHostAddress() + " with port: " + serverPort);
+            } catch (Exception e) {
+                e.printStackTrace();
+                view.say("Sorry we were unable to start server error message: \n" + e.getMessage());
+            }
         } catch (UnknownHostException e) {
             e.printStackTrace();
+            view.say("We were unable to detect your IP Address");
         }
     }
 }

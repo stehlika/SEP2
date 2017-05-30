@@ -16,14 +16,6 @@ public class House implements Serializable {
         this.bestplayer = bestplayer;
     }
 
-    public String getFaculty() {
-        return faculty;
-    }
-
-    public void setFaculty(String faculty) {
-        this.faculty = faculty;
-    }
-
     public int getTotalscore() {
         return totalscore;
     }

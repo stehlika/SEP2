@@ -24,10 +24,6 @@ public class UserMovement implements Serializable {
         return timestamp;
     }
 
-    public void setTimestamp(Date timestamp) {
-        this.timestamp = timestamp;
-    }
-
     public Player getPlayer() {
         return player;
     }
@@ -38,10 +34,6 @@ public class UserMovement implements Serializable {
 
     public String getMovement() {
         return movement;
-    }
-
-    public void setMovement(String movement) {
-        this.movement = movement;
     }
 
     @Override
@@ -65,11 +57,4 @@ public class UserMovement implements Serializable {
         return movement != null ? movement.equals(that.movement) : that.movement == null;
     }
 
-    @Override
-    public int hashCode() {
-        int result = timestamp != null ? timestamp.hashCode() : 0;
-        result = 31 * result + (player != null ? player.hashCode() : 0);
-        result = 31 * result + (movement != null ? movement.hashCode() : 0);
-        return result;
-    }
 }

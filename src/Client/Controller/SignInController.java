@@ -25,9 +25,6 @@ public class SignInController extends MasterController {
 
     @FXML
     public void initialize() {
-        usernameTF.setText("Tejka");
-        serverIPTF.setText("localhost");
-        serverPortTF.setText("9998");
 
         Resources resources = new Resources();
 
@@ -41,7 +38,6 @@ public class SignInController extends MasterController {
         int serverPort = Integer.parseInt(serverPortTF.textProperty().getValue());
         String username = usernameTF.textProperty().getValue();
         Player player;
-
 
         if (serverIP.length() > 7 &&  serverIP.length() <= 15 && serverPort > 999 && serverPort < 10000) {
             ClientRMI.getInstance().startClient(serverIP, serverPort);
