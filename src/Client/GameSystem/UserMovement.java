@@ -36,7 +36,6 @@ public class UserMovement implements Serializable {
         return movement;
     }
 
-
     @Override
     public String toString() {
         return "UserMovement{" +

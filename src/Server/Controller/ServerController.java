@@ -11,6 +11,7 @@ import java.net.UnknownHostException;
 public class ServerController {
 
     private ServerView view;
+
     public ServerController(ServerView view) {
         this.view = view;
         this.view.showStartUPScreen();

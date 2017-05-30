@@ -21,15 +21,15 @@ import java.util.ArrayList;
 public class ClientRMI extends UnicastRemoteObject implements RemoteObserver {
 
     private static final long servialVersionUID = 1L;
+    private static ClientRMI instance = null;
     private RmiService rmiService;
 
-    private static ClientRMI instance = null;
     private ClientRMI() throws RemoteException {
 
     }
 
     public static ClientRMI getInstance() {
-        if(instance == null) {
+        if (instance == null) {
             try {
                 instance = new ClientRMI();
             } catch (RemoteException e) {
@@ -51,13 +51,12 @@ public class ClientRMI extends UnicastRemoteObject implements RemoteObserver {
     }
 
 
-    public void addPlayer(Player player) throws  IOException {
+    public void addPlayer(Player player) throws IOException {
         try {
             rmiService.addPlayer(player);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
-
     }
 
     public void saveScore(String playerNick, int score) throws IOException {
@@ -66,7 +65,6 @@ public class ClientRMI extends UnicastRemoteObject implements RemoteObserver {
         } catch (RemoteException e) {
             e.printStackTrace();
         }
-
     }
 
     public Player checkPlayer(String nickname) throws IOException {
@@ -134,7 +132,6 @@ public class ClientRMI extends UnicastRemoteObject implements RemoteObserver {
         GameSystem.getInstance().updateUser2((UserMovement) msg);
     }
 
-
     public void userUpdate(UserMovement userMovement) {
         try {
             rmiService.updateUserPosition(userMovement);
@@ -142,7 +139,6 @@ public class ClientRMI extends UnicastRemoteObject implements RemoteObserver {
             e.printStackTrace();
         }
     }
-
 
     public Level getLevel() {
         try {

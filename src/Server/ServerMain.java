@@ -9,7 +9,6 @@ import Server.View.ServerView;
 public class ServerMain {
 
     private static String OS = null;
-    private static int serverPort;
     private static ServerController controller;
     private static ServerView view;
 

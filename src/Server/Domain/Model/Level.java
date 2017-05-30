@@ -18,8 +18,6 @@ public class Level implements Serializable {
     private ArrayList<Double> listOfLightningsX = new ArrayList<>();
     private ArrayList<Double> listOfLightningsY = new ArrayList<>();
 
-
-
     public Level() {
 
 

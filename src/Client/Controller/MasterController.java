@@ -63,7 +63,6 @@ public abstract class MasterController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     /**
@@ -108,7 +107,6 @@ public abstract class MasterController {
             e.printStackTrace();
         }
     }
-
 
     /**
      * Method managing the lists on main screen.
@@ -155,7 +153,6 @@ public abstract class MasterController {
         Optional<ButtonType> result = alert.showAndWait();
         return result.get() == ButtonType.OK;
     }
-
 
     /**
      * Static method displaying pop-up window indicating to the server error.

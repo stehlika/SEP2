@@ -25,7 +25,6 @@ import java.util.ArrayList;
  * Created by adamstehlik on 17/05/2017.
  */
 
-
 public class GameSystem  {
 
     private final double width = 1280, height = 720; // set screen size
@@ -41,10 +40,8 @@ public class GameSystem  {
     private boolean player1ready = false;
     private boolean player2ready = false;
 
-
     private UserCharacter userCharacter1;
     private UserCharacter userCharacter2;
-
 
     private TranslateTransition user1jump;
     private TranslateTransition user1fall;
@@ -54,7 +51,6 @@ public class GameSystem  {
 
     private StartScreen startScreen = new StartScreen(400, 300);
 
-  //  private RotateTransition rotator;
     private ArrayList<Tower> listOfTowers = new ArrayList<>();
     private ArrayList<Cloud> listOfClouds = new ArrayList<>();
     private ArrayList<Lightning> listOfLightnings = new ArrayList<>();

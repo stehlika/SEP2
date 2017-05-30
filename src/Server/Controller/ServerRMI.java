@@ -6,7 +6,6 @@ import Server.Domain.Model.House;
 import Server.Domain.Model.Level;
 import Server.Domain.Model.Player;
 import javafx.util.Pair;
-
 import java.io.IOException;
 import java.io.Serializable;
 import java.rmi.RemoteException;
