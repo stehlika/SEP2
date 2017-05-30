@@ -2,7 +2,6 @@ package Client.GameSystem;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
@@ -17,7 +16,7 @@ import javafx.scene.image.ImageView;
  */
 public class Tower extends Group {
 
-    public ImageView towerBody = new ImageView();
+    private ImageView towerBody = new ImageView();
     private double GAP = 120;
     private double oscillationCenter;
     private Timeline animateTube;

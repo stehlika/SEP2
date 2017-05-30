@@ -11,7 +11,7 @@ import javafx.scene.text.Text;
  */
 public class StartScreen extends Pane {
 
-    Text informationText = new Text("For start press ENTER");
+    private Text informationText = new Text("For start press ENTER");
 
     public StartScreen(double x, double y) {
         setPrefWidth(300);

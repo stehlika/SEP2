@@ -1,7 +1,5 @@
 package Server.View;
 
-import Server.Controller.ServerController;
-
 /**
  * Created by adamstehlik on 29/05/2017.
  */

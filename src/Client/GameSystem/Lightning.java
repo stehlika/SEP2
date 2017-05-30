@@ -14,8 +14,8 @@ import javafx.scene.shape.Rectangle;
 public class Lightning extends Group {
 
     private Rectangle bounds;
-    public ImageView lightningBody = new ImageView();
-    public Image frame;
+    private ImageView lightningBody = new ImageView();
+    private Image frame;
 
     /*
     * No-argument construcotr get's image from resources package and than sets random H and W with 1 opacity

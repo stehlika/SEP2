@@ -29,7 +29,6 @@ public abstract class MasterController {
      * @param source source - window that should be opened
      * @param name   - title
      * @param height - hight of the window
-     * @throws IOException
      */
     public void newPopUpWindow(String source, String name, int height) {
         try {
@@ -51,7 +50,6 @@ public abstract class MasterController {
      *
      * @param backBtn     back - button
      * @param actionEvent a button click
-     * @throws IOException
      */
     public void backToMainScreen(Button backBtn, ActionEvent actionEvent) {
         try {
@@ -73,7 +71,6 @@ public abstract class MasterController {
      *
      * @param source source - window (Manage Buses/Chauffeurs/Reservations)
      * @param button button for 'Reservations', 'Chauffeurs' and 'Buses'
-     * @throws IOException
      */
     public void newView(String source, Button button)  {
         try {
@@ -156,11 +153,7 @@ public abstract class MasterController {
         alert.setHeaderText(header);
         alert.setContentText(content);
         Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.OK) {
-            return true;
-        } else {
-            return false;
-        }
+        return result.get() == ButtonType.OK;
     }
 
 

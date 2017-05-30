@@ -1,8 +1,5 @@
 package Server.Domain.Model;
 
-import Client.GameSystem.Resources.Resources;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.scene.layout.Pane;
 
 import java.io.Serializable;
 import java.util.ArrayList;

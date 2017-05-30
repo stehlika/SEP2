@@ -2,7 +2,6 @@ package Client.GameSystem;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -22,7 +21,7 @@ public class Cloud extends Group {
 //        cloudBody.setX(Math.random() * root.getWidth());
 //        cloudBody.setY(Math.random() * root.getHeight() / 3);
 
-    public ImageView cloudBody = new ImageView();
+    private ImageView cloudBody = new ImageView();
     private double GAP = 120;
     private double oscillationCenter;
     private Timeline animateTube;

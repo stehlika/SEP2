@@ -47,7 +47,7 @@ public class GameSystemSingle {
     private TranslateTransition userjump;
     private TranslateTransition userfall;
 
-    StartScreen startScreen = new StartScreen(400, 300);
+    private StartScreen startScreen = new StartScreen(400, 300);
 
     private ArrayList<Tower> listOfTowers = new ArrayList<>();
     private ArrayList<Cloud> listOfClouds = new ArrayList<>();
@@ -318,29 +318,26 @@ public class GameSystemSingle {
         userCharacter.getGraphics().setRotationAxis(Rotate.Z_AXIS);
 
 
-        gameLoop = new Timeline(new KeyFrame(Duration.millis(1000 / FPS), new EventHandler<ActionEvent>() {
-
-            public void handle(ActionEvent e) {
-                updateCounters();
-                checkCollisions();
-                if (listOfClouds.get(0).getTranslateX() <= -width / 12.3) {
-                    listOfClouds.remove(0);
-                }
-                if (listOfTowers.get(0).getTranslateX() <= -width / 12.3) {
-                    listOfTowers.remove(0);
-                }
-                if (listOfLightnings.get(0).getTranslateX() <= -width / 12.3) {
-                    listOfLightnings.remove(0);
-                }
-                for (int i = 0; i < listOfClouds.size(); i++) {
-                    listOfClouds.get(i).setTranslateX(listOfClouds.get(i).getTranslateX() - 2);
-                }
-                for (int i = 0; i < listOfTowers.size(); i++) {
-                    listOfTowers.get(i).setTranslateX(listOfTowers.get(i).getTranslateX() - 2);
-                }
-                for (int i = 0; i < listOfLightnings.size(); i++) {
-                    listOfLightnings.get(i).setTranslateX(listOfLightnings.get(i).getTranslateX() - 2);
-                }
+        gameLoop = new Timeline(new KeyFrame(Duration.millis(1000 / FPS), e -> {
+            updateCounters();
+            checkCollisions();
+            if (listOfClouds.get(0).getTranslateX() <= -width / 12.3) {
+                listOfClouds.remove(0);
+            }
+            if (listOfTowers.get(0).getTranslateX() <= -width / 12.3) {
+                listOfTowers.remove(0);
+            }
+            if (listOfLightnings.get(0).getTranslateX() <= -width / 12.3) {
+                listOfLightnings.remove(0);
+            }
+            for (int i = 0; i < listOfClouds.size(); i++) {
+                listOfClouds.get(i).setTranslateX(listOfClouds.get(i).getTranslateX() - 2);
+            }
+            for (int i = 0; i < listOfTowers.size(); i++) {
+                listOfTowers.get(i).setTranslateX(listOfTowers.get(i).getTranslateX() - 2);
+            }
+            for (int i = 0; i < listOfLightnings.size(); i++) {
+                listOfLightnings.get(i).setTranslateX(listOfLightnings.get(i).getTranslateX() - 2);
             }
         }));
         gameLoop.setCycleCount(-1);

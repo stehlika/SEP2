@@ -2,7 +2,6 @@ package Client.GameSystem.Resources;
 
 import javafx.scene.image.Image;
 import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 
 /**
  * Created by adamstehlik on 17/05/2017.

@@ -185,8 +185,7 @@ public class DatabaseAdapter implements Persistence {
         try {
             result = db.query(sql);
 
-            for (int i = 0; i < result.size(); i++) {
-                Object[] row = result.get(i);
+            for (Object[] row : result) {
                 playernick = row[0].toString();
                 score = (int) row[1];
                 leaderboard.add(new Pair<>(playernick, score));
@@ -236,8 +235,7 @@ public class DatabaseAdapter implements Persistence {
 
         try {
             result = db.query(sql, faculty);
-            for (int i = 0; i < result.size(); i++) {
-                Object[] row = result.get(i);
+            for (Object[] row : result) {
                 playernick = row[0].toString();
                 score = (int) row[1];
                 leaderboard.add(new Pair<>(playernick, score));
@@ -270,11 +268,10 @@ public class DatabaseAdapter implements Persistence {
         int score = 0;
         try {
             result = db.query(sql,nickname);
-             for (int i = 0; i < result.size(); i++) {
-                 Object[] row = result.get(i);
-                 score = (int) row[0];
-                 scores.add(score);
-             }
+            for (Object[] row : result) {
+                score = (int) row[0];
+                scores.add(score);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }

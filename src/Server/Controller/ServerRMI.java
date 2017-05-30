@@ -9,7 +9,6 @@ import javafx.util.Pair;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.net.InetAddress;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -45,7 +44,7 @@ public class ServerRMI extends Observable implements RmiService {
         }
     }
 
-    public ServerRMI() {
+    private ServerRMI() {
         this.modelManager = new ModelManager();
     }
 
@@ -67,12 +66,12 @@ public class ServerRMI extends Observable implements RmiService {
     }
 
     @Override
-    public void saveScore(String playerNick, int score) throws RemoteException, IOException {
+    public void saveScore(String playerNick, int score) throws IOException {
         modelManager.saveScore(playerNick, score);
     }
 
     @Override
-    public Player checkPlayer(String nickname) throws RemoteException, IOException {
+    public Player checkPlayer(String nickname) throws IOException {
         return modelManager.checkPlayer(nickname);
     }
 
