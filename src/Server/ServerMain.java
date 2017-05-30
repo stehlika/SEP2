@@ -27,7 +27,7 @@ public class ServerMain {
             if (OS.startsWith("Mac")) {
                 return  9900;
             } else if (OS.startsWith("Windows")) {
-                return 1100;
+                return 1099;
             } else {
                 return 5000;
             }

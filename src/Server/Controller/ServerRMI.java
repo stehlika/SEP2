@@ -40,7 +40,7 @@ public class ServerRMI extends Observable implements RmiService {
             try {
                 ro.update(o.toString(), arg);
             } catch (RemoteException e) {
-                e.printStackTrace();
+                System.out.println("Not possible to notify user. ");
             }
         }
     }
