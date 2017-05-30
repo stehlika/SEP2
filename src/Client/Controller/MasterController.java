@@ -95,6 +95,10 @@ public abstract class MasterController {
                 ProfileController.player = player;
             } else if (vc.equals("MainView")) {
                 MainViewController.player = player;
+            } else if (vc.equals("Singleplayer")) {
+                InstructionsController.player = player;
+            } else if (vc.equals("Multiplayer")) {
+                InstructionsMultiController.player = player;
             }
             Stage stage;
             Parent root;

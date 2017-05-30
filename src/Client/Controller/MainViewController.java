@@ -30,11 +30,11 @@ public class MainViewController extends MasterController {
     }
 
     public void playGame(ActionEvent actionEvent) {
-        GameSystemSingle.getInstance().startGame(_player);
+        newView("Singleplayer", "../View/instructionsView.fxml", playBtnMS, _player);
     }
 
     public void playMultiGame(ActionEvent actionEvent) {
-        GameSystem.getInstance().startGame(_player);
+        newView("Multiplayer", "../View/instructionsMultiView.fxml", playMultiBtnMS, _player);
     }
 
     public void showHouseCup(ActionEvent actionEvent) {

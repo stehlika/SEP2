@@ -8,7 +8,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1280.0" style="-fx-background-color: #2c3e50;" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.Controller.InstructionsController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1280.0" style="-fx-background-color: #2c3e50;" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.Controller.InstructionsMultiController">
    <children>
       <Button fx:id="backBtn" layoutX="98.0" layoutY="98.0" mnemonicParsing="false" onAction="#back" prefHeight="70.0" prefWidth="70.0" style="-fx-background-radius: 35; -fx-background-color: #ecf0f1; -fx-opacity: 70%;" text="←" textFill="#34495e" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="50.0">
          <font>

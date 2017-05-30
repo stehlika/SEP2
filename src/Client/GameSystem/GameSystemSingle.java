@@ -23,13 +23,15 @@ import javafx.util.Duration;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by adamstehlik on 17/05/2017.
  */
 
 
-public class GameSystemSingle {
+public class GameSystemSingle extends TimerTask {
 
     private final double width = 1280, height = 720; // set screen size
     private Resources res = new Resources();
@@ -40,6 +42,9 @@ public class GameSystemSingle {
     private int highScore = 0;
     private double FPS = 40;
     private int counter_30FPS = 0;
+//    private Date startTime;
+//    private Date endTime;
+//    Timer timer = new Timer(false);
 
     private UserCharacter userCharacter;
     private Dementor dementor;
@@ -58,6 +63,12 @@ public class GameSystemSingle {
 
     private static GameSystemSingle instance = null;
     private GameSystemSingle()  {
+    }
+
+    @Override
+    public void run() {
+        score += 3;
+        scoreLabel.setText("Score: " + score);
     }
 
     public static GameSystemSingle getInstance() {
@@ -147,11 +158,11 @@ public class GameSystemSingle {
         Cloud cloud = listOfClouds.get(0);
         Tower tower = listOfTowers.get(0);
         Lightning lightning = listOfLightnings.get(0);
-        if (tower.getTranslateX() < 35 && incrementOnce) {
-            score++;
-            scoreLabel.setText("Score: " + score);
-            incrementOnce = false;
-        }
+//        if (tower.getTranslateX() < 35 && incrementOnce) {
+//            score++;
+//            scoreLabel.setText("Score: " + score);
+//            incrementOnce = false;
+//        }
         //Getovanie bounds zo shape pre zistenie prieniku suradnic toweru a usera.
         Path cloudPath = (Path) Shape.intersect(userCharacter.getBounds(), cloud.getBounds());
         Path towerPath = (Path) Shape.intersect(userCharacter.getBounds(), tower.getBounds());
@@ -162,13 +173,6 @@ public class GameSystemSingle {
         boolean towerIntersection = !(towerPath.getElements().isEmpty());
         boolean lightningIntersection = !(lightningPath.getElements().isEmpty());
         boolean dementorApproached = false;
-
-        if (towerIntersection) {
-            System.out.println("TOWER " + tower.getBounds() + " path " + towerPath);
-        }
-        if (cloudIntersection) {
-            System.out.println("CLOUD " + cloud.getBounds() + " path " + cloudPath);
-        }
 
         if (dementor.getTranslateX() + dementor.getBounds().getWidth() >= 200) {
             System.out.println("GAME OVER");
@@ -183,15 +187,12 @@ public class GameSystemSingle {
         // momentalne je to nastavene tak ze sa da game over obrazovka ked sa pretne tower s userom
         // TODO treba spravit viacero verzii intersection pre tower-user, user-cloud, user-lightning, user-dementor
         if (towerIntersection) {
-            System.out.println("TOWER intersection " + new Date());
             gameLoop.setRate(0.05);
             dementor.setTranslateX(dementor.getTranslateX() + 10);
         } else if (cloudIntersection) {
-            System.out.println("CLOUD intersection");
             gameLoop.setRate(0.2);
             dementor.setTranslateX(dementor.getTranslateX() + 4);
         } else if (lightningIntersection) {
-            System.out.println("LIGHTNING intersection");
         } else {
             gameLoop.setRate(1.0);
 //            System.out.println("Game resumed " + new Date());
@@ -208,6 +209,7 @@ public class GameSystemSingle {
             root.getChildren().get(1).setOpacity(0);
             gameOver = true;
             gameLoop.stop();
+//            timer.cancel();
         }
     }
 
@@ -218,6 +220,8 @@ public class GameSystemSingle {
      *
      */
     private void initializeGame() {
+//        timer.schedule(this, 0, 3000);
+
         listOfTowers.clear();
         listOfClouds.clear();
         listOfLightnings.clear();
