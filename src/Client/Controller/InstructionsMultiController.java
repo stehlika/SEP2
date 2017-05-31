@@ -22,7 +22,12 @@ public class InstructionsMultiController extends MasterController {
     public void initialize() {
         backBtn.toFront();
         _player = player;
-        instructionsL.setText("hatla Multi");
+        instructionsL.setText("You and your friend are about to have a little match.\n"+
+                                "Make sure your flight is as smooth as possible.\n" +
+                                "Use arrow keys to move up and down to avoid clouds,\n" +
+                                "towers and lightning bolts.\n" +
+                                "The first who bumps into any obstacle looses.\n" +
+                                "Enjoy the game!");
     }
 
     public void playGame() {

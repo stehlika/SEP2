@@ -1,35 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1280.0" style="-fx-background-color: #2c3e50;" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.Controller.SortingCeremonyController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #2c3e50;" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.Controller.SortingCeremonyController">
    <children>
-      <Button fx:id="continueBtn" layoutX="570.0" layoutY="591.0" mnemonicParsing="false" text="Continue" onAction="#showMainView">
-         <font>
-            <Font size="29.0" />
-         </font>
-      </Button>
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="511.0" layoutY="246.0" pickOnBounds="true" preserveRatio="true" />
-      <Label layoutX="496.0" layoutY="119.0" text="Bol si vybraty do" textFill="WHITE">
-         <font>
-            <Font size="43.0" />
-         </font>
-      </Label>
-      <Label fx:id="houseChosenL" layoutX="503.0" layoutY="435.0" text="#fakulta" textFill="WHITE">
-         <font>
-            <Font size="83.0" />
-         </font>
-      </Label>
-      <ImageView fx:id="houseIV" fitHeight="215.0" fitWidth="291.0" layoutX="513.0" layoutY="206.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../GameSystem/Resources/bolt.png" />
-         </image>
-      </ImageView>
+      <VBox alignment="CENTER" layoutX="300.0" layoutY="82.0" prefHeight="600.0" prefWidth="600.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="100.0">
+         <children>
+            <Label text="Bol si vybraty do" textFill="WHITE">
+               <font>
+                  <Font size="43.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </VBox.margin>
+            </Label>
+            <ImageView fx:id="houseIV" fitHeight="120.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../GameSystem/Resources/gryffindorSign.png" />
+               </image>
+               <VBox.margin>
+                  <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+               </VBox.margin>
+            </ImageView>
+            <Label fx:id="houseChosenL" text="#fakulta" textFill="WHITE">
+               <font>
+                  <Font size="83.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </VBox.margin>
+            </Label>
+            <Button fx:id="continueBtn" mnemonicParsing="false" onAction="#showMainView" prefHeight="50.0" prefWidth="180.0" style="-fx-background-radius: 25; -fx-background-color: #ecf0f1;" text="CONTINUE">
+               <font>
+                  <Font name="Avenir Roman" size="20.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+      </VBox>
    </children>
 </AnchorPane>

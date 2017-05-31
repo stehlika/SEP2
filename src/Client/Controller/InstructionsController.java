@@ -21,12 +21,16 @@ public class InstructionsController extends MasterController {
 
     @FXML
     public void initialize() {
-
-        System.out.println("player zavolany v initialize Single"+player);
         backBtn.toFront();
         _player = player;
-        instructionsL.setText("hatla Single");
-        System.out.println("_player zavolany v initialize Single"+_player);
+        instructionsL.setText("Move up and down using arrow keys.\n" +
+                "Avoid clouds and towers (they slow you down)\n" +
+                "and when you bump into lightning bolt, you will die.\n" +
+                "Also the dementor is trying to catch you, so make sure\n" +
+                "it won't get very close to you or else you will be kissed.\n" +
+                "... And all your happy memories will slowly but surely\n" +
+                "fade away. So you better fly quickly!\n" +
+                "Grab your broomstick and FLY!");
     }
 
     public void playGame() {

@@ -9,9 +9,8 @@ import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Path;
@@ -22,16 +21,13 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * Created by adamstehlik on 17/05/2017.
  */
 
 
-public class GameSystemSingle extends TimerTask {
+public class GameSystemSingle {
 
     private final double width = 1280, height = 720; // set screen size
     private Resources res = new Resources();
@@ -42,9 +38,6 @@ public class GameSystemSingle extends TimerTask {
     private int highScore = 0;
     private double FPS = 40;
     private int counter_30FPS = 0;
-//    private Date startTime;
-//    private Date endTime;
-//    Timer timer = new Timer(false);
 
     private UserCharacter userCharacter;
     private Dementor dementor;
@@ -63,12 +56,6 @@ public class GameSystemSingle extends TimerTask {
 
     private static GameSystemSingle instance = null;
     private GameSystemSingle()  {
-    }
-
-    @Override
-    public void run() {
-        score += 3;
-        scoreLabel.setText("Score: " + score);
     }
 
     public static GameSystemSingle getInstance() {
@@ -158,11 +145,12 @@ public class GameSystemSingle extends TimerTask {
         Cloud cloud = listOfClouds.get(0);
         Tower tower = listOfTowers.get(0);
         Lightning lightning = listOfLightnings.get(0);
-//        if (tower.getTranslateX() < 35 && incrementOnce) {
-//            score++;
-//            scoreLabel.setText("Score: " + score);
-//            incrementOnce = false;
-//        }
+        if (tower.getTranslateX() < 35 && incrementOnce) {
+            score++;
+            scoreLabel.setText("Score: " + score);
+            incrementOnce = false;
+            System.out.println("Score: " + score);
+        }
         //Getovanie bounds zo shape pre zistenie prieniku suradnic toweru a usera.
         Path cloudPath = (Path) Shape.intersect(userCharacter.getBounds(), cloud.getBounds());
         Path towerPath = (Path) Shape.intersect(userCharacter.getBounds(), tower.getBounds());
@@ -177,6 +165,11 @@ public class GameSystemSingle extends TimerTask {
         if (dementor.getTranslateX() + dementor.getBounds().getWidth() >= 200) {
             System.out.println("GAME OVER");
             dementorApproached =  true;
+        }
+
+        if (tower.getTranslateX() == userCharacter.getBounds().getCenterX() + userCharacter.getBounds().getRadiusX()) {
+//            score += 1;
+//            System.out.println("score: "+score);
         }
 
         //toto su vrchne a spodne bounds (towerIntersection je len zavolane aby to vtedy spomalilo - asi lepsie zavolat gameover?)
@@ -195,7 +188,6 @@ public class GameSystemSingle extends TimerTask {
         } else if (lightningIntersection) {
         } else {
             gameLoop.setRate(1.0);
-//            System.out.println("Game resumed " + new Date());
         }
 
         if (lightningIntersection || dementorApproached) {
@@ -209,7 +201,6 @@ public class GameSystemSingle extends TimerTask {
             root.getChildren().get(1).setOpacity(0);
             gameOver = true;
             gameLoop.stop();
-//            timer.cancel();
         }
     }
 
@@ -220,8 +211,6 @@ public class GameSystemSingle extends TimerTask {
      *
      */
     private void initializeGame() {
-//        timer.schedule(this, 0, 3000);
-
         listOfTowers.clear();
         listOfClouds.clear();
         listOfLightnings.clear();
@@ -248,14 +237,27 @@ public class GameSystemSingle extends TimerTask {
 
         Level level = new Level();
 
+        Image towerImg;
+
         for (int i = 0; i < level.getListOfTowersX().size(); i++) {
+            if (i % 4 == 0) {
+                towerImg = res.towerImageGryf;
+            }
+            else if (i%4==1) {
+                towerImg = res.towerImageRave;
+            }
+            else if (i%4==2) {
+                towerImg = res.towerImageHuff;
+            } else {
+                towerImg = res.towerImageSlyt;
+            }
             Tower tower;
             if (Math.random() < 0.4) {
-                tower = new Tower(res.towerImage, root, false);
+                tower = new Tower(towerImg, root, false);
             } else if (Math.random() > 0.85) {
-                tower = new Tower(res.towerImage, root, true);
+                tower = new Tower(towerImg, root, true);
             } else {
-                tower = new Tower(res.towerImage, root, false);
+                tower = new Tower(towerImg, root, false);
             }
 
             tower.setTranslateX(level.getListOfTowersX().get(i));

@@ -174,32 +174,23 @@ public class GameSystem  {
         boolean towerIntersection = !(towerPath.getElements().isEmpty());
         boolean lightningIntersection = !(lightningPath.getElements().isEmpty());
 
-        if (cloudIntersection) {
-            cloud.getBounds().setStroke(Color.YELLOW);
-        }
-
-        if (lightningIntersection) {
-            lightning.getBounds().setStroke(Color.CADETBLUE);
-        }
-
         if (userCharacter1.getBounds().getCenterY() + userCharacter1.getBounds().getRadiusY() > height || userCharacter1.getBounds().getCenterY() - userCharacter1.getBounds().getRadiusY() < 0) {
             towerIntersection = true;
         }
 
         // momentalne je to nastavene tak ze sa da game over obrazovka ked sa pretne tower s userom
         // TODO treba spravit viacero verzii intersection pre tower-user, user-cloud, user-lightning, user-dementor
-        if (towerIntersection) {
-            tower.getBounds().setStroke(Color.BLUEVIOLET);
-//            ClientRMI.getInstance().userUpdate(new UserMovement(this._player, "DIE"));
-//
-//            GameOverLabel gameOverLabel = new GameOverLabel(width / 2, height / 2);
-//            highScore = highScore < score ? score : highScore;
-//            gameOverLabel.setText("Tap to retry. Score: " + score + "\n\tHighScore: " + highScore);
-//          //  saveHighScore(); zatial nie je potreba pre fungovanie
-//            root.getChildren().add(gameOverLabel);
-//            root.getChildren().get(1).setOpacity(0);
-//            gameOver = true;
-//            gameLoop.stop();
+        if (towerIntersection || cloudIntersection || lightningIntersection) {
+            ClientRMI.getInstance().userUpdate(new UserMovement(this._player, "DIE"));
+
+            GameOverLabel gameOverLabel = new GameOverLabel(width / 2, height / 2);
+            highScore = highScore < score ? score : highScore;
+            gameOverLabel.setText("Tap to retry. Score: " + score + "\n\tHighScore: " + highScore);
+          //  saveHighScore(); zatial nie je potreba pre fungovanie
+            root.getChildren().add(gameOverLabel);
+            root.getChildren().get(1).setOpacity(0);
+            gameOver = true;
+            gameLoop.stop();
         }
     }
 
