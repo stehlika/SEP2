@@ -21,6 +21,7 @@ public class InstructionsController extends MasterController {
 
     @FXML
     public void initialize() {
+
         backBtn.toFront();
         _player = player;
         instructionsL.setText("Move up and down using arrow keys.\n" +
@@ -35,7 +36,6 @@ public class InstructionsController extends MasterController {
 
     public void playGame() {
         GameSystemSingle.getInstance().startGame(_player);
-        System.out.println("player zavolany v playGame Single"+_player);
     }
 
     public void back(ActionEvent actionEvent) {
