@@ -1,20 +1,30 @@
 # SEP2
-SEP 2 Project for Harry Potter Game
+**SEP 2 Project for Harry Potter Game**
 
-
-Prihlasovacie údaje
-Názov databázy:
-sep2database
-Prihlasovacie meno:
-sep2database
-Host/Server:
-Odporúčané pripojenie (funguje všade):
-postgresql.websupport.sk
-+port: 5432	
-
-Heslo: 0PXU4hYoGw
-
-Správa databázy
-
-PhpPgAdmin
-https://dbpg.websupport.sk/
+Database connection <br>
+<table>
+  <tr>
+    <td>Database name</td>
+    <td>sep2database</td>
+  </tr>
+  <tr>
+    <td>Username</td>
+    <td>sep2database</td>
+  </tr>
+  <tr>
+    <td>Host</td>
+    <td>postgresql.websupport.sk</td>
+  </tr>
+  <tr>
+     <td>Port</td>
+     <td>5432</td>
+  </tr>
+  <tr>
+     <td>Password</td>
+     <td>0PXU4hYoGw</td>
+  </tr>
+  <tr>
+     <td>PhpPgAdmin</td>
+     <td>https://dbpg.websupport.sk/</td>
+  </tr>
+</table>
