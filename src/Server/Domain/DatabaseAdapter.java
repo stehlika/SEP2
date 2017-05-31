@@ -70,9 +70,11 @@ public class DatabaseAdapter implements Persistence {
 
         try {
             db.update(sql, playernick, score);
+            updateEverything(playernick,score);
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
     }
 
     @Override
@@ -262,7 +264,7 @@ public class DatabaseAdapter implements Persistence {
 
     @Override
     public ArrayList<Integer> getHighscoreForPlayer(String nickname) throws IOException {
-        String sql = "SELECT score FROM sep2_schema.player_scores WHERE playernick=? ORDER BY score DESC;";
+        String sql = "SELECT score FROM sep2_schema.player_scores WHERE playernick= ? ORDER BY score DESC;";
         ArrayList<Object[]> result;
         ArrayList<Integer> scores=new ArrayList<>();
         int score = 0;
@@ -276,5 +278,36 @@ public class DatabaseAdapter implements Persistence {
             e.printStackTrace();
         }
         return scores;
+    }
+    private void updateEverything(String nickname,int score){
+        String sqlTemp = "SELECT faculty FROM sep2_schema.player WHERE nickname=?";
+        String faculty;
+        ArrayList<Object[]> result;
+        try {
+            result=db.query(sqlTemp,nickname);
+            Object[] row=result.get(0);
+            faculty=row[0].toString();
+            System.out.println(faculty+"(#(#&^$!&*@&");
+            System.out.println(nickname+score+"-------824583824719823");
+            String sql = "UPDATE sep2_schema.house_cup SET bestplayer=( " +
+                    "SELECT playernick FROM sep2_schema.player_scores WHERE score=( " +
+                    "SELECT max(ps.score) FROM sep2_schema.player_scores ps JOIN sep2_schema.player p ON ps.playernick = p.nickname " +
+                    "WHERE p.faculty=?) GROUP BY playernick) WHERE faculty=?;";
+            System.out.println("TERAZ SOM ZA QUERY");
+            db.update(sql,faculty,faculty);
+            System.out.println("TERAZ SOM JU EXECUTOL");
+            String sql2 = "UPDATE sep2_schema.house_cup SET totalscore = (SELECT sum(score) FROM sep2_schema.player_scores "
+                    + "JOIN sep2_schema.player ON player.nickname = player_scores.playernick WHERE player.faculty = ?) "
+                    + "WHERE faculty = ?;";
+
+            db.update(sql2,faculty,faculty);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+
+
     }
 }

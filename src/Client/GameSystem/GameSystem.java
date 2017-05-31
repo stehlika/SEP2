@@ -1,6 +1,7 @@
 package Client.GameSystem;
 
 import Client.Controller.ClientRMI;
+import Client.Controller.MasterController;
 import Client.GameSystem.Resources.Resources;
 import Client.HarryPotterMain;
 import Server.Domain.Model.Level;
@@ -32,7 +33,7 @@ public class GameSystem  {
     private Pane root;
     private boolean gameOver = false;
     private boolean incrementOnce = true;
-    private int score = 0;
+    private int score = 3499875;
     private int highScore = 0;
     private double FPS = 40;
     private int counter_30FPS = 0;
@@ -191,6 +192,8 @@ public class GameSystem  {
             root.getChildren().get(1).setOpacity(0);
             gameOver = true;
             gameLoop.stop();
+            saveHighScore();
+
         }
     }
 
@@ -268,7 +271,7 @@ public class GameSystem  {
             root.getChildren().add(bolt);
         }
 
-        score = 0;
+//        score = 0;
         incrementOnce = true;
         gameOver = false;
 
@@ -352,7 +355,13 @@ public class GameSystem  {
     }
 
     private void saveHighScore() {
-
+        try {
+            ClientRMI.getInstance().saveScore(_player.getNickname(),score);
+            System.out.println("USPESNE UPDATNUTE v DB");
+        } catch (IOException e) {
+            e.printStackTrace();
+            MasterController.showAlertView("We were unable to update scores in DB",500);
+        }
     }
 
 

@@ -1,6 +1,7 @@
 package Server;
 
 import Server.Controller.ServerController;
+import Server.Domain.DatabaseAdapter;
 import Server.View.ServerView;
 
 /**
