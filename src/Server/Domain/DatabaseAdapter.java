@@ -195,7 +195,6 @@ public class DatabaseAdapter implements Persistence {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return leaderboard;
     }
 

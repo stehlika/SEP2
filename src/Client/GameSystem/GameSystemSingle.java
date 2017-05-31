@@ -1,6 +1,6 @@
 package Client.GameSystem;
 
-import Client.Controller.ClientRMI;
+import Client.Controller.*;
 import Client.GameSystem.Resources.Resources;
 import Client.HarryPotterMain;
 import Server.Domain.Model.Level;
@@ -9,6 +9,7 @@ import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
@@ -84,18 +85,20 @@ public class GameSystemSingle {
         root.setPrefSize(width, height);
 
         scene.setOnKeyPressed(event -> {
-            if(event.getCode() == KeyCode.UP) {
+            if (event.getCode() == KeyCode.UP) {
                 if (!gameOver) {
                     upMovement();
-                }
-                else
+                } else
                     initializeGame();
             } else if (event.getCode() == KeyCode.DOWN) {
                 if (!gameOver) {
                     downMovement();
-                }
-                else
+                } else
                     initializeGame();
+            } else if (event.getCode() == KeyCode.ESCAPE) {
+                if (gameOver) {
+                    showProfile();
+                }
             } else {
                 System.out.println("bullshit");
             }
@@ -163,7 +166,6 @@ public class GameSystemSingle {
         boolean dementorApproached = false;
 
         if (dementor.getTranslateX() + dementor.getBounds().getWidth() >= 200) {
-            System.out.println("GAME OVER");
             dementorApproached =  true;
         }
 
@@ -195,8 +197,10 @@ public class GameSystemSingle {
 
             GameOverLabel gameOverLabel = new GameOverLabel(width / 2, height / 2);
             highScore = highScore < score ? score : highScore;
-            gameOverLabel.setText("Tap to retry. Score: " + score + "\n\tHighScore: " + highScore);
-          //  saveHighScore(); zatial nie je potreba pre fungovanie
+            gameOverLabel.setText("Tap to retry. Score: " + score + "\n\tHighScore: " + highScore
+                                    + "\nTo EXIT, press Esc.");
+
+//            saveHighScore(); zatial nie je potreba pre fungovanie
             root.getChildren().add(gameOverLabel);
             root.getChildren().get(1).setOpacity(0);
             gameOver = true;
@@ -364,6 +368,15 @@ public class GameSystemSingle {
             highScore = -1;
         }
 
+    }
+
+    public void showProfile() {
+        try {
+            Pane newLoadedPane = FXMLLoader.load(getClass().getResource("../View/mainView.fxml"));
+            root.getChildren().add(newLoadedPane);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void saveHighScore() {

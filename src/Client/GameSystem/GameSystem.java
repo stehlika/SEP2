@@ -9,6 +9,7 @@ import Server.Domain.Model.Player;
 import javafx.animation.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
@@ -105,10 +106,11 @@ public class GameSystem  {
                 if (!gameOver) {
                     downMovement();
                     ClientRMI.getInstance().userUpdate(new UserMovement(this._player, "DOWN"));
-
                 }
                 else
                     initializeGame();
+            } else if (event.getCode() == KeyCode.ESCAPE) {
+                showProfile();
             } else if (event.getCode() == KeyCode.ENTER) {
                 startScreen.setText("Waiting for player 2");
                 ClientRMI.getInstance().userUpdate(new UserMovement(this._player, "START"));
@@ -186,7 +188,8 @@ public class GameSystem  {
 
             GameOverLabel gameOverLabel = new GameOverLabel(width / 2, height / 2);
             highScore = highScore < score ? score : highScore;
-            gameOverLabel.setText("Tap to retry. Score: " + score + "\n\tHighScore: " + highScore);
+            gameOverLabel.setText("Tap to retry. Score: " + score + "\n\tHighScore: " + highScore
+                    + "\nTo EXIT, press Esc.");
           //  saveHighScore(); zatial nie je potreba pre fungovanie
             root.getChildren().add(gameOverLabel);
             root.getChildren().get(1).setOpacity(0);
@@ -397,6 +400,13 @@ public class GameSystem  {
         }
     }
 
-
+    public void showProfile() {
+        try {
+            Pane newLoadedPane = FXMLLoader.load(getClass().getResource("../View/mainView.fxml"));
+            root.getChildren().add(newLoadedPane);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 }
