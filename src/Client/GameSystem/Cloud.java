@@ -29,17 +29,8 @@ public class Cloud extends Group {
     private Rectangle bounds;
     private Image frame;
 
-    public Cloud(Image frame, Pane root, boolean animate) {
+    public Cloud(Image frame, Pane root) {
         this.frame = frame;
-//        oscillationCenter = gapLocation.get();
-        if (animate) {
-            animateTube = new Timeline(new KeyFrame(Duration.millis(33), e -> {
-//                gapLocation.set(25 * Math.cos(Math.PI / 60 * frames) + oscillationCenter);
-                frames = (frames + 1) % 120;
-            }));
-            animateTube.setCycleCount(-1);
-            animateTube.play();
-        }
         cloudBody.setImage(this.frame);
         cloudBody.setX(2.5);
         cloudBody.setY(2.5);

@@ -7,13 +7,10 @@ import Client.HarryPotterMain;
 import Server.Domain.Model.Level;
 import Server.Domain.Model.Player;
 import javafx.animation.*;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Path;
 import javafx.scene.shape.Shape;
 import javafx.scene.transform.Rotate;
@@ -39,17 +36,14 @@ public class GameSystem  {
     private double FPS = 40;
     private int counter_30FPS = 0;
 
-    private boolean player1ready = false;
-    private boolean player2ready = false;
-
     private UserCharacter userCharacter1;
     private UserCharacter userCharacter2;
 
-    private TranslateTransition user1jump;
-    private TranslateTransition user1fall;
+    private TranslateTransition user1Up;
+    private TranslateTransition user1Down;
 
-    private TranslateTransition user2jump;
-    private TranslateTransition user2fall;
+    private TranslateTransition user2Up;
+    private TranslateTransition user2Down;
 
     private StartScreen startScreen = new StartScreen(400, 300);
 
@@ -73,8 +67,6 @@ public class GameSystem  {
         return instance;
     }
 
-    // rotator sluzi na to aby sa mohli charactery a towere naklapat tak ako ste to videli na zaciatku
-
     /**
      *  Method that initialises playing screen and checks for user's keyboard input.
      *  @KeyCode.UP is calling function upMovement.
@@ -82,7 +74,6 @@ public class GameSystem  {
      */
     public void startGame(Player player) {
         _player = player;
-        System.out.println("Player: " + _player);
 
         Stage primaryStage = HarryPotterMain.get_primaryStage();
         root = new Pane();
@@ -111,12 +102,8 @@ public class GameSystem  {
                     initializeGame();
             } else if (event.getCode() == KeyCode.ESCAPE) {
                 showProfile();
-            } else if (event.getCode() == KeyCode.ENTER) {
-                startScreen.setText("Waiting for player 2");
-                ClientRMI.getInstance().userUpdate(new UserMovement(this._player, "START"));
             }
         });
-
     }
 
 
@@ -134,13 +121,12 @@ public class GameSystem  {
      * Method that moves user GUI object up 50px and animates the movement.
      */
     private void upMovement() {
-        user1jump.setByY(-50);
-        user1jump.setCycleCount(1);
+        user1Up.setByY(-50);
+        user1Up.setCycleCount(1);
         userCharacter1.jumping = true;
-        user1fall.stop();
-        user1jump.stop();
-        user1jump.play();
-
+        user1Down.stop();
+        user1Up.stop();
+        user1Up.play();
     }
 
 
@@ -148,17 +134,15 @@ public class GameSystem  {
      * Method is moving down user's GUI object by 50px and animates.
      */
     private void downMovement() {
-        user1jump.setByY(50);
-        user1jump.setCycleCount(1);
+        user1Up.setByY(50);
+        user1Up.setCycleCount(1);
         userCharacter1.jumping = true;
-        user1fall.stop();
-        user1jump.stop();
-        user1jump.play();
-
+        user1Down.stop();
+        user1Up.stop();
+        user1Up.play();
     }
 
     private void checkCollisions() {
-        //toto pocita kolko towerov user uz obisiel
         Tower tower = listOfTowers.get(0);
         Cloud cloud = listOfClouds.get(0);
         Lightning lightning = listOfLightnings.get(0);
@@ -167,12 +151,11 @@ public class GameSystem  {
             scoreLabel.setText("Score: " + score);
             incrementOnce = false;
         }
-        //Getovanie bounds zo shape pre zistenie prieniku suradnic toweru a usera.
+
         Path towerPath = (Path) Shape.intersect(userCharacter1.getBounds(), tower.getBounds());
         Path cloudPath = (Path) Shape.intersect(userCharacter1.getBounds(), cloud.getBounds());
         Path lightningPath = (Path) Shape.intersect(userCharacter1.getBounds(), lightning.getBounds());
 
-        //porovnava bound toweru a usera a meni premennu intersection podla toho
         boolean cloudIntersection = !(cloudPath.getElements().isEmpty());
         boolean towerIntersection = !(towerPath.getElements().isEmpty());
         boolean lightningIntersection = !(lightningPath.getElements().isEmpty());
@@ -181,8 +164,6 @@ public class GameSystem  {
             towerIntersection = true;
         }
 
-        // momentalne je to nastavene tak ze sa da game over obrazovka ked sa pretne tower s userom
-        // TODO treba spravit viacero verzii intersection pre tower-user, user-cloud, user-lightning, user-dementor
         if (towerIntersection || cloudIntersection || lightningIntersection) {
             ClientRMI.getInstance().userUpdate(new UserMovement(this._player, "DIE"));
 
@@ -200,20 +181,13 @@ public class GameSystem  {
         }
     }
 
-    /**
-     * Method that initializes game, clears lists of towers, clouds, Lightnings, clears view than draws users GUI object
-     * sets X, Y position initializes score screen
-     * Sets up the enviroment distance between towers etc
-     *
-     */
     private void initializeGame() {
-
         listOfTowers.clear();
         listOfClouds.clear();
         listOfLightnings.clear();
         root.getChildren().clear();
 
-        userCharacter1.getGraphics().setTranslateX(100); // Posuva hraca na X osi do lava prava defualt 100
+        userCharacter1.getGraphics().setTranslateX(100);
         userCharacter1.getGraphics().setTranslateY(150);
 
         userCharacter2.getGraphics().setTranslateX(100);
@@ -221,24 +195,8 @@ public class GameSystem  {
         userCharacter2.getGraphics().setOpacity(0.5);
 
         scoreLabel.setOpacity(0.8);
-        scoreLabel.setText("Score: 0");
+        scoreLabel.setText("Score: " + score);
         root.getChildren().addAll(userCharacter1.getGraphics(), scoreLabel, userCharacter2.getGraphics());
-
-//        SimpleDoubleProperty y = new SimpleDoubleProperty(0);
-//        y.set(root.getHeight() * Math.random() / 2.0);
-        //  vytvara cloudy na screen na  random X,Y poziciu a prida do listu cloudov
-        // vytvara lightning na screen na random X,Y poziciu a prida do listu lightning
-        for (int i = 0; i < 5; i++) {
-            //Cloud
-            Cloud cloud = new Cloud(res.cloudImage, root, false);
-            listOfClouds.add(cloud);
-
-            //Lightning
-            Lightning lightning = new Lightning(res.lightningImage, root);
-            listOfLightnings.add(lightning);
-        }
-
-        // vytvara towery na random pozicie a pridava ich do listu towerov
 
         for (int i = 0; i < level.getListOfTowersX().size(); i++) {
             Tower tower;
@@ -249,24 +207,21 @@ public class GameSystem  {
             } else {
                 tower = new Tower(res.towerImage, root, false);
             }
-
-//            tower.setTranslateX(i * (width / 4 + 10) + 400);
             tower.setTranslateX(level.getListOfTowersX().get(i));
             tower.setTranslateY(level.getListOfTowersY().get(i));
             listOfTowers.add(tower);
             root.getChildren().add(tower);
-
         }
-        for (int i = 0; i < level.getListOfCloudsX().size(); i++) {
 
-            Cloud cloud = new Cloud(res.cloudImage, root, false);
+        for (int i = 0; i < level.getListOfCloudsX().size(); i++) {
+            Cloud cloud = new Cloud(res.cloudImage, root);
             cloud.setTranslateX(level.getListOfCloudsX().get(i));
             cloud.setTranslateY(level.getListOfCloudsY().get(i));
             listOfClouds.add(cloud);
             root.getChildren().add(cloud);
         }
-        for (int i = 0; i < level.getListOfLightningsX().size(); i++) {
 
+        for (int i = 0; i < level.getListOfLightningsX().size(); i++) {
             Lightning bolt = new Lightning(res.lightningImage, root);
             bolt.setTranslateX(level.getListOfLightningsX().get(i));
             bolt.setTranslateY(level.getListOfLightningsY().get(i));
@@ -274,7 +229,6 @@ public class GameSystem  {
             root.getChildren().add(bolt);
         }
 
-//        score = 0;
         incrementOnce = true;
         gameOver = false;
 
@@ -300,18 +254,18 @@ public class GameSystem  {
         userCharacter2 = new UserCharacter(res.userImageGryf);
 
 
-        user1jump = new TranslateTransition(Duration.millis(450), userCharacter1.getGraphics());
-        user1fall = new TranslateTransition(Duration.millis(5 * height), userCharacter1.getGraphics());
+        user1Up = new TranslateTransition(Duration.millis(450), userCharacter1.getGraphics());
+        user1Down = new TranslateTransition(Duration.millis(5 * height), userCharacter1.getGraphics());
 
-        user2jump = new TranslateTransition(Duration.millis(450), userCharacter2.getGraphics());
-        user2fall = new TranslateTransition(Duration.millis(5 * height), userCharacter2.getGraphics());
+        user2Up = new TranslateTransition(Duration.millis(450), userCharacter2.getGraphics());
+        user2Down = new TranslateTransition(Duration.millis(5 * height), userCharacter2.getGraphics());
 
-        user1jump.setInterpolator(Interpolator.LINEAR);
-        user1fall.setByY(height + 20);
+        user1Up.setInterpolator(Interpolator.LINEAR);
+        user1Down.setByY(height + 20);
         userCharacter1.getGraphics().setRotationAxis(Rotate.Z_AXIS);
 
-        user2jump.setInterpolator(Interpolator.LINEAR);
-        user2fall.setByY(height + 20);
+        user2Up.setInterpolator(Interpolator.LINEAR);
+        user2Down.setByY(height + 20);
         userCharacter2.getGraphics().setRotationAxis(Rotate.Z_AXIS);
 
         gameLoop = new Timeline(new KeyFrame(Duration.millis(1000 / FPS), e -> {
@@ -373,29 +327,24 @@ public class GameSystem  {
             //ignore own requests
         } else {
             if (userMovement.getMovement().equals("UP")) {
-                user2jump.setByY(-50);
-                user2jump.setCycleCount(1);
+                user2Up.setByY(-50);
+                user2Up.setCycleCount(1);
                 userCharacter2.jumping = true;
-                user2fall.stop();
-                user2jump.stop();
-                user2jump.play();
+                user2Down.stop();
+                user2Up.stop();
+                user2Up.play();
 
             } else if (userMovement.getMovement().equals("DOWN")) {
-                user2jump.setByY(50);
-                user2jump.setCycleCount(1);
+                user2Up.setByY(50);
+                user2Up.setCycleCount(1);
                 userCharacter2.jumping = true;
-                user2fall.stop();
-                user2jump.stop();
-                user2jump.play();
+                user2Down.stop();
+                user2Up.stop();
+                user2Up.play();
 
             } else if (userMovement.getMovement().equals("DIE")) {
-                System.out.println("User character 2 died");
+//                The opponent died and frist user should be notified
                 GameOverLabel gameOverLabel = new GameOverLabel(width / 2, height / 2);
-
-            } else if (userMovement.getMovement().equals("START")) {
-                System.out.println("Player 2 je ready ");
-            } else {
-                System.out.println("Nerozpoznany prikaz");
             }
         }
     }

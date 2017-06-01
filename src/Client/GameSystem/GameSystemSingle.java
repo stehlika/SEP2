@@ -43,8 +43,8 @@ public class GameSystemSingle {
     private UserCharacter userCharacter;
     private Dementor dementor;
 
-    private TranslateTransition userjump;
-    private TranslateTransition userfall;
+    private TranslateTransition userUp;
+    private TranslateTransition userDown;
 
     private StartScreen startScreen = new StartScreen(400, 300);
 
@@ -99,8 +99,6 @@ public class GameSystemSingle {
                 if (gameOver) {
                     showProfile();
                 }
-            } else {
-                System.out.println("bullshit");
             }
         });
 
@@ -121,13 +119,11 @@ public class GameSystemSingle {
      * Method that moves user GUI object up 50px and animates the movement.
      */
     private void upMovement() {
-        userjump.setByY(-50);
-        userjump.setCycleCount(1);
-        userCharacter.jumping = true;
-        userfall.stop();
-        userjump.stop();
-        userjump.play();
-
+        userUp.setByY(-50);
+        userUp.setCycleCount(1);
+        userDown.stop();
+        userUp.stop();
+        userUp.play();
     }
 
 
@@ -135,12 +131,11 @@ public class GameSystemSingle {
      * Method is moving down user's GUI object by 50px and animates.
      */
     private void downMovement() {
-        userjump.setByY(50);
-        userjump.setCycleCount(1);
-        userCharacter.jumping = true;
-        userfall.stop();
-        userjump.stop();
-        userjump.play();
+        userUp.setByY(50);
+        userUp.setCycleCount(1);
+        userDown.stop();
+        userUp.stop();
+        userUp.play();
 
     }
 
@@ -154,12 +149,11 @@ public class GameSystemSingle {
             incrementOnce = false;
             System.out.println("Score: " + score);
         }
-        //Getovanie bounds zo shape pre zistenie prieniku suradnic toweru a usera.
+
         Path cloudPath = (Path) Shape.intersect(userCharacter.getBounds(), cloud.getBounds());
         Path towerPath = (Path) Shape.intersect(userCharacter.getBounds(), tower.getBounds());
         Path lightningPath = (Path) Shape.intersect(userCharacter.getBounds(), lightning.getBounds());
 
-        //porovnava bound toweru a usera a meni premennu intersection podla toho
         boolean cloudIntersection = !(cloudPath.getElements().isEmpty());
         boolean towerIntersection = !(towerPath.getElements().isEmpty());
         boolean lightningIntersection = !(lightningPath.getElements().isEmpty());
@@ -174,13 +168,10 @@ public class GameSystemSingle {
 //            System.out.println("score: "+score);
         }
 
-        //toto su vrchne a spodne bounds (towerIntersection je len zavolane aby to vtedy spomalilo - asi lepsie zavolat gameover?)
         if (userCharacter.getBounds().getCenterY() + userCharacter.getBounds().getRadiusY() > height || userCharacter.getBounds().getCenterY() - userCharacter.getBounds().getRadiusY() < 0) {
             towerIntersection = true;
         }
 
-        // momentalne je to nastavene tak ze sa da game over obrazovka ked sa pretne tower s userom
-        // TODO treba spravit viacero verzii intersection pre tower-user, user-cloud, user-lightning, user-dementor
         if (towerIntersection) {
             gameLoop.setRate(0.05);
             dementor.setTranslateX(dementor.getTranslateX() + 10);
@@ -199,8 +190,6 @@ public class GameSystemSingle {
             highScore = highScore < score ? score : highScore;
             gameOverLabel.setText("Tap to retry. Score: " + score + "\n\tHighScore: " + highScore
                                     + "\nTo EXIT, press Esc.");
-
-//            saveHighScore(); zatial nie je potreba pre fungovanie
             root.getChildren().add(gameOverLabel);
             root.getChildren().get(1).setOpacity(0);
             gameOver = true;
@@ -220,28 +209,19 @@ public class GameSystemSingle {
         listOfLightnings.clear();
         root.getChildren().clear();
 
-        userCharacter.getGraphics().setTranslateX(200); // Posuva hraca na X osi do lava prava defualt 100
+        userCharacter.getGraphics().setTranslateX(200);
         userCharacter.getGraphics().setTranslateY(150);
 
         scoreLabel.setOpacity(0.8);
         scoreLabel.setText("Score: " + score);
         root.getChildren().addAll(userCharacter.getGraphics(), scoreLabel);
 
-        //  vytvara cloudy na screen na  random X,Y poziciu a prida do listu cloudov
-        // vytvara lightning na screen na random X,Y poziciu a prida do listu lightning
-        for (int i = 0; i < 5; i++) {
-            Cloud cloud = new Cloud(res.cloudImage, root, false);
-            listOfClouds.add(cloud);
-
-            Lightning lightning = new Lightning(res.lightningImage, root);
-            listOfLightnings.add(lightning);
-        }
-
-        // vytvara towery na random pozicie a pridava ich do listu towerov
 
         Level level = new Level();
-
         Image towerImg;
+        Tower tower;
+        Cloud cloud;
+        Lightning bolt;
 
         for (int i = 0; i < level.getListOfTowersX().size(); i++) {
             if (i % 4 == 0) {
@@ -255,10 +235,7 @@ public class GameSystemSingle {
             } else {
                 towerImg = res.towerImageSlyt;
             }
-            Tower tower;
-            if (Math.random() < 0.4) {
-                tower = new Tower(towerImg, root, false);
-            } else if (Math.random() > 0.85) {
+            if (Math.random() < 0.2) {
                 tower = new Tower(towerImg, root, true);
             } else {
                 tower = new Tower(towerImg, root, false);
@@ -271,7 +248,7 @@ public class GameSystemSingle {
         }
         for (int i = 0; i < level.getListOfCloudsX().size(); i++) {
 
-            Cloud cloud = new Cloud(res.cloudImage, root, false);
+            cloud = new Cloud(res.cloudImage, root);
             cloud.setTranslateX(level.getListOfCloudsX().get(i));
             cloud.setTranslateY(level.getListOfCloudsY().get(i));
             listOfClouds.add(cloud);
@@ -279,7 +256,7 @@ public class GameSystemSingle {
         }
         for (int i = 0; i < level.getListOfLightningsX().size(); i++) {
 
-            Lightning bolt = new Lightning(res.lightningImage, root);
+            bolt = new Lightning(res.lightningImage, root);
             bolt.setTranslateX(level.getListOfLightningsX().get(i));
             bolt.setTranslateY(level.getListOfLightningsY().get(i));
             listOfLightnings.add(bolt);
@@ -291,12 +268,9 @@ public class GameSystemSingle {
         dementor.setTranslateY(100.0);
         root.getChildren().add(dementor);
 
-//        score = 0;
         incrementOnce = true;
         gameOver = false;
         userCharacter.jumping = false;
-//        userfall.stop();
-//        userfall.play();
 
         gameLoop.play();
     }
@@ -313,18 +287,14 @@ public class GameSystemSingle {
         } else if (player.getFaculty().equals("slytherin")) {
             userCharacter = new UserCharacter(res.userImageSlyt);
         } else {
-            System.out.println("jajojaofhohso");
             userCharacter = new UserCharacter(res.userImage);
         }
 
+        userUp = new TranslateTransition(Duration.millis(450), userCharacter.getGraphics());
+        userDown = new TranslateTransition(Duration.millis(5 * height), userCharacter.getGraphics());
 
-
-        userjump = new TranslateTransition(Duration.millis(450), userCharacter.getGraphics());
-        userfall = new TranslateTransition(Duration.millis(5 * height), userCharacter.getGraphics());
-
-
-        userjump.setInterpolator(Interpolator.LINEAR);
-        userfall.setByY(height + 20);
+        userUp.setInterpolator(Interpolator.LINEAR);
+        userDown.setByY(height + 20);
         userCharacter.getGraphics().setRotationAxis(Rotate.Z_AXIS);
 
 
@@ -350,6 +320,7 @@ public class GameSystemSingle {
                 listOfLightnings.get(i).setTranslateX(listOfLightnings.get(i).getTranslateX() - 2);
             }
         }));
+
         gameLoop.setCycleCount(-1);
         initializeGame();
         loadHighScore();
@@ -367,7 +338,6 @@ public class GameSystemSingle {
             e.printStackTrace();
             highScore = -1;
         }
-
     }
 
     public void showProfile() {

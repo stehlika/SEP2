@@ -14,7 +14,7 @@ public class ScoreLabel extends Pane {
     Text status = new Text("Score: 0");
 
     public ScoreLabel(double x, double y) {
-        setPrefHeight(100);
+        setPrefHeight(150);
         setPrefWidth(300);
         setTranslateX(x - 310);
         setTranslateY(y + 10);
