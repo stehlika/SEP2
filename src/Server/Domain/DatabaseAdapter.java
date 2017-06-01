@@ -256,6 +256,11 @@ public class DatabaseAdapter implements Persistence {
                     + "WHERE faculty = ?;";
 
             db.update(sql2,faculty,faculty);
+            String sql3= "UPDATE sep2_schema.player " +
+                    "SET playtime=(SELECT sum(score) FROM sep2_schema.player_scores WHERE playernick=?) WHERE nickname=?;";
+            db.update(sql3,nickname,nickname);
+
+
 
         } catch (SQLException e) {
             e.printStackTrace();
