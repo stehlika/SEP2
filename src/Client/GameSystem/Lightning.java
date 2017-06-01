@@ -24,14 +24,10 @@ public class Lightning extends Group {
 
     public Lightning(Image frame, Pane root) {
         this.frame = frame;
-//        setImage(new Image(Lightning.class.getResourceAsStream("Resources/bolt.png")));
-//        setFitWidth(20);
-//        setFitHeight(30);
 
         lightningBody.setImage(this.frame);
         lightningBody.setX(2.5);
         lightningBody.setY(30);
-//        lightningBody.yProperty().bind(root.heightProperty().divide(2));
         setOpacity(1.0);
         bounds = new Rectangle(frame.getWidth(), frame.getHeight());
         bounds.setStroke(Color.TRANSPARENT);

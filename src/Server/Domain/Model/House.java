@@ -20,16 +20,8 @@ public class House implements Serializable {
         return totalscore;
     }
 
-    public void setTotalscore(int totalscore) {
-        this.totalscore = totalscore;
-    }
-
     public String getBestplayer() {
         return bestplayer;
-    }
-
-    public void setBestplayer(String bestplayer) {
-        this.bestplayer = bestplayer;
     }
 
     @Override

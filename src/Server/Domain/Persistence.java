@@ -16,9 +16,6 @@ public interface Persistence {
     void saveScore(String playernick, int score) throws IOException;
 
     void updateTotalScore(String faculty) throws IOException;
-    //TODO : zavolat bud vo vnutri metody save score alebo potom
-    // niekde vonku normalne vonku ked skonci hra tak save score
-    // update score
 
     String houseSelection() throws IOException;
 
@@ -31,7 +28,6 @@ public interface Persistence {
     void removePlayer(String nickname) throws IOException;
 
     void updateBestPlayer(String faculty) throws IOException;
-    //TODO : zavolat bud
 
     ArrayList<Pair<String, Integer>> getHouseLeaderBoard(String faculty) throws IOException;
 

@@ -18,7 +18,6 @@ public class InstructionsController extends MasterController {
     public static Player player;
     private Player _player;
 
-
     @FXML
     public void initialize() {
 

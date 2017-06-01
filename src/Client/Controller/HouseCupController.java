@@ -47,7 +47,6 @@ public class HouseCupController extends MasterController {
     public void initialize() {
         backBtn.toFront();
 
-
         try {
             gryffindor = rmi.getHouse("gryffindor");
             ravenclaw = rmi.getHouse("ravenclaw");

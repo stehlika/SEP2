@@ -26,10 +26,8 @@ public class Tower extends Group {
 
     public Tower(Image frame,Pane root, boolean animate) {
         this.frame = frame;
-//        oscillationCenter = gapLocation.get();
         if (animate) {
             animateTube = new Timeline(new KeyFrame(Duration.millis(33), e -> {
-//                gapLocation.set(25 * Math.cos(Math.PI / 60 * frames) + oscillationCenter);
                 frames = (frames + 1) % 120;
             }));
             animateTube.setCycleCount(-1);
@@ -38,7 +36,6 @@ public class Tower extends Group {
         towerBody.setImage(this.frame);
         towerBody.setX(2.5);
         towerBody.setY(2.5);
-//        towerBody.yProperty().bind(gapLocation.add(GAP).add(root.heightProperty().divide(6)));
         this.bounds = new Rectangle(frame.getWidth(), frame.getHeight());
         bounds.setStroke(Color.TRANSPARENT);
         bounds.setFill(Color.TRANSPARENT);

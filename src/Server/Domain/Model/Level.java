@@ -9,8 +9,6 @@ import java.util.ArrayList;
  */
 public class Level implements Serializable {
 
-    private final double width = 4000, height = 720;
-
     private ArrayList<Double> listOfTowersX = new ArrayList<>();
     private ArrayList<Double> listOfTowersY = new ArrayList<>();
     private ArrayList<Double> listOfCloudsX = new ArrayList<>();
@@ -33,47 +31,24 @@ public class Level implements Serializable {
         return listOfTowersX;
     }
 
-    public void setListOfTowersX(ArrayList<Double> listOfTowersX) {
-        this.listOfTowersX = listOfTowersX;
-    }
-
     public ArrayList<Double> getListOfTowersY() {
         return listOfTowersY;
-    }
-
-    public void setListOfTowersY(ArrayList<Double> listOfTowersY) {
-        this.listOfTowersY = listOfTowersY;
     }
 
     public ArrayList<Double> getListOfCloudsX() {
         return listOfCloudsX;
     }
 
-    public void setListOfCloudsX(ArrayList<Double> listOfCloudsX) {
-        this.listOfCloudsX = listOfCloudsX;
-    }
-
     public ArrayList<Double> getListOfCloudsY() {
         return listOfCloudsY;
-    }
-
-    public void setListOfCloudsY(ArrayList<Double> listOfCloudsY) {
-        this.listOfCloudsY = listOfCloudsY;
     }
 
     public ArrayList<Double> getListOfLightningsX() {
         return listOfLightningsX;
     }
 
-    public void setListOfLightningsX(ArrayList<Double> listOfLightningsX) {
-        this.listOfLightningsX = listOfLightningsX;
-    }
-
     public ArrayList<Double> getListOfLightningsY() {
         return listOfLightningsY;
     }
 
-    public void setListOfLightningsY(ArrayList<Double> listOfLightningsY) {
-        this.listOfLightningsY = listOfLightningsY;
-    }
 }

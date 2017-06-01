@@ -18,14 +18,7 @@ public class Cloud extends Group {
      *  No-argument constructor. Gets image from resources package and sets W and H for each cloud and opacity.
      */
 
-//        cloudBody.setX(Math.random() * root.getWidth());
-//        cloudBody.setY(Math.random() * root.getHeight() / 3);
-
     private ImageView cloudBody = new ImageView();
-    private double GAP = 120;
-    private double oscillationCenter;
-    private Timeline animateTube;
-    private int frames = 0;
     private Rectangle bounds;
     private Image frame;
 

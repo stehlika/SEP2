@@ -105,7 +105,6 @@ public class GameSystemSingle {
                 }
             }
         });
-
     }
 
 
@@ -166,11 +165,6 @@ public class GameSystemSingle {
             dementorApproached =  true;
         }
 
-        if (tower.getTranslateX() == userCharacter.getBounds().getCenterX() + userCharacter.getBounds().getRadiusX()) {
-//            score += 1;
-//            System.out.println("score: "+score);
-        }
-
         if (userCharacter.getBounds().getCenterY() + userCharacter.getBounds().getRadiusY() > height || userCharacter.getBounds().getCenterY() - userCharacter.getBounds().getRadiusY() < 0) {
             towerIntersection = true;
         }
@@ -181,7 +175,6 @@ public class GameSystemSingle {
         } else if (cloudIntersection) {
             gameLoop.setRate(0.2);
             dementor.setTranslateX(dementor.getTranslateX() + 4);
-        } else if (lightningIntersection) {
         } else {
             gameLoop.setRate(1.0);
         }
@@ -219,7 +212,6 @@ public class GameSystemSingle {
         scoreLabel.setOpacity(0.8);
         scoreLabel.setText("Score: " + score);
         root.getChildren().addAll(userCharacter.getGraphics(), scoreLabel);
-
 
         Level level = new Level();
         Image towerImg;
@@ -301,7 +293,6 @@ public class GameSystemSingle {
         userDown.setByY(height + 20);
         userCharacter.getGraphics().setRotationAxis(Rotate.Z_AXIS);
 
-
         gameLoop = new Timeline(new KeyFrame(Duration.millis(1000 / FPS), e -> {
             updateCounters();
             checkCollisions();
@@ -344,7 +335,7 @@ public class GameSystemSingle {
         }
     }
 
-    public void showProfile() {
+    private void showProfile() {
         try {
             Pane newLoadedPane = FXMLLoader.load(getClass().getResource("../View/mainView.fxml"));
             root.getChildren().add(newLoadedPane);
