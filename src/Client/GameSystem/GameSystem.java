@@ -19,6 +19,7 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by adamstehlik on 17/05/2017.
@@ -31,7 +32,7 @@ public class GameSystem  {
     private Pane root;
     private boolean gameOver = false;
     private boolean incrementOnce = true;
-    private int score = 3499875;
+    private int score = 0;
     private int highScore = 0;
     private double FPS = 40;
     private int counter_30FPS = 0;
@@ -54,6 +55,8 @@ public class GameSystem  {
     private Timeline gameLoop;
     private Player _player;
 
+    private Date startTime;
+
     private static GameSystem instance = null;
 
     private Level level;
@@ -74,6 +77,7 @@ public class GameSystem  {
      */
     public void startGame(Player player) {
         _player = player;
+        startTime = new Date();
 
         Stage primaryStage = HarryPotterMain.get_primaryStage();
         root = new Pane();
@@ -86,6 +90,7 @@ public class GameSystem  {
         root.setPrefSize(width, height);
 
         scene.setOnKeyPressed(event -> {
+            countScore();
             if(event.getCode() == KeyCode.UP) {
                 if (!gameOver) {
                     upMovement();
@@ -171,7 +176,6 @@ public class GameSystem  {
             highScore = highScore < score ? score : highScore;
             gameOverLabel.setText("Tap to retry. Score: " + score + "\n\tHighScore: " + highScore
                     + "\nTo EXIT, press Esc.");
-          //  saveHighScore(); zatial nie je potreba pre fungovanie
             root.getChildren().add(gameOverLabel);
             root.getChildren().get(1).setOpacity(0);
             gameOver = true;
@@ -186,6 +190,7 @@ public class GameSystem  {
         listOfClouds.clear();
         listOfLightnings.clear();
         root.getChildren().clear();
+        score = 0;
 
         userCharacter1.getGraphics().setTranslateX(100);
         userCharacter1.getGraphics().setTranslateY(150);
@@ -196,6 +201,7 @@ public class GameSystem  {
 
         scoreLabel.setOpacity(0.8);
         scoreLabel.setText("Score: " + score);
+
         root.getChildren().addAll(userCharacter1.getGraphics(), scoreLabel, userCharacter2.getGraphics());
 
         for (int i = 0; i < level.getListOfTowersX().size(); i++) {
@@ -247,7 +253,6 @@ public class GameSystem  {
         } else if (player.getFaculty().equals("slytherin")) {
             userCharacter1 = new UserCharacter(res.userImageSlyt);
         } else {
-            System.out.println("jajojaofhohso");
             userCharacter1 = new UserCharacter(res.userImage);
         }
 
@@ -356,6 +361,14 @@ public class GameSystem  {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+
+    private void countScore() {
+        final Date currentTime = new Date();
+        long timeDifference = -(startTime.getTime() - currentTime.getTime()) / 1000;
+        score = Math.toIntExact(timeDifference);
+        scoreLabel.setText("Score: " + score);
     }
 
 }

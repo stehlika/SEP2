@@ -22,6 +22,7 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by adamstehlik on 17/05/2017.
@@ -37,7 +38,7 @@ public class GameSystemSingle {
     private boolean incrementOnce = true;
     private int score = 0;
     private int highScore = 0;
-    private double FPS = 40;
+    private double FPS = 70;
     private int counter_30FPS = 0;
 
     private UserCharacter userCharacter;
@@ -54,6 +55,7 @@ public class GameSystemSingle {
     private ScoreLabel scoreLabel = new ScoreLabel(width, 0);
     private Timeline gameLoop;
     private Player _player;
+    private Date startTime;
 
     private static GameSystemSingle instance = null;
     private GameSystemSingle()  {
@@ -72,7 +74,7 @@ public class GameSystemSingle {
      */
     public void startGame(Player player) {
         _player = player;
-        System.out.println("Player: " + _player);
+        startTime = new Date();
 
         Stage primaryStage = HarryPotterMain.get_primaryStage();
         root = new Pane();
@@ -85,6 +87,8 @@ public class GameSystemSingle {
         root.setPrefSize(width, height);
 
         scene.setOnKeyPressed(event -> {
+            countScore();
+
             if (event.getCode() == KeyCode.UP) {
                 if (!gameOver) {
                     upMovement();
@@ -136,7 +140,6 @@ public class GameSystemSingle {
         userDown.stop();
         userUp.stop();
         userUp.play();
-
     }
 
     private void checkCollisions() {
@@ -194,6 +197,7 @@ public class GameSystemSingle {
             root.getChildren().get(1).setOpacity(0);
             gameOver = true;
             gameLoop.stop();
+            saveHighScore();
         }
     }
 
@@ -310,14 +314,14 @@ public class GameSystemSingle {
             if (listOfLightnings.get(0).getTranslateX() <= -width / 12.3) {
                 listOfLightnings.remove(0);
             }
-            for (int i = 0; i < listOfClouds.size(); i++) {
-                listOfClouds.get(i).setTranslateX(listOfClouds.get(i).getTranslateX() - 2);
+            for (Cloud listOfCloud : listOfClouds) {
+                listOfCloud.setTranslateX(listOfCloud.getTranslateX() - 2);
             }
-            for (int i = 0; i < listOfTowers.size(); i++) {
-                listOfTowers.get(i).setTranslateX(listOfTowers.get(i).getTranslateX() - 2);
+            for (Tower listOfTower : listOfTowers) {
+                listOfTower.setTranslateX(listOfTower.getTranslateX() - 2);
             }
-            for (int i = 0; i < listOfLightnings.size(); i++) {
-                listOfLightnings.get(i).setTranslateX(listOfLightnings.get(i).getTranslateX() - 2);
+            for (Lightning listOfLightning : listOfLightnings) {
+                listOfLightning.setTranslateX(listOfLightning.getTranslateX() - 2);
             }
         }));
 
@@ -350,6 +354,19 @@ public class GameSystemSingle {
     }
 
     private void saveHighScore() {
+        try {
+            ClientRMI.getInstance().saveScore(_player.getNickname(),score);
+            System.out.println("USPESNE UPDATNUTE v DB");
+        } catch (IOException e) {
+            e.printStackTrace();
+            MasterController.showAlertView("We were unable to update scores in DB",500);
+        }
+    }
 
+    private void countScore() {
+        final Date currentTime = new Date();
+        long timeDifference = -(startTime.getTime() - currentTime.getTime()) / 1000;
+        score = Math.toIntExact(timeDifference);
+        scoreLabel.setText("Score: " + score);
     }
 }
