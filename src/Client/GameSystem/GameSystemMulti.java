@@ -1,17 +1,14 @@
 package Client.GameSystem;
 
-import Client.Controller.*;
+import Client.Controller.ClientRMI;
+import Client.Controller.MasterController;
 import Client.GameSystem.Resources.Resources;
 import Client.HarryPotterMain;
 import Server.Domain.Model.Level;
 import Server.Domain.Model.Player;
-import javafx.animation.Interpolator;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.animation.TranslateTransition;
+import javafx.animation.*;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Path;
@@ -28,8 +25,7 @@ import java.util.Date;
  * Created by adamstehlik on 17/05/2017.
  */
 
-
-public class GameSystemSingle {
+public class GameSystemMulti {
 
     private final double width = 1280, height = 720; // set screen size
     private Resources res = new Resources();
@@ -38,14 +34,17 @@ public class GameSystemSingle {
     private boolean incrementOnce = true;
     private int score = 0;
     private int highScore = 0;
-    private double FPS = 70;
+    private double FPS = 80;
     private int counter_30FPS = 0;
 
-    private UserCharacter userCharacter;
-    private Dementor dementor;
+    private UserCharacter userCharacter1;
+    private UserCharacter userCharacter2;
 
-    private TranslateTransition userUp;
-    private TranslateTransition userDown;
+    private TranslateTransition user1Up;
+    private TranslateTransition user1Down;
+
+    private TranslateTransition user2Up;
+    private TranslateTransition user2Down;
 
     private StartScreen startScreen = new StartScreen(400, 300);
 
@@ -55,15 +54,19 @@ public class GameSystemSingle {
     private ScoreLabel scoreLabel = new ScoreLabel(width, 0);
     private Timeline gameLoop;
     private Player _player;
+
+    private static GameSystemMulti instance = null;
     private Date startTime;
 
-    private static GameSystemSingle instance = null;
-    private GameSystemSingle()  {
+
+    private Level level;
+    private GameSystemMulti()  {
+        level = ClientRMI.getInstance().getLevel();
     }
 
-    public static GameSystemSingle getInstance() {
+    public static GameSystemMulti getInstance() {
         if(instance == null)
-                instance = new GameSystemSingle();
+                instance = new GameSystemMulti();
         return instance;
     }
 
@@ -88,21 +91,22 @@ public class GameSystemSingle {
 
         scene.setOnKeyPressed(event -> {
             countScore();
-
-            if (event.getCode() == KeyCode.UP) {
+            if(event.getCode() == KeyCode.UP) {
                 if (!gameOver) {
                     upMovement();
-                } else
+                    ClientRMI.getInstance().userUpdate(new UserMovement(this._player, "UP"));
+                }
+                else
                     initializeGame();
             } else if (event.getCode() == KeyCode.DOWN) {
                 if (!gameOver) {
                     downMovement();
-                } else
+                    ClientRMI.getInstance().userUpdate(new UserMovement(this._player, "DOWN"));
+                }
+                else
                     initializeGame();
             } else if (event.getCode() == KeyCode.ESCAPE) {
-                if (gameOver) {
-                    showProfile();
-                }
+                showProfile();
             }
         });
     }
@@ -122,11 +126,12 @@ public class GameSystemSingle {
      * Method that moves user GUI object up 50px and animates the movement.
      */
     private void upMovement() {
-        userUp.setByY(-50);
-        userUp.setCycleCount(1);
-        userDown.stop();
-        userUp.stop();
-        userUp.play();
+        user1Up.setByY(-50);
+        user1Up.setCycleCount(1);
+        userCharacter1.jumping = true;
+        user1Down.stop();
+        user1Up.stop();
+        user1Up.play();
     }
 
 
@@ -134,16 +139,17 @@ public class GameSystemSingle {
      * Method is moving down user's GUI object by 50px and animates.
      */
     private void downMovement() {
-        userUp.setByY(50);
-        userUp.setCycleCount(1);
-        userDown.stop();
-        userUp.stop();
-        userUp.play();
+        user1Up.setByY(50);
+        user1Up.setCycleCount(1);
+        userCharacter1.jumping = true;
+        user1Down.stop();
+        user1Up.stop();
+        user1Up.play();
     }
 
     private void checkCollisions() {
-        Cloud cloud = listOfClouds.get(0);
         Tower tower = listOfTowers.get(0);
+        Cloud cloud = listOfClouds.get(0);
         Lightning lightning = listOfLightnings.get(0);
         if (tower.getTranslateX() < 35 && incrementOnce) {
             score++;
@@ -151,121 +157,86 @@ public class GameSystemSingle {
             incrementOnce = false;
         }
 
-        Path cloudPath = (Path) Shape.intersect(userCharacter.getBounds(), cloud.getBounds());
-        Path towerPath = (Path) Shape.intersect(userCharacter.getBounds(), tower.getBounds());
-        Path lightningPath = (Path) Shape.intersect(userCharacter.getBounds(), lightning.getBounds());
+        Path towerPath = (Path) Shape.intersect(userCharacter1.getBounds(), tower.getBounds());
+        Path cloudPath = (Path) Shape.intersect(userCharacter1.getBounds(), cloud.getBounds());
+        Path lightningPath = (Path) Shape.intersect(userCharacter1.getBounds(), lightning.getBounds());
 
         boolean cloudIntersection = !(cloudPath.getElements().isEmpty());
         boolean towerIntersection = !(towerPath.getElements().isEmpty());
         boolean lightningIntersection = !(lightningPath.getElements().isEmpty());
-        boolean dementorApproached = false;
 
-        if (dementor.getTranslateX() + dementor.getBounds().getWidth() >= 200) {
-            dementorApproached =  true;
-        }
-
-        if (userCharacter.getBounds().getCenterY() + userCharacter.getBounds().getRadiusY() > height || userCharacter.getBounds().getCenterY() - userCharacter.getBounds().getRadiusY() < 0) {
+        if (userCharacter1.getBounds().getCenterY() + userCharacter1.getBounds().getRadiusY() > height || userCharacter1.getBounds().getCenterY() - userCharacter1.getBounds().getRadiusY() < 0) {
             towerIntersection = true;
         }
 
-        if (towerIntersection) {
-            gameLoop.setRate(0.05);
-            dementor.setTranslateX(dementor.getTranslateX() + 10);
-        } else if (cloudIntersection) {
-            gameLoop.setRate(0.2);
-            dementor.setTranslateX(dementor.getTranslateX() + 4);
-        } else {
-            gameLoop.setRate(1.0);
-        }
-
-        if (lightningIntersection || dementorApproached) {
+        if (towerIntersection || cloudIntersection || lightningIntersection) {
             ClientRMI.getInstance().userUpdate(new UserMovement(this._player, "DIE"));
 
             GameOverLabel gameOverLabel = new GameOverLabel(width / 2, height / 2);
             highScore = highScore < score ? score : highScore;
             gameOverLabel.setText("Tap to retry. Score: " + score + "\n\tHighScore: " + highScore
-                                    + "\nTo EXIT, press Esc.");
+                    + "\nTo EXIT, press Esc.");
             root.getChildren().add(gameOverLabel);
             root.getChildren().get(1).setOpacity(0);
             gameOver = true;
             gameLoop.stop();
             saveHighScore();
+
         }
     }
 
-    /**
-     * Method that initializes game, clears lists of towers, clouds, Lightnings, clears view than draws users GUI object
-     * sets X, Y position initializes score screen
-     * Sets up the enviroment distance between towers etc
-     *
-     */
     private void initializeGame() {
         listOfTowers.clear();
         listOfClouds.clear();
         listOfLightnings.clear();
         root.getChildren().clear();
+        score = 0;
 
-        userCharacter.getGraphics().setTranslateX(200);
-        userCharacter.getGraphics().setTranslateY(150);
+        userCharacter1.getGraphics().setTranslateX(100);
+        userCharacter1.getGraphics().setTranslateY(150);
+
+        userCharacter2.getGraphics().setTranslateX(100);
+        userCharacter2.getGraphics().setTranslateY(150);
+        userCharacter2.getGraphics().setOpacity(0.5);
 
         scoreLabel.setOpacity(0.8);
         scoreLabel.setText("Score: " + score);
-        root.getChildren().addAll(userCharacter.getGraphics(), scoreLabel);
 
-        Level level = new Level();
-        Image towerImg;
-        Tower tower;
-        Cloud cloud;
-        Lightning bolt;
+        root.getChildren().addAll(userCharacter1.getGraphics(), scoreLabel, userCharacter2.getGraphics());
 
         for (int i = 0; i < level.getListOfTowersX().size(); i++) {
-            if (i % 4 == 0) {
-                towerImg = res.towerImageGryf;
-            }
-            else if (i%4==1) {
-                towerImg = res.towerImageRave;
-            }
-            else if (i%4==2) {
-                towerImg = res.towerImageHuff;
+            Tower tower;
+            if (Math.random() < 0.4) {
+                tower = new Tower(res.towerImage, root, false);
+            } else if (Math.random() > 0.85) {
+                tower = new Tower(res.towerImage, root, true);
             } else {
-                towerImg = res.towerImageSlyt;
+                tower = new Tower(res.towerImage, root, false);
             }
-            if (Math.random() < 0.2) {
-                tower = new Tower(towerImg, root, true);
-            } else {
-                tower = new Tower(towerImg, root, false);
-            }
-
             tower.setTranslateX(level.getListOfTowersX().get(i));
             tower.setTranslateY(level.getListOfTowersY().get(i));
             listOfTowers.add(tower);
             root.getChildren().add(tower);
         }
-        for (int i = 0; i < level.getListOfCloudsX().size(); i++) {
 
-            cloud = new Cloud(res.cloudImage, root);
+        for (int i = 0; i < level.getListOfCloudsX().size(); i++) {
+            Cloud cloud = new Cloud(res.cloudImage, root);
             cloud.setTranslateX(level.getListOfCloudsX().get(i));
             cloud.setTranslateY(level.getListOfCloudsY().get(i));
             listOfClouds.add(cloud);
             root.getChildren().add(cloud);
         }
-        for (int i = 0; i < level.getListOfLightningsX().size(); i++) {
 
-            bolt = new Lightning(res.lightningImage, root);
+        for (int i = 0; i < level.getListOfLightningsX().size(); i++) {
+            Lightning bolt = new Lightning(res.lightningImage, root);
             bolt.setTranslateX(level.getListOfLightningsX().get(i));
             bolt.setTranslateY(level.getListOfLightningsY().get(i));
             listOfLightnings.add(bolt);
             root.getChildren().add(bolt);
         }
 
-        dementor = new Dementor(res.deatheaterImage, root);
-        dementor.setTranslateX(40.0);
-        dementor.setTranslateY(100.0);
-        root.getChildren().add(dementor);
-
         incrementOnce = true;
         gameOver = false;
-        userCharacter.jumping = false;
 
         gameLoop.play();
     }
@@ -274,25 +245,36 @@ public class GameSystemSingle {
         root.getChildren().add(startScreen);
 
         if (player.getFaculty().equals("gryffindor")) {
-            userCharacter = new UserCharacter(res.userImageGryf);
+            userCharacter1 = new UserCharacter(res.userImageGryf);
         } else if (player.getFaculty().equals("ravenclaw")) {
-            userCharacter = new UserCharacter(res.userImageRave);
+            userCharacter1 = new UserCharacter(res.userImageRave);
         } else if (player.getFaculty().equals("hufflepuff")) {
-            userCharacter = new UserCharacter(res.userImageHuff);
+            userCharacter1 = new UserCharacter(res.userImageHuff);
         } else if (player.getFaculty().equals("slytherin")) {
-            userCharacter = new UserCharacter(res.userImageSlyt);
+            userCharacter1 = new UserCharacter(res.userImageSlyt);
         } else {
-            userCharacter = new UserCharacter(res.userImage);
+            userCharacter1 = new UserCharacter(res.userImage);
         }
 
-        userUp = new TranslateTransition(Duration.millis(450), userCharacter.getGraphics());
-        userDown = new TranslateTransition(Duration.millis(5 * height), userCharacter.getGraphics());
+        userCharacter2 = new UserCharacter(res.userImageGryf);
 
-        userUp.setInterpolator(Interpolator.LINEAR);
-        userDown.setByY(height + 20);
-        userCharacter.getGraphics().setRotationAxis(Rotate.Z_AXIS);
+
+        user1Up = new TranslateTransition(Duration.millis(450), userCharacter1.getGraphics());
+        user1Down = new TranslateTransition(Duration.millis(5 * height), userCharacter1.getGraphics());
+
+        user2Up = new TranslateTransition(Duration.millis(450), userCharacter2.getGraphics());
+        user2Down = new TranslateTransition(Duration.millis(5 * height), userCharacter2.getGraphics());
+
+        user1Up.setInterpolator(Interpolator.LINEAR);
+        user1Down.setByY(height + 20);
+        userCharacter1.getGraphics().setRotationAxis(Rotate.Z_AXIS);
+
+        user2Up.setInterpolator(Interpolator.LINEAR);
+        user2Down.setByY(height + 20);
+        userCharacter2.getGraphics().setRotationAxis(Rotate.Z_AXIS);
 
         gameLoop = new Timeline(new KeyFrame(Duration.millis(1000 / FPS), e -> {
+
             updateCounters();
             checkCollisions();
             if (listOfClouds.get(0).getTranslateX() <= -width / 12.3) {
@@ -304,17 +286,16 @@ public class GameSystemSingle {
             if (listOfLightnings.get(0).getTranslateX() <= -width / 12.3) {
                 listOfLightnings.remove(0);
             }
-            for (Cloud listOfCloud : listOfClouds) {
-                listOfCloud.setTranslateX(listOfCloud.getTranslateX() - 2);
+            for (int i = 0; i < listOfClouds.size(); i++) {
+                listOfClouds.get(i).setTranslateX(listOfClouds.get(i).getTranslateX() - 2);
             }
-            for (Tower listOfTower : listOfTowers) {
-                listOfTower.setTranslateX(listOfTower.getTranslateX() - 2);
+            for (int i = 0; i < listOfLightnings.size(); i++) {
+                listOfLightnings.get(i).setTranslateX(listOfLightnings.get(i).getTranslateX() - 2);
             }
-            for (Lightning listOfLightning : listOfLightnings) {
-                listOfLightning.setTranslateX(listOfLightning.getTranslateX() - 2);
+            for (int i = 0; i < listOfTowers.size(); i++) {
+                listOfTowers.get(i).setTranslateX(listOfTowers.get(i).getTranslateX() - 2);
             }
         }));
-
         gameLoop.setCycleCount(-1);
         initializeGame();
         loadHighScore();
@@ -332,15 +313,7 @@ public class GameSystemSingle {
             e.printStackTrace();
             highScore = -1;
         }
-    }
 
-    private void showProfile() {
-        try {
-            Pane newLoadedPane = FXMLLoader.load(getClass().getResource("../View/mainView.fxml"));
-            root.getChildren().add(newLoadedPane);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     private void saveHighScore() {
@@ -352,10 +325,49 @@ public class GameSystemSingle {
         }
     }
 
+
+    public void updateUser2(UserMovement userMovement) {
+        if ((userMovement.getPlayer().equals(this._player))) {
+            //ignore own requests
+        } else {
+            if (userMovement.getMovement().equals("UP")) {
+                user2Up.setByY(-50);
+                user2Up.setCycleCount(1);
+                userCharacter2.jumping = true;
+                user2Down.stop();
+                user2Up.stop();
+                user2Up.play();
+
+            } else if (userMovement.getMovement().equals("DOWN")) {
+                user2Up.setByY(50);
+                user2Up.setCycleCount(1);
+                userCharacter2.jumping = true;
+                user2Down.stop();
+                user2Up.stop();
+                user2Up.play();
+
+            } else if (userMovement.getMovement().equals("DIE")) {
+//                The opponent died and frist user should be notified
+                GameOverLabel gameOverLabel = new GameOverLabel(width / 2, height / 2);
+            }
+        }
+    }
+
+    public void showProfile() {
+        try {
+            Pane newLoadedPane = FXMLLoader.load(getClass().getResource("../View/mainView.fxml"));
+            root.getChildren().add(newLoadedPane);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     private void countScore() {
         final Date currentTime = new Date();
         long timeDifference = -(startTime.getTime() - currentTime.getTime()) / 1000;
         score = Math.toIntExact(timeDifference);
         scoreLabel.setText("Score: " + score);
     }
+
 }

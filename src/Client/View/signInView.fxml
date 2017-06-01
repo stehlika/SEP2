@@ -2,7 +2,10 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -11,6 +14,11 @@
    <children>
       <VBox alignment="CENTER" layoutX="482.0" layoutY="236.0" prefHeight="381.0" prefWidth="274.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="100.0">
          <children>
+            <Label text="J i z i r   H r n c i r" textFill="WHITE">
+               <font>
+                  <Font name="Avenir Roman" size="96.0" />
+               </font>
+            </Label>
             <TextField fx:id="serverIPTF" maxWidth="280.0" prefHeight="60.0" promptText="Type in server IP Address (192.168.1.11)" style="-fx-background-radius: 30; -fx-border-color: #998100; -fx-border-radius: 30; -fx-border-width: 3; -fx-background-color: #ecf0f1;">
                <VBox.margin>
                   <Insets top="20.0" />
@@ -45,5 +53,15 @@
             </Button>
          </children>
       </VBox>
+      <ImageView fx:id="dementorIV" fitHeight="80.0" fitWidth="80.0" layoutX="66.0" layoutY="76.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="100.0">
+      <image>
+         <Image url="@../GameSystem/Resources/dementor.png" />
+      </image>
+      </ImageView>
+      <ImageView fx:id="harryIV" fitHeight="140.0" fitWidth="240.0" layoutX="1048.0" layoutY="519.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="100.0" AnchorPane.rightAnchor="100.0">
+         <image>
+            <Image url="@../GameSystem/Resources/harry.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -19,6 +20,8 @@ public class SignInController extends MasterController {
 
     public Button signInBtn;
     public TextField usernameTF;
+    public ImageView dementorIV;
+    public ImageView harryIV;
     private ClientRMI rmi = ClientRMI.getInstance();
     public TextField serverIPTF;
     public TextField serverPortTF;

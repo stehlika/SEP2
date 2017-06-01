@@ -13,7 +13,7 @@
    <children>
       <VBox alignment="CENTER" layoutX="300.0" layoutY="82.0" prefHeight="600.0" prefWidth="600.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="100.0">
          <children>
-            <Label text="Bol si vybraty do" textFill="WHITE">
+            <Label text="You belong to" textFill="WHITE">
                <font>
                   <Font size="43.0" />
                </font>

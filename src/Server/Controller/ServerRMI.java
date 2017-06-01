@@ -89,8 +89,8 @@ public class ServerRMI extends Observable implements RmiService {
     }
 
     @Override
-    public ArrayList<Integer> getHighscoreForPlayer(String name) throws IOException {
-        return modelManager.getHighscoreForPlayer(name);
+    public ArrayList<Integer> getScoresForPlayer(String name) throws IOException {
+        return modelManager.getScoresForPlayer(name);
     }
 
     @Override

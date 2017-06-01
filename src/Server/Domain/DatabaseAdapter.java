@@ -70,17 +70,14 @@ public class DatabaseAdapter implements Persistence {
 
     @Override
     public String houseSelection() throws IOException {
-        System.out.println("Prislo to do funkcie database adapter");
         String sql = "SELECT faculty FROM sep2_schema.house_cup WHERE totalscore = (SELECT min(totalscore) FROM sep2_schema.house_cup)";
         String randomFaculty = "";
         ArrayList<Object[]> result;
 
         try {
-            System.out.println("Prislo to do try ");
             result = db.query(sql);
             Object[] row = result.get(0);
             randomFaculty = row[0].toString();
-            System.out.println("presne pred returnom");
             return randomFaculty;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -114,7 +111,6 @@ public class DatabaseAdapter implements Persistence {
             player.setPlaytime((int) row[1]);
             player.setWinratio((double) row[2]);
             player.setFaculty(row[3].toString());
-            System.out.println(player.toString());
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -123,8 +119,6 @@ public class DatabaseAdapter implements Persistence {
 
     @Override
     public House getHouse(String faculty) throws IOException {
-        //metoda ktera vraci house a vsechny data
-        System.out.println("Database Adapter class get house");
         String sql = "SELECT * FROM sep2_schema.house_cup WHERE faculty = ?;";
         House house = null;
         ArrayList<Object[]> result;
@@ -193,9 +187,6 @@ public class DatabaseAdapter implements Persistence {
 
     @Override
     public ArrayList<Pair<String, Integer>> getHouseLeaderBoard(String faculty) throws IOException {
-        //TODO
-        //leaderboard hracu se skore z konkretnej fakulty
-        System.out.println("Database adapter zavolala sa metoda getHouseLeaderBoard");
         ArrayList<Pair<String, Integer>> leaderboard = new ArrayList<>();
 
         String sql = "SELECT playernick, max(score) AS score FROM sep2_schema.player_scores JOIN sep2_schema.player ON (playernick = nickname) WHERE faculty=? GROUP BY playernick ORDER BY score DESC;";
@@ -231,7 +222,7 @@ public class DatabaseAdapter implements Persistence {
     }
 
     @Override
-    public ArrayList<Integer> getHighscoreForPlayer(String nickname) throws IOException {
+    public ArrayList<Integer> getScoresForPlayer(String nickname) throws IOException {
         String sql = "SELECT score FROM sep2_schema.player_scores WHERE playernick= ? ORDER BY score DESC;";
         ArrayList<Object[]> result;
         ArrayList<Integer> scores=new ArrayList<>();
@@ -255,15 +246,11 @@ public class DatabaseAdapter implements Persistence {
             result=db.query(sqlTemp,nickname);
             Object[] row=result.get(0);
             faculty=row[0].toString();
-            System.out.println(faculty+"(#(#&^$!&*@&");
-            System.out.println(nickname+score+"-------824583824719823");
             String sql = "UPDATE sep2_schema.house_cup SET bestplayer=( " +
                     "SELECT playernick FROM sep2_schema.player_scores WHERE score=( " +
                     "SELECT max(ps.score) FROM sep2_schema.player_scores ps JOIN sep2_schema.player p ON ps.playernick = p.nickname " +
                     "WHERE p.faculty=?) GROUP BY playernick) WHERE faculty=?;";
-            System.out.println("TERAZ SOM ZA QUERY");
             db.update(sql,faculty,faculty);
-            System.out.println("TERAZ SOM JU EXECUTOL");
             String sql2 = "UPDATE sep2_schema.house_cup SET totalscore = (SELECT sum(score) FROM sep2_schema.player_scores "
                     + "JOIN sep2_schema.player ON player.nickname = player_scores.playernick WHERE player.faculty = ?) "
                     + "WHERE faculty = ?;";

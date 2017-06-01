@@ -69,8 +69,8 @@ public class ModelManager implements ModelMan {
     }
 
     @Override
-    public ArrayList<Integer> getHighscoreForPlayer(String name) throws IOException {
-        return storage.getHighscoreForPlayer(name);
+    public ArrayList<Integer> getScoresForPlayer(String name) throws IOException {
+        return storage.getScoresForPlayer(name);
     }
 
     @Override

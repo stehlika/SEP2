@@ -1,6 +1,6 @@
 package Client.Controller;
 
-import Client.GameSystem.GameSystem;
+import Client.GameSystem.GameSystemMulti;
 import Server.Domain.Model.Player;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -31,7 +31,7 @@ public class InstructionsMultiController extends MasterController {
     }
 
     public void playGame() {
-        GameSystem.getInstance().startGame(_player);
+        GameSystemMulti.getInstance().startGame(_player);
     }
 
     public void back(ActionEvent actionEvent) {

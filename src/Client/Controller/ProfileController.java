@@ -22,7 +22,6 @@ public class ProfileController extends MasterController {
     public Label nicknameL;
     public Label playTimeL;
     public ListView scoresLV;
-    public Label winRatioL;
     public Label houseL;
     public ImageView profileIV;
     public Image image;
@@ -30,6 +29,7 @@ public class ProfileController extends MasterController {
 
     public static Player player;
     private Player _player;
+    private int playTime = 0;
 
     private ArrayList<Integer> scoresArrayList = new ArrayList<>();
 
@@ -40,7 +40,6 @@ public class ProfileController extends MasterController {
 
         nicknameL.setText(_player.getNickname());
         playTimeL.setText(Integer.toString(_player.getPlaytime()) + " s");
-        winRatioL.setText(Double.toString(_player.getWinratio()));
         houseL.setText(_player.getFaculty());
         try {
             scoresArrayList = rmi.getHighScoreForPlayer(_player.getNickname());
@@ -58,6 +57,10 @@ public class ProfileController extends MasterController {
             image = new Image(getClass().getResourceAsStream("../GameSystem/Resources/draco.png"));
         }
         profileIV.setImage(image);
+        for (Integer score: scoresArrayList) {
+            playTime += score;
+        }
+        playTimeL.setText(playTime + " s");
         manageList(scoresLV, scoresArrayList, "scores");
     }
 

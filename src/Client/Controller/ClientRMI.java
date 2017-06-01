@@ -1,6 +1,6 @@
 package Client.Controller;
 
-import Client.GameSystem.GameSystem;
+import Client.GameSystem.GameSystemMulti;
 import Client.GameSystem.UserMovement;
 import Server.Controller.RemoteObserver;
 import Server.Controller.RmiService;
@@ -120,7 +120,7 @@ public class ClientRMI extends UnicastRemoteObject implements RemoteObserver {
 
     public ArrayList<Integer> getHighScoreForPlayer(String nickname) throws IOException {
         try {
-            return rmiService.getHighscoreForPlayer(nickname);
+            return rmiService.getScoresForPlayer(nickname);
         } catch (RemoteException e) {
             e.printStackTrace();
             return null;
@@ -129,7 +129,7 @@ public class ClientRMI extends UnicastRemoteObject implements RemoteObserver {
 
     @Override
     public void update(Object observable, Object msg) throws RemoteException {
-        GameSystem.getInstance().updateUser2((UserMovement) msg);
+        GameSystemMulti.getInstance().updateUser2((UserMovement) msg);
     }
 
     public void userUpdate(UserMovement userMovement) {

@@ -1,7 +1,5 @@
 package Client.Controller;
 
-import Client.GameSystem.GameSystem;
-import Client.GameSystem.GameSystemSingle;
 import Server.Domain.Model.Player;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

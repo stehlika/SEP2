@@ -45,7 +45,6 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
                         <Label text="Nickname:" textFill="WHITE">
@@ -63,17 +62,7 @@
                               <Font size="25.0" />
                            </font>
                         </Label>
-                        <Label text="Win Ratio:" textFill="WHITE" GridPane.rowIndex="3">
-                           <font>
-                              <Font size="25.0" />
-                           </font>
-                        </Label>
                         <Label fx:id="playTimeL" text="#playtime" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                           <font>
-                              <Font size="25.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="winRatioL" text="#winRatio" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="3">
                            <font>
                               <Font size="25.0" />
                            </font>

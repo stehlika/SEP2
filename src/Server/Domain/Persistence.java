@@ -33,7 +33,7 @@ public interface Persistence {
 
     boolean clear() throws IOException;
 
-    ArrayList<Integer> getHighscoreForPlayer(String nickname) throws IOException;
+    ArrayList<Integer> getScoresForPlayer(String nickname) throws IOException;
 
 
 }
