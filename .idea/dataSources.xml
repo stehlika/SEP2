@@ -14,5 +14,11 @@
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://postgresql.websupport.sk:5432/sep2database</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="sep2database" uuid="3e63b390-5f4d-4e34-8467-f869d138bfb4">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://postgresql.websupport.sk/sep2database</jdbc-url>
+    </data-source>
   </component>
 </project>

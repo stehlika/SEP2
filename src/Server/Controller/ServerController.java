@@ -12,11 +12,19 @@ public class ServerController {
 
     private ServerView view;
 
+    /**
+     * One parameter constructor to follow MVC design pattern.
+     * @param view - representation of server view.
+     */
     public ServerController(ServerView view) {
         this.view = view;
         this.view.showStartUPScreen();
     }
 
+    /**
+     * Method which delegates start of the server.
+     * @param serverPort - indicates on which port would be server running.
+     */
     public void startRMIServer(int serverPort) {
         try {
             System.setProperty("java.rmi.server.hostname", InetAddress.getLocalHost().getHostAddress());

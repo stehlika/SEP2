@@ -15,12 +15,11 @@ public class UserCharacter {
     public boolean jumping = false;
     private Ellipse bounds;
 
-    /*
+    /**
     * Creates new user object with bounds
     * Bounds are used for intersection with another objects
     * Ellipse is used for more precise collision
     */
-
     public UserCharacter(Image frame) {
         this.frame = frame;
         this.bounds = new Ellipse(frame.getWidth() / 2.0, 11.5);

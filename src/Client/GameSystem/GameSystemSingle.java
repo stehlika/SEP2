@@ -38,7 +38,7 @@ public class GameSystemSingle {
     private boolean incrementOnce = true;
     private int score = 0;
     private int highScore = 0;
-    private double FPS = 70;
+    private double FPS = 90;
     private int counter_30FPS = 0;
 
     private UserCharacter userCharacter;
@@ -58,9 +58,16 @@ public class GameSystemSingle {
     private Date startTime;
 
     private static GameSystemSingle instance = null;
+
+    /**
+     * Private constructor to follow Singleton design pattern.
+     */
     private GameSystemSingle()  {
     }
 
+    /**
+     * Public static method returning instance of class for following Singleton design pattern.
+     */
     public static GameSystemSingle getInstance() {
         if(instance == null)
                 instance = new GameSystemSingle();
@@ -69,8 +76,9 @@ public class GameSystemSingle {
 
     /**
      *  Method that initialises playing screen and checks for user's keyboard input.
-     *  @KeyCode.UP is calling function upMovement.
-     *  @KeyCode.DOWN is calling function downMovement.
+     *  Keyboard arrow UP is calling function upMovement.
+     *  Keyboard arrow DOWN is calling function downMovement.
+     *  Keyboard arrow ESCAPE is returning user to profile view
      */
     public void startGame(Player player) {
         _player = player;
@@ -109,7 +117,7 @@ public class GameSystemSingle {
 
 
     /**
-     * This function is taking care of FPS for user movement
+     * This function is taking care of FPS for game movement
      */
     private void updateCounters() {
         if (counter_30FPS % 4 == 0) {
@@ -141,6 +149,10 @@ public class GameSystemSingle {
         userUp.play();
     }
 
+
+    /**
+     * Method for checking collisions between user, obstacles in game and deatheater.
+     */
     private void checkCollisions() {
         Cloud cloud = listOfClouds.get(0);
         Tower tower = listOfTowers.get(0);
@@ -196,7 +208,7 @@ public class GameSystemSingle {
     /**
      * Method that initializes game, clears lists of towers, clouds, Lightnings, clears view than draws users GUI object
      * sets X, Y position initializes score screen
-     * Sets up the enviroment distance between towers etc
+     * Sets up the entire game environment.
      *
      */
     private void initializeGame() {
@@ -270,6 +282,12 @@ public class GameSystemSingle {
         gameLoop.play();
     }
 
+
+    /**
+     * Method setting up the right graphics for every player. Method is also preparing view for game-play,
+     * loading scores etc.
+     * @param player is necessary for assigning right GUI representation of user character
+     */
     private void initGame(Player player) {
         root.getChildren().add(startScreen);
 
@@ -320,6 +338,9 @@ public class GameSystemSingle {
         loadHighScore();
     }
 
+    /**
+     * Method loading highest score for current player. To inform user of his/her most successful game.
+     */
     private void loadHighScore() {
         try {
             ArrayList<Integer> highScores = ClientRMI.getInstance().getHighScoreForPlayer(_player.getNickname());
@@ -334,6 +355,9 @@ public class GameSystemSingle {
         }
     }
 
+    /**
+     * Method opening profile screen when user decides to close game and go back to views.
+     */
     private void showProfile() {
         try {
             Pane newLoadedPane = FXMLLoader.load(getClass().getResource("../View/mainView.fxml"));
@@ -343,6 +367,9 @@ public class GameSystemSingle {
         }
     }
 
+    /**
+     * Method necessary for saving current score to server.
+     */
     private void saveHighScore() {
         try {
             ClientRMI.getInstance().saveScore(_player.getNickname(),score);
@@ -352,6 +379,9 @@ public class GameSystemSingle {
         }
     }
 
+    /**
+     * Method is counting score for each play and is updating label on game screen to inform user how is he/she doing.
+     */
     private void countScore() {
         final Date currentTime = new Date();
         long timeDifference = -(startTime.getTime() - currentTime.getTime()) / 1000;

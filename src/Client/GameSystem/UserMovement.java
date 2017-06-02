@@ -14,15 +14,17 @@ public class UserMovement implements Serializable {
     private Player player;
     private String movement;
 
+    /**
+     * Two parameter constructor necessary for multi-player game.
+     * @param player - determining who performed someting
+     * @param movement - determinig what was executed on second user computer
+     */
     UserMovement(Player player, String movement) {
         this.player = player;
         this.movement = movement;
         this.timestamp = new Date();
     }
 
-    public Date getTimestamp() {
-        return timestamp;
-    }
 
     public Player getPlayer() {
         return player;
