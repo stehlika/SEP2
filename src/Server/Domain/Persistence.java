@@ -31,8 +31,6 @@ public interface Persistence {
 
     ArrayList<Pair<String, Integer>> getHouseLeaderBoard(String faculty) throws IOException;
 
-    boolean clear() throws IOException;
-
     ArrayList<Integer> getScoresForPlayer(String nickname) throws IOException;
 
 

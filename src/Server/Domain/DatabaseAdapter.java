@@ -24,10 +24,16 @@ public class DatabaseAdapter implements Persistence {
         try {
             this.db = new Database(DRIVER, URL, USER, PASSWORD);
         } catch (ClassNotFoundException e) {
+
             e.printStackTrace();
         }
     }
 
+    /**
+     * The method adding the player to the database (the Player object is created is SignInController).
+     * @param player
+     * @throws IOException
+     */
     @Override
     public void addPlayer(Player player) throws IOException {
 
@@ -40,6 +46,12 @@ public class DatabaseAdapter implements Persistence {
 
     }
 
+    /**
+     * The method adding data to player_score table (including username and the score)
+     * @param playernick
+     * @param score
+     * @throws IOException
+     */
     @Override
     public void saveScore(String playernick, int score) throws IOException {
         String sql = "INSERT INTO sep2_schema.player_scores (playernick, score)"
@@ -54,6 +66,11 @@ public class DatabaseAdapter implements Persistence {
 
     }
 
+    /**
+     * The method callled if the new gained score in GameSystemSingle is higher than the player's highest score. Method checks for players new highest score.
+     * @param faculty
+     * @throws IOException
+     */
     @Override
     public void updateTotalScore(String faculty) throws IOException {
         String sql = "UPDATE sep2_schema.house_cup SET totalscore = (SELECT sum(score) FROM sep2_schema.player_scores "
@@ -68,6 +85,11 @@ public class DatabaseAdapter implements Persistence {
     }
 
 
+    /**
+     * Method returning the house which has the least total score (all scores gaind by all house members).
+     * @return
+     * @throws IOException
+     */
     @Override
     public String houseSelection() throws IOException {
         String sql = "SELECT faculty FROM sep2_schema.house_cup WHERE totalscore = (SELECT min(totalscore) FROM sep2_schema.house_cup)";
@@ -86,6 +108,12 @@ public class DatabaseAdapter implements Persistence {
     }
 
 
+    /**
+     * Method checking whether the given Player exists in the database. If he/she does, it returns the object Player with all data. If not, null is returned (and Player is created in controller).
+     * @param nickname
+     * @return
+     * @throws IOException
+     */
     @Override
     public Player checkPlayer(String nickname) throws IOException
     {
@@ -117,6 +145,12 @@ public class DatabaseAdapter implements Persistence {
         return player;
     }
 
+    /**
+     * Method returning House object based on the house name.
+     * @param faculty
+     * @return
+     * @throws IOException
+     */
     @Override
     public House getHouse(String faculty) throws IOException {
         String sql = "SELECT * FROM sep2_schema.house_cup WHERE faculty = ?;";
@@ -139,6 +173,11 @@ public class DatabaseAdapter implements Persistence {
         }
     }
 
+    /**
+     * Method returning the player_score table in form of ArrayList of Pairs.
+     * @return
+     * @throws IOException
+     */
     @Override
     public ArrayList<Pair<String, Integer>> getLeaderBoard() throws IOException {
         ArrayList<Pair<String, Integer>> leaderboard = new ArrayList<>();
@@ -162,6 +201,11 @@ public class DatabaseAdapter implements Persistence {
         return leaderboard;
     }
 
+    /**
+     * Method deleting the player from database by the given nickname.
+     * @param nickname
+     * @throws IOException
+     */
     @Override
     public void removePlayer(String nickname) throws IOException {
         try {
@@ -172,6 +216,11 @@ public class DatabaseAdapter implements Persistence {
         }
     }
 
+    /**
+     * Method updating the Player with the highest score for the given house.
+     * @param faculty
+     * @throws IOException
+     */
     @Override
     public void updateBestPlayer(String faculty) throws IOException {
         String sql = "UPDATE sep2_schema.house_cup SET bestplayer=(SELECT playernick  FROM sep2_schema.player_scores JOIN (SELECT nickname FROM sep2_schema.player\n" +
@@ -185,6 +234,12 @@ public class DatabaseAdapter implements Persistence {
 
     }
 
+    /**
+     * Method returning the player_score table in form of ArrayList of Pairs for given house.
+     * @param faculty
+     * @return
+     * @throws IOException
+     */
     @Override
     public ArrayList<Pair<String, Integer>> getHouseLeaderBoard(String faculty) throws IOException {
         ArrayList<Pair<String, Integer>> leaderboard = new ArrayList<>();
@@ -208,19 +263,12 @@ public class DatabaseAdapter implements Persistence {
         }
     }
 
-    @Override
-    public boolean clear() throws IOException {
-        //todo
-        try {
-            String sql = "TRUNCATE TABLE sep2database.sep2_schema CASCADE;";
-            db.update(sql);
-            return true;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
+    /**
+     * Method returning ArrayList of Integers - all scores gained by given player.
+     * @param nickname
+     * @return
+     * @throws IOException
+     */
     @Override
     public ArrayList<Integer> getScoresForPlayer(String nickname) throws IOException {
         String sql = "SELECT score FROM sep2_schema.player_scores WHERE playernick= ? ORDER BY score DESC;";
@@ -238,6 +286,12 @@ public class DatabaseAdapter implements Persistence {
         }
         return scores;
     }
+
+    /**
+     * Method called after each game to update the data in database.
+     * @param nickname
+     * @param score
+     */
     private void updateEverything(String nickname,int score){
         String sqlTemp = "SELECT faculty FROM sep2_schema.player WHERE nickname=?";
         String faculty;
