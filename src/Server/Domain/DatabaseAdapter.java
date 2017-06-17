@@ -16,9 +16,9 @@ public class DatabaseAdapter implements Persistence {
 
     private Database db;
     private static final String DRIVER = "org.postgresql.Driver";
-    private static final String URL = "jdbc:postgresql://postgresql.websupport.sk:5432/sep2database";
-    private static final String USER = "sep2database";
-    private static final String PASSWORD = "0PXU4hYoGw";
+    private static final String URL = "jdbc:postgresql://postgresql.websupport.sk:5432/g1fz7wy5";
+    private static final String USER = "g1fz7wy5";
+    private static final String PASSWORD = "1b7pKT16bX";
 
     public DatabaseAdapter() {
         try {

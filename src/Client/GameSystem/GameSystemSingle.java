@@ -83,7 +83,6 @@ public class GameSystemSingle {
     public void startGame(Player player) {
         _player = player;
         startTime = new Date();
-
         Stage primaryStage = HarryPotterMain.get_primaryStage();
         root = new Pane();
         root.setStyle("-fx-background-color: #ACCAD1");
