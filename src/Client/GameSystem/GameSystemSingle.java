@@ -199,6 +199,7 @@ public class GameSystemSingle {
             root.getChildren().add(gameOverLabel);
             root.getChildren().get(1).setOpacity(0);
             gameOver = true;
+            score = 0;
             gameLoop.stop();
             saveHighScore();
         }
@@ -376,6 +377,8 @@ public class GameSystemSingle {
             e.printStackTrace();
             MasterController.showAlertView("We were unable to update scores in DB",500);
         }
+        score = 0;
+        scoreLabel.setText("Score: " + score);
     }
 
     /**

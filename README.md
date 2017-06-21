@@ -5,11 +5,11 @@ Database connection <br>
 <table>
   <tr>
     <td>Database name</td>
-    <td>sep2database</td>
+    <td>g1fz7wy5</td>
   </tr>
   <tr>
     <td>Username</td>
-    <td>sep2database</td>
+    <td>g1fz7wy5</td>
   </tr>
   <tr>
     <td>Host</td>
@@ -21,7 +21,7 @@ Database connection <br>
   </tr>
   <tr>
      <td>Password</td>
-     <td>0PXU4hYoGw</td>
+     <td>1b7pKT16bX</td>
   </tr>
   <tr>
      <td>PhpPgAdmin</td>
